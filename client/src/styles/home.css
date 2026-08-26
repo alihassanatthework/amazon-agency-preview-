@@ -85,6 +85,8 @@
   min-height: 420px;
 }
 
+.hero__panel-wrap { transform: translate3d(0, var(--parallax, 0px), 0); will-change: transform; }
+
 .hero__panel {
   border-radius: var(--radius-card);
   box-shadow: var(--elev-2);
@@ -92,12 +94,12 @@
 }
 .hero__panel-inner { padding: var(--space-5); }
 
-.hero__panel-head {
+.hero__panel-head { margin-bottom: var(--space-5); }
+.hero__panel-figure-row {
   display: flex;
-  align-items: flex-start;
-  justify-content: space-between;
-  gap: var(--space-4);
-  margin-bottom: var(--space-5);
+  align-items: baseline;
+  gap: var(--space-3);
+  flex-wrap: wrap;
 }
 .hero__panel-figure {
   font-family: var(--font-display);
@@ -145,7 +147,7 @@
 }
 .hero__float--metric { left: -6%; bottom: 4%; width: 168px; --enter-delay: 180ms; }
 .hero__float--listing {
-  right: -4%; top: -6%;
+  right: -5%; top: -9%;
   display: flex;
   align-items: center;
   gap: var(--space-3);
@@ -207,7 +209,7 @@
    H2 — Client logo band
    -------------------------------------------------------------------------- */
 
-.logos { overflow: hidden; }
+.logos { overflow: hidden; --marquee-duration: 40s; }
 .logos__caption { text-align: center; }
 
 .logos__filters {
@@ -245,7 +247,22 @@
   padding-left: var(--space-8);
   white-space: nowrap;
   will-change: transform;
+  animation: marquee var(--marquee-duration, 40s) linear infinite;
 }
+/* The track holds an even number of repeats, so translating exactly half its
+   width lands on an identical frame — a seamless loop with no seam jump. */
+@keyframes marquee {
+  from { transform: translate3d(0, 0, 0); }
+  to   { transform: translate3d(-50%, 0, 0); }
+}
+/* Hover slows the track to 25% speed rather than stopping it dead. */
+.logos__track.is-slow { animation-duration: calc(var(--marquee-duration, 40s) * 4); }
+/* Off-screen work pauses. */
+.logos:not(.is-visible) .logos__track { animation-play-state: paused; }
+
+/* Filtering cross-fades the track. */
+.logos__track { animation-name: marquee, marqueeFade; animation-duration: var(--marquee-duration, 40s), var(--motion-base); animation-timing-function: linear, var(--ease-base); animation-iteration-count: infinite, 1; }
+@keyframes marqueeFade { from { opacity: 0; } to { opacity: 1; } }
 
 .logos__item {
   font-family: var(--font-display);
@@ -274,6 +291,7 @@ html:not(.motion-on) .logos__track {
 }
 html:not(.motion-on) .logos__viewport::before,
 html:not(.motion-on) .logos__viewport::after { display: none; }
+html:not(.motion-on) .logos__track { animation: none; }
 
 /* --------------------------------------------------------------------------
    H3 — KPI performance band
@@ -328,6 +346,7 @@ html:not(.motion-on) .logos__viewport::after { display: none; }
   .hero__visual { max-width: 60%; margin-top: var(--space-7); min-height: 340px; }
   .hero__bloom { width: 80vw; height: 80vw; }
 
+  .logos { --marquee-duration: 32s; }
   .kpi__row { grid-template-columns: repeat(3, 1fr); }
   .kpi__cell:nth-child(4) { border-left: 0; padding-left: 0; }
   .kpi__cell:nth-child(n+4) { border-top: 1px solid rgba(255, 255, 255, .12); margin-top: var(--space-6); }
@@ -354,6 +373,7 @@ html:not(.motion-on) .logos__viewport::after { display: none; }
   }
   .logos__filters::-webkit-scrollbar { display: none; }
   .logos__item { font-size: 17px; line-height: 22px; }
+  .logos { --marquee-duration: 24s; }   /* perceived speed stays constant */
   .logos__viewport::before, .logos__viewport::after { width: 48px; }
   html:not(.motion-on) .logos__track { grid-template-columns: repeat(3, 1fr); }
 
