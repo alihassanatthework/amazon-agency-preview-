@@ -76,14 +76,13 @@ export function CountUp({
   return (
     <span ref={ref} className={className}>
       {prefix ? <span className={affixClassName}>{prefix}</span> : null}
-      <span className="count" role="text" aria-label={`${prefix ?? ''}${final}${suffix ?? ''}`}>
+      {/* Assistive tech reads the final value; the animating digits are
+          hidden from it so a count-up is never announced digit by digit. */}
+      <span className="visually-hidden">{final}</span>
+      <span className="count" aria-hidden="true">
         {/* Inert spacer holds the final width — zero layout shift. */}
-        <span className="count__reserve" aria-hidden="true">
-          {final}
-        </span>
-        <span className="count__value" aria-hidden="true">
-          {format(value, decimals, separator)}
-        </span>
+        <span className="count__reserve">{final}</span>
+        <span className="count__value">{format(value, decimals, separator)}</span>
       </span>
       {suffix ? <span className={affixClassName}>{suffix}</span> : null}
     </span>

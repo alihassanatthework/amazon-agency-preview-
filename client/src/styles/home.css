@@ -383,3 +383,274 @@ html:not(.motion-on) .logos__track { animation: none; }
   .kpi__cell:nth-child(2n) { padding-left: var(--space-4); border-left: 1px solid rgba(255, 255, 255, .12); }
   .kpi__cell:last-child { grid-column: 1 / -1; border-left: 0; padding-left: 0; }
 }
+
+/* --------------------------------------------------------------------------
+   H4 — Solutions (pinned progressive section)
+   -------------------------------------------------------------------------- */
+
+.solutions--pinned { height: 300vh; }          /* bounded pin distance */
+.solutions__viewport {
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  overflow: hidden;
+}
+.solutions__inner { width: 100%; }
+
+.solutions__grid {
+  display: grid;
+  grid-template-columns: repeat(12, 1fr);
+  gap: var(--gutter);
+  align-items: start;
+  margin-top: calc(var(--space-7) * var(--section-pad-scale));
+}
+
+.solutions__index-col {
+  grid-column: 1 / span 5;
+  position: relative;
+  padding-left: var(--space-5);
+}
+
+/* Vertical progress rail filling in Amber 600 between index markers */
+.solutions__rail {
+  position: absolute;
+  left: 0; top: 6px; bottom: 0;
+  width: 1px;
+  background: var(--line);
+}
+.solutions__rail-fill {
+  position: absolute;
+  inset: 0;
+  background: var(--amber-600);
+  transform-origin: top center;
+  transform: scaleY(0);
+  transition: transform var(--motion-base) var(--ease-base);
+}
+
+.solutions__list { list-style: none; margin: 0 0 var(--space-6); padding: 0; }
+
+.solutions__entry {
+  display: flex;
+  align-items: baseline;
+  gap: var(--space-3);
+  width: 100%;
+  padding: var(--space-3) 0;
+  border: 0;
+  background: transparent;
+  text-align: left;
+  cursor: pointer;
+  color: var(--stone);
+  opacity: .6;
+  transition: opacity var(--motion-base) var(--ease-base),
+              transform var(--motion-base) var(--ease-base),
+              color var(--motion-base) var(--ease-base);
+}
+.solutions__entry .heading-s { color: inherit; font-family: var(--font-display); }
+.solutions__entry-index {
+  font-size: var(--body-s);
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+  color: var(--stone);
+  transition: color var(--motion-base) var(--ease-base);
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .solutions__entry:not(.is-active):hover { opacity: .85; transform: translateX(4px); }
+}
+
+/* Only one thing is legible at full strength at any moment. */
+.solutions__entry.is-active { opacity: 1; color: var(--ink); }
+.solutions__entry.is-active .solutions__entry-index { color: var(--amber-600); }
+
+.solutions__detail { min-height: 160px; }
+.motion-on .solutions__detail {
+  animation: detailIn var(--motion-base) var(--ease-base) both;
+}
+@keyframes detailIn {
+  from { opacity: 0; transform: translateY(12px); }
+  to   { opacity: 1; transform: none; }
+}
+
+.solutions__desc { color: var(--graphite); max-width: 46ch; }
+
+.solutions__metrics {
+  display: flex;
+  gap: var(--space-6);
+  margin: var(--space-5) 0 0;
+}
+.solutions__metrics div { margin: 0; }
+.solutions__metrics dt { color: var(--stone); }
+.solutions__metric-value {
+  margin: var(--space-1) 0 0;
+  font-family: var(--font-display);
+  font-size: 28px;
+  font-weight: 600;
+  letter-spacing: -.02em;
+  color: var(--amber-800);
+  font-variant-numeric: tabular-nums;
+}
+
+/* --- Visual stage — one panel active at a time ---------------------------- */
+
+.solutions__stage {
+  grid-column: 6 / span 7;
+  position: relative;
+  aspect-ratio: 4 / 3;
+  max-height: 60vh;
+}
+.solutions__panel {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  transform: translateY(16px);
+  transition: opacity var(--motion-base) var(--ease-base),
+              transform var(--motion-base) var(--ease-base);
+  pointer-events: none;
+}
+.solutions__panel.is-active { opacity: 1; transform: none; }
+.solutions__panel.is-past { transform: translateY(-16px); }
+
+/* Abstract stage illustration — built from tokens, never photographed */
+.stage {
+  position: relative;
+  width: 100%; height: 100%;
+  border-radius: var(--radius-card);
+  background: var(--white);
+  box-shadow: var(--elev-1);
+  overflow: hidden;
+  padding: var(--space-6);
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  gap: var(--space-3);
+}
+.stage::before {
+  content: '';
+  position: absolute;
+  inset: -20% -10% 40% 40%;
+  background: var(--bloom);
+  opacity: .5;
+  pointer-events: none;
+}
+.stage__bar {
+  height: 10px;
+  border-radius: var(--radius-pill);
+  background: var(--amber-wash);
+  position: relative;
+  overflow: hidden;
+}
+.stage__bar::after {
+  content: '';
+  position: absolute;
+  inset: 0 auto 0 0;
+  background: linear-gradient(90deg, var(--amber-500), var(--amber-600));
+  border-radius: inherit;
+}
+.stage__bar--a::after { width: 82%; }
+.stage__bar--b::after { width: 54%; }
+.stage__bar--c::after { width: 68%; }
+
+.stage--ops .stage__bar--a::after { width: 94%; }
+.stage--ops .stage__bar--b::after { width: 71%; }
+.stage--catalogue .stage__bar--a::after { width: 63%; }
+.stage--catalogue .stage__bar--c::after { width: 88%; }
+.stage--setup .stage__bar--b::after { width: 96%; }
+
+.stage__chip {
+  align-self: flex-start;
+  margin-top: var(--space-3);
+  padding: var(--space-1) var(--space-3);
+  border-radius: var(--radius-pill);
+  background: var(--amber-wash);
+  color: var(--amber-800);
+  font-size: var(--caption);
+  font-weight: 600;
+}
+
+/* --- Stacked recomposition (mobile / reduced motion) ---------------------- */
+
+.solutions__stack { display: grid; gap: var(--space-5); }
+.solutions__card { display: grid; gap: var(--space-3); }
+.solutions__card .stage { aspect-ratio: 16 / 10; box-shadow: none; border: 1px solid var(--line); }
+.solutions__index {
+  margin: var(--space-3) 0 0;
+  font-size: var(--body-s);
+  font-weight: 600;
+  color: var(--amber-600);
+  font-variant-numeric: tabular-nums;
+}
+
+/* --------------------------------------------------------------------------
+   H5 — Approach / differentiator
+   -------------------------------------------------------------------------- */
+
+/* The statement sits across columns 2–10: centred within the container but
+   left-aligned internally. */
+.approach .container > * { max-width: 1040px; margin-inline: auto; }
+.approach__header { margin-bottom: var(--space-4); }
+.approach__statement { margin-bottom: var(--space-5); }
+
+.approach__note { color: var(--graphite); max-width: 62ch; }
+.approach__emphasis {
+  font-style: normal;
+  font-weight: 600;
+  color: var(--ink);
+  transition: color var(--motion-base) var(--ease-base) 200ms;
+}
+.motion-on .approach__emphasis-wrap.is-revealed .approach__emphasis { color: var(--amber-800); }
+html:not(.motion-on) .approach__emphasis { color: var(--amber-800); }
+
+.approach__points {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--gutter);
+  margin-top: calc(var(--space-8) * var(--section-pad-scale));
+}
+.approach__point { position: relative; padding-left: var(--space-5); }
+.approach__point-rule {
+  position: absolute;
+  left: 0; top: 4px; bottom: 4px;
+  width: 1px;
+  background: var(--line);
+  opacity: .8;
+  transition: opacity var(--motion-base) var(--ease-base),
+              background var(--motion-base) var(--ease-base);
+}
+.approach__point-title {
+  font-family: var(--font-display);
+  font-size: var(--body);
+  font-weight: 600;
+  color: var(--ink);
+  margin: 0 0 var(--space-2);
+  transition: color var(--motion-base) var(--ease-base);
+}
+.approach__point p { color: var(--graphite); }
+
+@media (hover: hover) and (pointer: fine) {
+  .approach__point:hover .approach__point-title { color: var(--amber-800); }
+  .approach__point:hover .approach__point-rule { opacity: 1; background: var(--amber-500); }
+}
+
+.approach__cta { margin-top: var(--space-6); }
+
+/* --- H4 / H5 responsive --------------------------------------------------- */
+
+@media (max-width: 1279px) {
+  .solutions--pinned { height: 240vh; }         /* pin shortened */
+  .solutions__grid { grid-template-columns: 1fr; }
+  .solutions__index-col, .solutions__stage { grid-column: 1 / -1; }
+  .solutions__stage { max-height: 34vh; aspect-ratio: 16 / 9; margin-top: var(--space-5); }
+  .solutions__detail { min-height: 130px; }
+}
+
+@media (max-width: 767px) {
+  .approach__points { grid-template-columns: 1fr; gap: 0; }
+  .approach__point {
+    padding: var(--space-4) 0;
+    border-top: 1px solid var(--line);   /* horizontal rules, not vertical */
+  }
+  .approach__point:first-child { border-top: 0; padding-top: 0; }
+  .solutions__metrics { gap: var(--space-5); }
+}
