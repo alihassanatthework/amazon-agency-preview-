@@ -103,8 +103,17 @@
   transition-delay: var(--reveal-delay, 0ms);
 }
 
-/* --- Count-up: width reserved with tabular figures so nothing shifts ------ */
-[data-count] { font-variant-numeric: tabular-nums; font-feature-settings: 'tnum' 1; }
+/* --- Count-up: the final value is rendered as an inert spacer stacked under
+   the live one, so the cell holds its final width from the first frame and
+   nothing shifts during the count. -------------------------------------- */
+.count {
+  display: inline-grid;
+  font-variant-numeric: tabular-nums;
+  font-feature-settings: 'tnum' 1;
+}
+.count__reserve,
+.count__value { grid-area: 1 / 1; }
+.count__reserve { visibility: hidden; }
 
 /* --- Parallax-soft: translation written to --parallax by motion.js -------- */
 .motion-on [data-parallax] {
