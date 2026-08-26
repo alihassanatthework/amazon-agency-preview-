@@ -80,6 +80,10 @@
   --motion-count:  1800ms;  /* easeOutExpo, applied in JS                  */
   --stagger:         80ms;
 
+  /* Section padding derives from this scale so rhythm is preserved without
+     letting mobile become cramped or desktop-tall. Media queries reassign it. */
+  --section-pad-scale: 1;
+
   /* --- Header ----------------------------------------------------------- */
   --header-h: 72px;
   --blur: 12px;
@@ -108,7 +112,3 @@
     --bloom-opacity: .4;         /* 10.3 — blooms halve and drop opacity   */
   }
 }
-
-/* Section padding derives from the scale so rhythm is preserved without
-   letting mobile become cramped or desktop-tall. */
-:root { --section-pad-scale: 1; }
