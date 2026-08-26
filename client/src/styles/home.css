@@ -660,3 +660,520 @@ html:not(.motion-on) .approach__emphasis { color: var(--amber-800); }
   .approach__point:first-child { border-top: 0; padding-top: 0; }
   .solutions__metrics { gap: var(--space-5); }
 }
+
+/* --------------------------------------------------------------------------
+   H6 — Video social proof
+   -------------------------------------------------------------------------- */
+
+.video { overflow: hidden; }
+.video__grid {
+  display: grid;
+  grid-template-columns: repeat(12, 1fr);
+  gap: var(--gutter);
+  align-items: start;
+}
+.video__header { grid-column: 1 / span 5; }
+
+/* The frame extends past the container's right edge — the one deliberate
+   grid break on the page. */
+.video__media {
+  grid-column: 6 / span 7;
+  position: relative;
+  margin-right: -40px;
+  transform: translate3d(0, var(--parallax, 0px), 0);
+}
+
+.video__frame {
+  aspect-ratio: 16 / 9;
+  border-radius: var(--radius-card);
+  box-shadow: var(--elev-1);
+  background: var(--canvas-deep);
+}
+.video__frame .mask-wipe__inner { height: 100%; }
+
+.video__poster { position: relative; height: 100%; display: grid; place-items: center; }
+.video__poster-art {
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(70% 90% at 30% 20%, rgba(245, 166, 91, .5), transparent 60%),
+    radial-gradient(60% 80% at 80% 80%, rgba(210, 98, 26, .35), transparent 65%),
+    linear-gradient(155deg, #2A2622, #4F4B47);
+  transition: transform var(--motion-base) var(--ease-base);
+}
+.video__player { width: 100%; height: 100%; border: 0; }
+
+/* The highest-contrast small element in the section. */
+.video__play {
+  position: relative;
+  z-index: 1;
+  width: 72px; height: 72px;
+  display: grid;
+  place-items: center;
+  padding-left: 4px;
+  border: 0;
+  border-radius: var(--radius-pill);
+  background: var(--white);
+  color: var(--amber-600);
+  box-shadow: var(--elev-2);
+  cursor: pointer;
+  transition: transform var(--motion-base) var(--ease-base),
+              box-shadow var(--motion-base) var(--ease-base);
+}
+@media (hover: hover) and (pointer: fine) {
+  .video__frame:hover .video__poster-art { transform: scale(1.03); }
+  .video__frame:hover .video__play { transform: scale(1.08); box-shadow: var(--accent-glow); }
+}
+
+/* Quote panel overlaps the frame's lower-left corner by 48px. */
+.video__quote {
+  position: absolute;
+  left: -48px;
+  bottom: -48px;
+  max-width: 400px;
+  padding: var(--space-5);
+  background: var(--amber-wash);
+  border-radius: var(--radius-card);
+}
+.video__quote blockquote { margin: 0; }
+.video__quote p { color: var(--ink); margin-bottom: var(--space-3); }
+.video__quote footer { color: var(--amber-800); font-weight: 600; }
+
+.video__cta {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-4);
+  flex-wrap: wrap;
+  margin-top: var(--space-8);
+}
+.video__note { margin: 0; }
+
+/* --------------------------------------------------------------------------
+   H7 — Case studies (horizontal scroll)
+   -------------------------------------------------------------------------- */
+
+.cases--pinned { height: 220vh; }
+.cases__viewport {
+  position: sticky;
+  top: 0;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: var(--space-6);
+  overflow: hidden;
+  padding-block: var(--space-6);
+}
+
+.cases__track-wrap { overflow: hidden; }
+.cases__track {
+  display: flex;
+  gap: var(--space-5);
+  /* The first card is inset to the container margin so the track starts
+     aligned to the grid rather than at the viewport edge. */
+  padding-left: max(var(--page-margin), calc((100vw - var(--container)) / 2 + var(--page-margin)));
+  padding-right: var(--page-margin);
+  will-change: transform;
+}
+
+.cases__rail {
+  height: 1px;
+  background: var(--line);
+  position: relative;
+  overflow: hidden;
+}
+.cases__rail-fill {
+  position: absolute;
+  inset: 0;
+  background: var(--amber-600);
+  transform-origin: left center;
+  transform: scaleX(0);
+}
+
+.case-card {
+  flex: none;
+  width: 480px;
+  min-height: 560px;
+  display: flex;
+  flex-direction: column;
+  padding: 0;
+  overflow: hidden;
+  background: var(--white);
+}
+.case-card__media { height: 300px; flex: none; border-radius: 0; }
+.case-card__body { padding: var(--space-5); display: flex; flex-direction: column; gap: var(--space-2); }
+
+.case-card__category {
+  margin: 0;
+  font-size: var(--eyebrow);
+  font-weight: 600;
+  letter-spacing: .12em;
+  text-transform: uppercase;
+  color: var(--amber-800);
+}
+.case-card__line { color: var(--graphite); margin: 0; }
+.case-card__line span {
+  display: block;
+  font-size: var(--caption);
+  color: var(--stone);
+}
+
+/* The result metric is the largest element in the card — the card sells the
+   outcome first and the client second. */
+.case-card__metric {
+  margin: var(--space-3) 0 0;
+  font-family: var(--font-display);
+  font-size: 40px;
+  line-height: 1.1;
+  font-weight: 600;
+  letter-spacing: -.02em;
+  color: var(--amber-800);
+  font-variant-numeric: tabular-nums;
+}
+.case-card__link { margin-top: auto; padding-top: var(--space-4); align-self: flex-start; }
+
+.case-card--end {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: var(--space-3);
+  width: 380px;
+  padding: var(--space-6);
+  background: var(--amber-wash);
+  border: 0;
+}
+.case-card--end .display-m { margin: 0; }
+.case-card--end p { color: var(--graphite); }
+
+/* Card artwork — built from the palette, never stock photography */
+.case-art { width: 100%; height: 100%; }
+.case-art--beauty  { background: radial-gradient(80% 90% at 25% 20%, #F5A65B, transparent 60%), linear-gradient(150deg, #F6F1EC, #E0CDBB); }
+.case-art--apparel { background: radial-gradient(75% 85% at 75% 25%, #ED7C24, transparent 62%), linear-gradient(150deg, #2A2622, #4F4B47); }
+.case-art--food    { background: radial-gradient(85% 85% at 40% 75%, #D2621A, transparent 60%), linear-gradient(150deg, #FDF0E4, #F5C79A); }
+
+/* Mobile carousel / reduced-motion stack */
+.cases__carousel {
+  display: flex;
+  gap: var(--space-4);
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none;
+  padding: var(--space-6) var(--page-margin) var(--space-4);
+  /* Partial reveal of the next card signals scrollability. */
+  scroll-padding-left: var(--page-margin);
+}
+.cases__carousel::-webkit-scrollbar { display: none; }
+.cases__carousel .case-card { width: 84vw; scroll-snap-align: start; min-height: 0; }
+.cases__carousel .case-card--end { width: 84vw; }
+
+.cases__carousel--stacked {
+  display: grid;
+  grid-template-columns: 1fr;
+  overflow: visible;
+  gap: var(--space-5);
+}
+.cases__carousel--stacked .case-card,
+.cases__carousel--stacked .case-card--end { width: 100%; }
+
+/* --------------------------------------------------------------------------
+   H8 — Comparison
+   -------------------------------------------------------------------------- */
+
+.comparison__table { position: relative; margin-top: calc(var(--space-7) * var(--section-pad-scale)); }
+
+.comparison__head,
+.comparison__row {
+  display: grid;
+  grid-template-columns: 160px 1fr 1fr;
+  gap: var(--gutter);
+  align-items: start;
+}
+
+.comparison__head { padding: 0 var(--space-5) var(--space-4); }
+.comparison__col-title {
+  font-family: var(--font-display);
+  font-size: var(--body);
+  font-weight: 600;
+  color: var(--stone);
+}
+.comparison__col-title--us { color: var(--ink); }
+
+/* The favourable column is a raised White panel; the other side is flat and
+   borderless on the band background. */
+.comparison__panel {
+  position: absolute;
+  left: calc(160px + var(--gutter) - var(--space-5));
+  right: calc(50% - var(--space-2));
+  top: 0; bottom: 0;
+  background: var(--white);
+  border-radius: var(--radius-card);
+  box-shadow: var(--elev-1);
+  transform: scale(.985);
+  opacity: 0;
+  transition: transform var(--motion-reveal) var(--ease-reveal),
+              opacity var(--motion-reveal) var(--ease-reveal);
+  pointer-events: none;
+}
+.comparison__table.is-revealed .comparison__panel { transform: none; opacity: 1; }
+html:not(.motion-on) .comparison__panel { transform: none; opacity: 1; }
+
+.comparison__panel-rule {
+  position: absolute;
+  left: 0; right: 0; top: 0;
+  height: 2px;
+  background: var(--amber-600);
+  border-radius: var(--radius-card) var(--radius-card) 0 0;
+}
+
+.comparison__rows { list-style: none; margin: 0; padding: 0; position: relative; }
+
+.comparison__row {
+  position: relative;
+  padding: var(--space-4) var(--space-5);
+  opacity: 0;
+  transform: translateY(24px);
+}
+.comparison__table.is-revealed .comparison__row {
+  opacity: 1;
+  transform: none;
+  transition: opacity var(--motion-reveal) var(--ease-reveal),
+              transform var(--motion-reveal) var(--ease-reveal);
+  transition-delay: var(--reveal-delay, 0ms);
+}
+html:not(.motion-on) .comparison__row { opacity: 1; transform: none; }
+
+.comparison__divider {
+  position: absolute;
+  left: var(--space-5); right: var(--space-5); top: 0;
+  height: 1px;
+  background: var(--line);
+  transform: scaleX(0);
+  transform-origin: left center;
+}
+.comparison__table.is-revealed .comparison__divider {
+  transform: scaleX(1);
+  transition: transform var(--motion-reveal) var(--ease-reveal);
+  transition-delay: var(--reveal-delay, 0ms);
+}
+html:not(.motion-on) .comparison__divider { transform: scaleX(1); }
+.comparison__row:first-child .comparison__divider { display: none; }
+
+.comparison__label {
+  font-size: var(--body-s);
+  font-weight: 600;
+  color: var(--ink);
+}
+.comparison__cell { display: flex; gap: var(--space-3); color: var(--graphite); }
+.comparison__cell--them { color: var(--stone); transition: color var(--motion-base) var(--ease-base); }
+
+.comparison__mark { flex: none; margin-top: 5px; color: var(--stone); }
+.comparison__mark--us { color: var(--amber-600); }
+
+/* Row hover raises the entire pair — the contrast becomes active without
+   adding a single new element. */
+.comparison__row::before {
+  content: '';
+  position: absolute;
+  left: calc(160px + var(--gutter) - var(--space-5));
+  right: calc(50% - var(--space-2));
+  top: 1px; bottom: 0;
+  background: var(--amber-wash);
+  opacity: 0;
+  transition: opacity var(--motion-base) var(--ease-base);
+  pointer-events: none;
+}
+@media (hover: hover) and (pointer: fine) {
+  .comparison__row:hover::before { opacity: .4; }
+  .comparison__row:hover .comparison__cell--them { color: var(--graphite); }
+}
+.comparison__row > * { position: relative; }
+
+.comparison__cta { margin-top: var(--space-7); }
+
+/* --------------------------------------------------------------------------
+   H9 — About
+   -------------------------------------------------------------------------- */
+
+.about__grid {
+  display: grid;
+  grid-template-columns: repeat(12, 1fr);
+  gap: var(--gutter);
+  align-items: start;
+}
+.about__media {
+  grid-column: 1 / span 5;
+  transform: translate3d(0, var(--parallax, 0px), 0);
+}
+.about__frame { aspect-ratio: 4 / 5; }
+.about-art {
+  background:
+    radial-gradient(70% 60% at 30% 15%, rgba(245, 166, 91, .55), transparent 60%),
+    radial-gradient(80% 70% at 80% 90%, rgba(210, 98, 26, .3), transparent 65%),
+    linear-gradient(160deg, #F6F1EC 0%, #D9C6B4 100%);
+}
+@media (hover: hover) and (pointer: fine) {
+  .about__frame:hover .about-art { transform: scale(1.02); }
+}
+
+/* The text column begins 64px below the image top — an intentional stagger. */
+.about__text { grid-column: 7 / span 6; padding-top: 64px; }
+.about__body { margin-top: var(--space-5); color: var(--graphite); }
+
+.about__facts {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--space-4);
+  margin-top: var(--space-6);
+}
+.about__fact { position: relative; padding-top: var(--space-4); }
+.about__fact-rule {
+  position: absolute;
+  left: 0; right: 0; top: 0;
+  height: 1px;
+  background: var(--amber-500);
+}
+.about__fact-value {
+  margin: 0 0 var(--space-1);
+  font-family: var(--font-display);
+  font-size: var(--heading-s);
+  font-weight: 600;
+  color: var(--amber-800);
+  font-variant-numeric: tabular-nums;
+}
+.about__fact .caption { transition: color var(--motion-base) var(--ease-base); }
+@media (hover: hover) and (pointer: fine) {
+  .about__fact:hover .caption { color: var(--graphite); }
+}
+
+.about__cta { margin-top: var(--space-6); }
+
+/* --------------------------------------------------------------------------
+   H10 — Contact CTA
+   -------------------------------------------------------------------------- */
+
+.cta { overflow: hidden; text-align: center; }
+.cta__bloom {
+  left: 50%;
+  bottom: -40%;
+  width: 90vw;
+  height: 70vw;
+  max-width: 1100px;
+  transform: translateX(-50%);
+}
+.motion-on .cta__bloom { animation: bloomIn 1200ms var(--ease-reveal) both; }
+@keyframes bloomIn {
+  from { opacity: 0; transform: translateX(-50%) scale(.92); }
+  to   { opacity: var(--bloom-opacity); transform: translateX(-50%) scale(1); }
+}
+
+.cta__inner {
+  position: relative;
+  z-index: 1;
+  max-width: 760px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.cta__title { margin-bottom: var(--space-4); }
+.cta__lead { color: var(--graphite); margin-bottom: var(--space-7); }
+
+.cta__actions {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-4);
+}
+/* The only place on the homepage where whitespace around a button exceeds 64px. */
+.cta__btn { min-height: 56px; padding-inline: var(--space-5); }
+
+.cta__trust {
+  display: flex;
+  align-items: center;
+  gap: var(--space-4);
+  flex-wrap: wrap;
+  justify-content: center;
+  margin-top: var(--space-7);
+}
+.cta__trust .caption { margin: 0; }
+
+/* --- Mobile sticky CTA bar ------------------------------------------------ */
+
+.sticky-cta {
+  position: fixed;
+  left: 0; right: 0; bottom: 0;
+  z-index: 90;
+  height: 64px;
+  display: flex;
+  align-items: center;
+  padding: 0 var(--page-margin);
+  background: rgba(255, 255, 255, .96);
+  border-top: 1px solid var(--line);
+  transform: translateY(100%);
+  transition: transform var(--motion-base) var(--ease-base);
+}
+.sticky-cta.is-shown { transform: none; }
+
+/* --- H6–H10 responsive ---------------------------------------------------- */
+
+@media (max-width: 1279px) {
+  .video__grid { grid-template-columns: 1fr; }
+  .video__header, .video__media { grid-column: 1 / -1; }
+  .video__media { margin-right: 0; margin-top: var(--space-6); }  /* grid break removed */
+
+  .cases--pinned { height: 180vh; }
+  .case-card { width: 400px; }
+
+  .comparison__head, .comparison__row { grid-template-columns: 1fr 1fr; }
+  .comparison__label { grid-column: 1 / -1; margin-bottom: var(--space-2); }
+  .comparison__panel, .comparison__row::before { left: calc(-1 * var(--space-5)); right: calc(50% - var(--space-2)); }
+
+  .about__grid { grid-template-columns: 1fr; }
+  .about__media, .about__text { grid-column: 1 / -1; }
+  .about__text { padding-top: var(--space-6); }
+  .about__frame { aspect-ratio: 3 / 2; }
+}
+
+@media (max-width: 767px) {
+  .video__quote {
+    position: static;
+    max-width: none;
+    margin-top: var(--space-4);
+    border-radius: var(--radius-card);
+  }
+  .video__play { width: 56px; height: 56px; }
+  .video__cta { margin-top: var(--space-6); }
+
+  .about__frame { aspect-ratio: 4 / 3; }
+  .about__facts { grid-template-columns: repeat(3, 1fr); gap: var(--space-3); }
+  .about__fact-value { font-size: 20px; }
+
+  /* The table recomposes into five stacked contrast cards — a vertical
+     contrast rather than a horizontal one. A side-scrolling table is rejected. */
+  .comparison__head { display: none; }
+  .comparison__panel { display: none; }
+  .comparison__row {
+    grid-template-columns: 1fr;
+    gap: 0;
+    padding: 0;
+    margin-bottom: var(--space-4);
+    border-radius: var(--radius-card);
+    overflow: hidden;
+    border: 1px solid var(--line);
+  }
+  .comparison__row::before { display: none; }
+  .comparison__divider { display: none; }
+  .comparison__label {
+    padding: var(--space-3) var(--space-4);
+    background: var(--white);
+    border-bottom: 1px solid var(--line);
+  }
+  .comparison__cell { padding: var(--space-4); }
+  .comparison__cell--us { background: var(--amber-wash); }
+  .comparison__cell--them { background: var(--canvas); }
+
+  .cta__lead { margin-bottom: var(--space-6); }
+  .cta__actions { width: 100%; }
+  .cta__btn { width: 100%; min-height: 52px; }
+}
