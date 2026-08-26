@@ -1,0 +1,123 @@
+/* ==========================================================================
+   PHASE 03 — MOTION PRIMITIVES
+   Rise · rise-stagger · mask-wipe · line-draw · word-rise · count-up ·
+   parallax-soft. Transform and opacity only — nothing runs off the compositor.
+
+   Initial (hidden) states are scoped to html.motion-on, which motion.js adds
+   only when JavaScript runs AND prefers-reduced-motion is not set. Without
+   either, every element below renders in its final state. No-JS and
+   reduced-motion are first-class rendering paths, not fallbacks.
+   ========================================================================== */
+
+/* --- Rise: opacity 0→1, translateY 24px→0. The scroll-reveal default. ----- */
+.motion-on [data-reveal] {
+  opacity: 0;
+  transform: translateY(24px);
+  will-change: transform, opacity;
+}
+.motion-on [data-reveal].is-revealed {
+  opacity: 1;
+  transform: none;
+  transition:
+    opacity   var(--motion-reveal) var(--ease-reveal),
+    transform var(--motion-reveal) var(--ease-reveal);
+  transition-delay: var(--reveal-delay, 0ms);
+}
+/* Never fade alone — a reveal always pairs opacity with a transform. */
+
+/* Rise-stagger: children cascade in DOM order at 80ms. Delay is written to
+   --reveal-delay by motion.js so the cascade survives dynamic content. */
+.motion-on [data-reveal-group] > * {
+  opacity: 0;
+  transform: translateY(24px);
+}
+.motion-on [data-reveal-group].is-revealed > * {
+  opacity: 1;
+  transform: none;
+  transition:
+    opacity   var(--motion-reveal) var(--ease-reveal),
+    transform var(--motion-reveal) var(--ease-reveal);
+}
+
+/* --- Mask-wipe: parent clips; the image starts at scale 1.08 / translateY 4%
+   and a covering panel retracts while the image settles to scale 1. -------- */
+.mask-wipe { position: relative; overflow: hidden; }
+.mask-wipe__inner { transform: none; }
+.motion-on .mask-wipe__inner {
+  transform: scale(1.08) translateY(4%);
+  transform-origin: center;
+}
+.motion-on .mask-wipe::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  background: var(--canvas);
+  transform-origin: bottom center;
+  transform: scaleY(1);
+  pointer-events: none;
+}
+.motion-on .mask-wipe--fromLeft::before { transform-origin: right center; transform: scaleX(1); }
+
+.motion-on .mask-wipe.is-revealed .mask-wipe__inner {
+  transform: none;
+  transition: transform var(--motion-mask) var(--ease-mask);
+}
+.motion-on .mask-wipe.is-revealed::before {
+  transform: scaleY(0);
+  transition: transform var(--motion-mask) var(--ease-mask);
+}
+.motion-on .mask-wipe--fromLeft.is-revealed::before { transform: scaleX(0); }
+
+/* --- Line-draw: a 1px rule scales from scaleX(0) to 1 from the left ------- */
+.motion-on [data-line-draw] {
+  transform: scaleX(0);
+  transform-origin: left center;
+}
+.motion-on [data-line-draw].is-revealed {
+  transform: scaleX(1);
+  transition: transform var(--motion-reveal) var(--ease-reveal);
+  transition-delay: var(--reveal-delay, 0ms);
+}
+.motion-on [data-line-draw='vertical'] { transform: scaleY(0); transform-origin: top center; }
+.motion-on [data-line-draw='vertical'].is-revealed { transform: scaleY(1); }
+/* The eyebrow's own 32px rule draws with its section header. */
+.motion-on [data-reveal] .eyebrow::before { transform: scaleX(0); }
+.motion-on [data-reveal].is-revealed .eyebrow::before {
+  transform: scaleX(1);
+  transition: transform var(--motion-reveal) var(--ease-reveal) 120ms;
+}
+
+/* --- Word-rise: headline split by line; each line rises from a clipped
+   container at a 60ms cascade. Hero headline and the two largest section
+   headlines only — overuse cheapens it. ----------------------------------- */
+.line-clip { display: block; overflow: hidden; padding-bottom: .08em; margin-bottom: -.08em; }
+.motion-on .line-clip > span {
+  display: block;
+  transform: translateY(105%);
+}
+.motion-on .is-revealed .line-clip > span,
+.motion-on .line-clip.is-revealed > span {
+  transform: none;
+  transition: transform var(--motion-reveal) var(--ease-reveal);
+  transition-delay: var(--reveal-delay, 0ms);
+}
+
+/* --- Count-up: width reserved with tabular figures so nothing shifts ------ */
+[data-count] { font-variant-numeric: tabular-nums; font-feature-settings: 'tnum' 1; }
+
+/* --- Parallax-soft: translation written to --parallax by motion.js -------- */
+.motion-on [data-parallax] {
+  transform: translate3d(0, var(--parallax, 0px), 0);
+  will-change: transform;
+}
+
+/* --- 3.4 Reduced motion — a complete, well-composed page with no motion --- */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: .01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: .01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
