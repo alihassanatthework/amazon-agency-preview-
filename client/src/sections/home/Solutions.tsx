@@ -140,7 +140,7 @@ export function Solutions() {
   const header = (
     <SectionHeader
       eyebrow="Solutions"
-      headline={['Four functions. One operating', 'system for your marketplace.']}
+      headline={['Four functions,', 'one operating system.']}
       id="solutions-title"
       variant="split"
     />
