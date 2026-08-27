@@ -33,11 +33,16 @@ function readPalette(): Record<string, string> {
   );
 }
 
-/** Light-to-dark resolves get a wider overlap than light-to-light ones. */
+/**
+ * Overlap widths are deliberately short. Interpolating white to black across a
+ * long distance passes through mid-grey and reads as a smudge rather than a
+ * handoff; the dark bands carry their own edge lighting instead, so the layer
+ * only has to soften the seam.
+ */
 function overlapFor(from: string, to: string) {
   const darkInvolved = from === 'ink' || to === 'ink';
-  if (from === 'canvas' && to === 'ink') return 160; // H10 → H11 / C5 → C6
-  return darkInvolved ? 120 : 96;
+  if (from === 'canvas' && to === 'ink') return 96; // H10 → H11 / C5 → C6
+  return darkInvolved ? 64 : 48;
 }
 
 export function BackgroundLayer() {
@@ -76,6 +81,11 @@ export function BackgroundLayer() {
       let currentKey = sections[0].dataset.bg ?? 'canvas';
 
       for (const section of sections) {
+        // A section that is not rendered has no boundary to hand off at, and
+        // its zero rect would otherwise stack a bogus stop at the top of the
+        // gradient and wash the whole viewport.
+        if (section.offsetHeight === 0) continue;
+
         const key = section.dataset.bg ?? 'canvas';
         const top = section.getBoundingClientRect().top;
         const overlap = overlapFor(currentKey, key);

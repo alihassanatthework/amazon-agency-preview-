@@ -539,3 +539,57 @@ p:last-child { margin-bottom: 0; }
   font-weight: 600;
 }
 .badge--onDark { background: rgba(245, 166, 91, .12); color: var(--amber-300); }
+
+/* --------------------------------------------------------------------------
+   Dark band treatment — shared by H3 and C4 so both dark moments read as the
+   same material. A flat black block is the failure mode here: the depth comes
+   from a warm radial light source, a fine texture and an edge highlight.
+   -------------------------------------------------------------------------- */
+
+.bg-ink {
+  position: relative;
+  isolation: isolate;
+}
+
+/* Warm light source, offset so the band is lit rather than uniformly filled. */
+.bg-ink::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  background:
+    radial-gradient(72% 120% at 78% 8%, rgba(237, 124, 36, .20) 0%, transparent 58%),
+    radial-gradient(52% 90% at 12% 96%, rgba(245, 166, 91, .10) 0%, transparent 62%);
+}
+
+/* A fine texture stops large dark areas from banding, and an edge highlight
+   catches the top of the band where it meets the light section above. */
+.bg-ink::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  background-image:
+    linear-gradient(rgba(255, 255, 255, .028) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, .028) 1px, transparent 1px);
+  background-size: 56px 56px;
+  mask-image: radial-gradient(120% 90% at 50% 0%, #000 0%, transparent 72%);
+  -webkit-mask-image: radial-gradient(120% 90% at 50% 0%, #000 0%, transparent 72%);
+}
+
+/* --- Glass surface — the one elevated material used on dark fields -------- */
+
+.glass {
+  position: relative;
+  border-radius: var(--radius-card);
+  background:
+    linear-gradient(158deg, rgba(255, 255, 255, .07) 0%, rgba(255, 255, 255, .022) 46%, rgba(255, 255, 255, .04) 100%);
+  border: 1px solid rgba(255, 255, 255, .09);
+  box-shadow:
+    0 1px 0 rgba(255, 255, 255, .07) inset,
+    0 24px 60px rgba(0, 0, 0, .45),
+    0 2px 8px rgba(0, 0, 0, .3);
+  backdrop-filter: blur(2px);
+}

@@ -272,8 +272,8 @@
 
 .logos__item {
   font-family: var(--font-display);
-  font-size: 21px;             /* normalised to a 28px cap height */
-  line-height: 28px;
+  font-size: 18px;             /* normalised to a 24px cap height */
+  line-height: 24px;
   font-weight: 600;
   letter-spacing: .02em;
   color: var(--stone);
@@ -303,45 +303,118 @@ html:not(.motion-on) .logos__track { animation: none; }
    H3 — KPI performance band
    -------------------------------------------------------------------------- */
 
-.kpi__rule { margin: calc(var(--space-7) * var(--section-pad-scale)) 0 0; opacity: .5; }
+.kpi__head {
+  display: grid;
+  grid-template-columns: minmax(0, 7fr) minmax(0, 4fr);
+  gap: var(--gutter);
+  align-items: end;
+  margin-bottom: calc(var(--space-7) * var(--section-pad-scale));
+}
+.kpi__header { max-width: none; }
+
+/* The right-hand columns carry the substantiation note rather than sitting
+   empty, and it doubles as the section's quiet trust signal. */
+.kpi__verify {
+  display: flex;
+  gap: var(--space-3);
+  align-items: flex-start;
+  padding: var(--space-4);
+  border-radius: var(--radius-card);
+  border: 1px solid rgba(255, 255, 255, .08);
+  background: rgba(255, 255, 255, .03);
+  font-size: var(--body-s);
+  line-height: 1.6;
+  color: rgba(252, 250, 248, .62);
+}
+.kpi__verify-icon {
+  flex: none;
+  display: grid;
+  place-items: center;
+  width: 22px; height: 22px;
+  border-radius: var(--radius-pill);
+  background: rgba(245, 166, 91, .14);
+  color: var(--amber-300);
+}
+
+/* --- The instrument panel ------------------------------------------------- */
+
+.kpi__slab {
+  position: relative;
+  padding: var(--space-6) 0 var(--space-5);
+  overflow: hidden;
+}
+
+/* A single amber filament along the top edge, drawn on entry. */
+.kpi__slab-rule {
+  position: absolute;
+  left: 0; right: 0; top: 0;
+  height: 1px;
+  background: linear-gradient(90deg,
+    transparent 0%,
+    var(--amber-500) 18%,
+    var(--amber-300) 50%,
+    var(--amber-500) 82%,
+    transparent 100%);
+  box-shadow: 0 0 14px rgba(237, 124, 36, .55);
+}
 
 .kpi__row {
   display: grid;
-  grid-template-columns: repeat(5, 1fr);
+  grid-template-columns: repeat(5, minmax(0, 1fr));
 }
 
+/* A column layout with the note pushed to the bottom keeps the meta line on a
+   common baseline even when a label wraps to two lines. */
 .kpi__cell {
-  padding: var(--space-6) var(--space-4) 0;
-  border-left: 1px solid rgba(255, 255, 255, .12);
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  padding: var(--space-2) var(--space-5) var(--space-4);
+  border-left: 1px solid rgba(255, 255, 255, .07);
 }
-.kpi__cell:first-child { border-left: 0; padding-left: 0; }
+.kpi__cell:first-child { border-left: 0; }
 
-.kpi__value { color: var(--canvas); margin: 0 0 var(--space-3); }
-.kpi__unit { color: var(--amber-300); font-size: 55%; }   /* unit at 55% of the numeral */
+.kpi__value {
+  color: var(--canvas);
+  margin: 0 0 var(--space-3);
+  text-shadow: 0 2px 24px rgba(0, 0, 0, .4);
+}
+.kpi__unit { color: var(--amber-300); font-size: 55%; }
 
 .kpi__label {
-  color: var(--stone);
-  position: relative;
-  padding-bottom: var(--space-3);
+  margin: 0;
+  min-height: 2.9em;            /* two lines, so the notes share a baseline */
+  font-size: var(--body-s);
+  line-height: 1.45;
+  color: rgba(252, 250, 248, .82);
   transition: color var(--motion-base) var(--ease-base);
 }
-.kpi__label::after {
+
+.kpi__note {
+  margin: var(--space-2) 0 0;
+  padding-top: var(--space-2);
+  color: var(--stone);
+  opacity: .8;
+}
+
+/* Hover raises an amber rule beneath the cell and lifts its label. The
+   affordance is informational emphasis only, so the cursor does not change. */
+.kpi__cell::after {
   content: '';
   position: absolute;
-  left: 0; bottom: 0;
-  width: 100%; height: 1px;
+  left: var(--space-5); right: var(--space-5); bottom: 0;
+  height: 1px;
   background: var(--amber-600);
   transform: scaleX(0);
   transform-origin: left center;
   transition: transform var(--motion-base) var(--ease-base);
 }
-/* Informational emphasis only — cells are not clickable, so no cursor change */
 @media (hover: hover) and (pointer: fine) {
+  .kpi__cell:hover { background: rgba(255, 255, 255, .022); }
   .kpi__cell:hover .kpi__label { color: var(--canvas); }
-  .kpi__cell:hover .kpi__label::after { transform: scaleX(1); }
+  .kpi__cell:hover::after { transform: scaleX(1); }
+  .kpi__cell { transition: background var(--motion-base) var(--ease-base); }
 }
-
-.kpi__note { margin-top: var(--space-7); color: var(--stone); max-width: 62ch; }
 
 /* --- H1–H3 responsive ----------------------------------------------------- */
 
@@ -353,9 +426,12 @@ html:not(.motion-on) .logos__track { animation: none; }
   .hero__bloom { width: 80vw; height: 80vw; }
 
   .logos { --marquee-duration: 32s; }
-  .kpi__row { grid-template-columns: repeat(3, 1fr); }
-  .kpi__cell:nth-child(4) { border-left: 0; padding-left: 0; }
-  .kpi__cell:nth-child(n+4) { border-top: 1px solid rgba(255, 255, 255, .12); margin-top: var(--space-6); }
+  .kpi__head { grid-template-columns: 1fr; align-items: start; }
+  .kpi__verify { max-width: 62ch; }
+
+  .kpi__row { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+  .kpi__cell:nth-child(4) { border-left: 0; }
+  .kpi__cell:nth-child(n+4) { border-top: 1px solid rgba(255, 255, 255, .07); padding-top: var(--space-5); }
 }
 
 @media (max-width: 767px) {
@@ -378,16 +454,24 @@ html:not(.motion-on) .logos__track { animation: none; }
     margin-inline: calc(var(--page-margin) * -1);
   }
   .logos__filters::-webkit-scrollbar { display: none; }
-  .logos__item { font-size: 17px; line-height: 22px; }
+  .logos__item { font-size: 16px; line-height: 22px; }
   .logos { --marquee-duration: 24s; }   /* perceived speed stays constant */
   .logos__viewport::before, .logos__viewport::after { width: 48px; }
   html:not(.motion-on) .logos__track { grid-template-columns: repeat(3, 1fr); }
 
   /* 2×2 grid with the fifth metric full width beneath */
-  .kpi__row { grid-template-columns: repeat(2, 1fr); }
-  .kpi__cell { border-left: 0; padding: var(--space-5) 0 0; border-top: 1px solid rgba(255, 255, 255, .12); margin-top: 0; }
-  .kpi__cell:nth-child(2n) { padding-left: var(--space-4); border-left: 1px solid rgba(255, 255, 255, .12); }
-  .kpi__cell:last-child { grid-column: 1 / -1; border-left: 0; padding-left: 0; }
+  .kpi__slab { padding: var(--space-5) 0 var(--space-3); }
+  .kpi__row { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .kpi__cell {
+    border-left: 0;
+    padding: var(--space-4);
+    border-top: 1px solid rgba(255, 255, 255, .07);
+  }
+  .kpi__cell:nth-child(-n+2) { border-top: 0; }
+  .kpi__cell:nth-child(2n) { border-left: 1px solid rgba(255, 255, 255, .07); }
+  .kpi__cell:last-child { grid-column: 1 / -1; border-left: 0; }
+  .kpi__cell::after { left: var(--space-4); right: var(--space-4); }
+  .kpi__note { display: none; }
 }
 
 /* --------------------------------------------------------------------------
@@ -508,9 +592,11 @@ html:not(.motion-on) .logos__track { animation: none; }
 .solutions__stage {
   grid-column: 6 / span 7;
   position: relative;
-  aspect-ratio: 4 / 3;
-  max-height: 46vh;
-  margin-left: auto;
+  /* Sized explicitly: an aspect-ratio box whose children are all absolutely
+     positioned has no content to size from, so it must not be allowed to
+     shrink-to-fit. */
+  width: 100%;
+  height: min(46vh, 420px);
 }
 .solutions__panel {
   position: absolute;
@@ -887,32 +973,23 @@ html:not(.motion-on) .approach__emphasis { color: var(--amber-800); }
    H8 — Comparison
    -------------------------------------------------------------------------- */
 
-.comparison__table { position: relative; margin-top: calc(var(--space-7) * var(--section-pad-scale)); }
+.comparison__table { margin-top: calc(var(--space-7) * var(--section-pad-scale)); }
 
-.comparison__head,
-.comparison__row {
+/* One grid holds the header, every row and the raised panel, so the panel can
+   never drift out of alignment with the cells it sits behind. */
+.comparison__grid {
   display: grid;
-  grid-template-columns: 160px 1fr 1fr;
-  gap: var(--gutter);
-  align-items: start;
+  grid-template-columns: 168px minmax(0, 1fr) minmax(0, 1fr);
+  align-items: stretch;
 }
 
-.comparison__head { padding: 0 var(--space-5) var(--space-4); }
-.comparison__col-title {
-  font-family: var(--font-display);
-  font-size: var(--body);
-  font-weight: 600;
-  color: var(--stone);
-}
-.comparison__col-title--us { color: var(--ink); }
+/* Each row is display: contents — its three cells become grid items while the
+   row itself remains a single hover target. */
+.comparison__row { display: contents; }
 
-/* The favourable column is a raised White panel; the other side is flat and
-   borderless on the band background. */
 .comparison__panel {
-  position: absolute;
-  left: calc(160px + var(--gutter) - var(--space-5));
-  right: calc(50% - var(--space-2));
-  top: 0; bottom: 0;
+  position: relative;
+  grid-column: 2;
   background: var(--white);
   border-radius: var(--radius-card);
   box-shadow: var(--elev-1);
@@ -920,7 +997,6 @@ html:not(.motion-on) .approach__emphasis { color: var(--amber-800); }
   opacity: 0;
   transition: transform var(--motion-reveal) var(--ease-reveal),
               opacity var(--motion-reveal) var(--ease-reveal);
-  pointer-events: none;
 }
 .comparison__table.is-revealed .comparison__panel { transform: none; opacity: 1; }
 html:not(.motion-on) .comparison__panel { transform: none; opacity: 1; }
@@ -933,68 +1009,75 @@ html:not(.motion-on) .comparison__panel { transform: none; opacity: 1; }
   border-radius: var(--radius-card) var(--radius-card) 0 0;
 }
 
-.comparison__rows { list-style: none; margin: 0; padding: 0; position: relative; }
+.comparison__corner { grid-area: 1 / 1; }
+.comparison__col-title--us { grid-area: 1 / 2; }
+.comparison__col-title--them { grid-area: 1 / 3; }
 
-.comparison__row {
+.comparison__corner,
+.comparison__col-title {
+  padding: 0 var(--space-5) var(--space-4);
+  align-self: end;
+  font-family: var(--font-display);
+  font-size: var(--body);
+  font-weight: 600;
+  color: var(--stone);
+}
+.comparison__col-title--us { color: var(--ink); position: relative; z-index: 1; }
+
+.comparison__label { grid-column: 1; grid-row: var(--row); }
+.comparison__cell--us { grid-column: 2; grid-row: var(--row); }
+.comparison__cell--them { grid-column: 3; grid-row: var(--row); }
+
+.comparison__label,
+.comparison__cell {
   position: relative;
+  z-index: 1;
   padding: var(--space-4) var(--space-5);
+  border-top: 1px solid var(--line);
+}
+.comparison__row:first-of-type .comparison__label,
+.comparison__row:first-of-type .comparison__cell { border-top: 0; }
+
+.comparison__label {
+  font-size: var(--body-s);
+  font-weight: 600;
+  color: var(--ink);
+  border-top-color: transparent;
+}
+
+.comparison__cell { display: flex; gap: var(--space-3); color: var(--graphite); }
+.comparison__cell--us { border-top-color: var(--line); }
+.comparison__cell--them {
+  color: var(--stone);
+  border-top-color: var(--line);
+  transition: color var(--motion-base) var(--ease-base);
+}
+
+.comparison__mark { flex: none; margin-top: 5px; color: var(--stone); }
+.comparison__mark--us { color: var(--amber-600); }
+
+/* Rows rise in sequence, each preceded by its divider. */
+.motion-on .comparison__label,
+.motion-on .comparison__cell {
   opacity: 0;
   transform: translateY(24px);
 }
-.comparison__table.is-revealed .comparison__row {
+.motion-on .comparison__table.is-revealed .comparison__label,
+.motion-on .comparison__table.is-revealed .comparison__cell {
   opacity: 1;
   transform: none;
   transition: opacity var(--motion-reveal) var(--ease-reveal),
               transform var(--motion-reveal) var(--ease-reveal);
   transition-delay: var(--reveal-delay, 0ms);
 }
-html:not(.motion-on) .comparison__row { opacity: 1; transform: none; }
-
-.comparison__divider {
-  position: absolute;
-  left: var(--space-5); right: var(--space-5); top: 0;
-  height: 1px;
-  background: var(--line);
-  transform: scaleX(0);
-  transform-origin: left center;
-}
-.comparison__table.is-revealed .comparison__divider {
-  transform: scaleX(1);
-  transition: transform var(--motion-reveal) var(--ease-reveal);
-  transition-delay: var(--reveal-delay, 0ms);
-}
-html:not(.motion-on) .comparison__divider { transform: scaleX(1); }
-.comparison__row:first-child .comparison__divider { display: none; }
-
-.comparison__label {
-  font-size: var(--body-s);
-  font-weight: 600;
-  color: var(--ink);
-}
-.comparison__cell { display: flex; gap: var(--space-3); color: var(--graphite); }
-.comparison__cell--them { color: var(--stone); transition: color var(--motion-base) var(--ease-base); }
-
-.comparison__mark { flex: none; margin-top: 5px; color: var(--stone); }
-.comparison__mark--us { color: var(--amber-600); }
 
 /* Row hover raises the entire pair — the contrast becomes active without
    adding a single new element. */
-.comparison__row::before {
-  content: '';
-  position: absolute;
-  left: calc(160px + var(--gutter) - var(--space-5));
-  right: calc(50% - var(--space-2));
-  top: 1px; bottom: 0;
-  background: var(--amber-wash);
-  opacity: 0;
-  transition: opacity var(--motion-base) var(--ease-base);
-  pointer-events: none;
-}
 @media (hover: hover) and (pointer: fine) {
-  .comparison__row:hover::before { opacity: .4; }
+  .comparison__row:hover .comparison__cell--us { background: rgba(253, 240, 228, .55); }
   .comparison__row:hover .comparison__cell--them { color: var(--graphite); }
+  .comparison__cell--us { transition: background var(--motion-base) var(--ease-base); }
 }
-.comparison__row > * { position: relative; }
 
 .comparison__cta { margin-top: var(--space-7); }
 
@@ -1149,9 +1232,33 @@ html:not(.motion-on) .comparison__divider { transform: scaleX(1); }
   .cases--pinned { height: 180vh; }
   .case-card { width: 400px; }
 
-  .comparison__head, .comparison__row { grid-template-columns: 1fr 1fr; }
-  .comparison__label { grid-column: 1 / -1; margin-bottom: var(--space-2); }
-  .comparison__panel, .comparison__row::before { left: calc(-1 * var(--space-5)); right: calc(50% - var(--space-2)); }
+  /* Row labels move above each pair. The raised panel gives way to a tint on
+     the favourable cell, so the asymmetry survives without the overlay. */
+  .comparison__grid { display: block; }
+  .comparison__panel, .comparison__corner, .comparison__col-title { display: none; }
+  .comparison__row {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+    border-top: 1px solid var(--line);
+    padding-top: var(--space-4);
+    margin-top: var(--space-4);
+  }
+  .comparison__row:first-of-type { border-top: 0; margin-top: 0; }
+  .comparison__label {
+    grid-column: 1 / -1;
+    grid-row: auto;
+    padding: 0 0 var(--space-3);
+    border-top: 0;
+  }
+  .comparison__cell { grid-row: auto; border-top: 0; padding: var(--space-4); }
+  .comparison__cell--us {
+    grid-column: 1;
+    background: var(--white);
+    border-top: 2px solid var(--amber-600);
+    border-radius: 0 0 var(--radius-card) var(--radius-card);
+    box-shadow: var(--elev-1);
+  }
+  .comparison__cell--them { grid-column: 2; }
 
   .about__grid { grid-template-columns: 1fr; }
   .about__media, .about__text { grid-column: 1 / -1; }
@@ -1175,26 +1282,23 @@ html:not(.motion-on) .comparison__divider { transform: scaleX(1); }
 
   /* The table recomposes into five stacked contrast cards — a vertical
      contrast rather than a horizontal one. A side-scrolling table is rejected. */
-  .comparison__head { display: none; }
-  .comparison__panel { display: none; }
   .comparison__row {
-    grid-template-columns: 1fr;
-    gap: 0;
+    display: block;
+    margin: 0 0 var(--space-4);
     padding: 0;
-    margin-bottom: var(--space-4);
+    border: 1px solid var(--line);
     border-radius: var(--radius-card);
     overflow: hidden;
-    border: 1px solid var(--line);
-  }
-  .comparison__row::before { display: none; }
-  .comparison__divider { display: none; }
-  .comparison__label {
-    padding: var(--space-3) var(--space-4);
     background: var(--white);
+  }
+  .comparison__row:first-of-type { border: 1px solid var(--line); }
+  .comparison__label {
+    display: block;
+    padding: var(--space-3) var(--space-4);
     border-bottom: 1px solid var(--line);
   }
-  .comparison__cell { padding: var(--space-4); }
-  .comparison__cell--us { background: var(--amber-wash); }
+  .comparison__cell { padding: var(--space-4); border-top: 0; border-radius: 0; box-shadow: none; }
+  .comparison__cell--us { background: var(--amber-wash); border-top: 0; }
   .comparison__cell--them { background: var(--canvas); }
 
   .cta__lead { margin-bottom: var(--space-6); }

@@ -1,3 +1,4 @@
+import { Fragment } from 'react';
 import { Link } from 'react-router-dom';
 import { LineDraw, Reveal, useReveal } from '../../motion';
 import { SectionHeader } from '../../components/ui/SectionHeader';
@@ -37,12 +38,21 @@ const ROWS = [
  * The asymmetry does the work: elevation, a white surface and an amber rule on
  * one side; flat and muted on the other. No red crosses, no green ticks and no
  * scoring — a checkmark and a dash are the only iconography.
+ *
+ * The raised panel is a real grid item spanning the "us" column rather than an
+ * absolutely positioned overlay, so it can never drift out of alignment with
+ * the cells it sits behind. Each row is `display: contents`, which keeps one
+ * hover target per row while letting its three cells participate in the grid.
  */
 export function Comparison() {
   const { ref, revealed } = useReveal<HTMLDivElement>();
 
   return (
-    <section className="section comparison bg-canvas-deep" aria-labelledby="comparison-title" data-bg="canvas-deep">
+    <section
+      className="section comparison bg-canvas-deep"
+      aria-labelledby="comparison-title"
+      data-bg="canvas-deep"
+    >
       <div className="container">
         <SectionHeader
           eyebrow="The difference"
@@ -51,44 +61,60 @@ export function Comparison() {
           id="comparison-title"
         />
 
-        <div className={`comparison__table${revealed ? ' is-revealed' : ''}`} ref={ref}>
-          <div className="comparison__head" aria-hidden="true">
-            <span />
-            <span className="comparison__col-title comparison__col-title--us">Working with us</span>
-            <span className="comparison__col-title">The generic agency model</span>
-          </div>
+        <div
+          className={`comparison__table${revealed ? ' is-revealed' : ''}`}
+          ref={ref}
+        >
+          <div className="comparison__grid">
+            {/* The raised panel — a grid item, not an overlay. Its row span is
+                explicit: `1 / -1` would collapse, because with no explicit rows
+                the -1 line resolves to the start of the grid. */}
+            <div
+              className="comparison__panel"
+              style={{ gridRow: `1 / span ${ROWS.length + 1}` }}
+              aria-hidden="true"
+            >
+              <LineDraw className="comparison__panel-rule" delay={400} />
+            </div>
 
-          {/* The raised panel lifts off the page as the section arrives. */}
-          <div className="comparison__panel" aria-hidden="true">
-            <LineDraw className="comparison__panel-rule" delay={400} />
-          </div>
+            <span className="comparison__corner" aria-hidden="true" />
+            <span className="comparison__col-title comparison__col-title--us">
+              Working with us
+            </span>
+            <span className="comparison__col-title comparison__col-title--them">
+              The generic agency model
+            </span>
 
-          <ul className="comparison__rows">
             {ROWS.map((row, i) => (
-              <li
-                className="comparison__row"
-                key={row.label}
-                style={{ ['--reveal-delay' as string]: `${Math.min(i * 90, 400)}ms` }}
-              >
-                <span className="comparison__divider" aria-hidden="true" />
-                <span className="comparison__label">{row.label}</span>
+              <Fragment key={row.label}>
+                {/* Every cell is placed explicitly, so nothing can be pushed
+                    into a neighbouring column by the panel's placement. */}
+                <div
+                  className="comparison__row"
+                  style={{
+                    ['--reveal-delay' as string]: `${Math.min(i * 90, 400)}ms`,
+                    ['--row' as string]: String(i + 2),
+                  }}
+                >
+                  <span className="comparison__label">{row.label}</span>
 
-                <span className="comparison__cell comparison__cell--us">
-                  <span className="comparison__mark comparison__mark--us" aria-hidden="true">
-                    <Check />
+                  <span className="comparison__cell comparison__cell--us">
+                    <span className="comparison__mark comparison__mark--us" aria-hidden="true">
+                      <Check />
+                    </span>
+                    <span className="body-s">{row.us}</span>
                   </span>
-                  <span className="body-s">{row.us}</span>
-                </span>
 
-                <span className="comparison__cell comparison__cell--them">
-                  <span className="comparison__mark" aria-hidden="true">
-                    <Dash />
+                  <span className="comparison__cell comparison__cell--them">
+                    <span className="comparison__mark" aria-hidden="true">
+                      <Dash />
+                    </span>
+                    <span className="body-s">{row.them}</span>
                   </span>
-                  <span className="body-s">{row.them}</span>
-                </span>
-              </li>
+                </div>
+              </Fragment>
             ))}
-          </ul>
+          </div>
         </div>
 
         <Reveal className="comparison__cta">
