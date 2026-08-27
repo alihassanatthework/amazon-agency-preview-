@@ -1,65 +1,75 @@
 /* ==========================================================================
-   PHASE 01 — DESIGN TOKENS
-   Colour, type, spacing, radius, shadow and motion defined once. No raw hex
-   values or ad-hoc durations appear in component code beyond this file.
+   BLAZON — DESIGN TOKENS
+   Sections 04–06 of the Master Implementation Blueprint, in one file.
+   Nothing in component code hardcodes a colour, a duration or an easing.
+
+   Two facts drive the whole system: the logo is black, and its accent is a
+   lime-to-sage green gradient. The green measures 7.80:1 on near-black and
+   2.33:1 on off-white, which is why the foundation is dark — it is the only
+   footing on which the brand's own accent can carry text at all.
    ========================================================================== */
 
 :root {
-  /* --- 1.1 Core palette ------------------------------------------------ */
-  --white:        #FFFFFF;  /* cards, inputs, elevated surfaces            */
-  --canvas:       #FCFAF8;  /* default page background                     */
-  --canvas-deep:  #F6F1EC;  /* alternating section bands                   */
-  --amber-wash:   #FDF0E4;  /* accent tint blocks, badges, active pills    */
-  --line:         #E6DFD8;  /* 1px hairlines, dividers, card borders       */
-  --stone:        #8C867F;  /* captions, meta labels, placeholders         */
-  --graphite:     #4F4B47;  /* body copy, secondary text                   */
-  --amber-300:    #F5A65B;  /* gradient upper stop, dark-field accents     */
-  --amber-500:    #ED7C24;  /* GRAPHICS ONLY — borders, icons, chart bars  */
-  --amber-600:    #D2621A;  /* ACTIONS ONLY — primary CTA fill             */
-  --amber-700:    #B44E14;  /* CTA hover / pressed                         */
-  --amber-800:    #8F3D10;  /* TEXT ONLY — accent text on white at body px */
-  --ink:          #1C1A18;  /* headlines, max contrast                     */
-  --ink-deep:     #0F0E0D;  /* footer base, dark section base              */
-  --error:        #C0492F;  /* desaturated red — form errors               */
+  /* --- 4.2 Foundation — dark surfaces --------------------------------- */
+  --void:        #080A07;   /* deepest base — footer, overlays              */
+  --obsidian:    #0B0D0A;   /* primary dark surface, default page bg        */
+  --carbon:      #131711;   /* alternating dark band                        */
+  --slate-moss:  #1C2118;   /* dark cards, inputs                           */
+  --char-line:   #2A3124;   /* hairlines on dark                            */
+  --ash:         #8E9188;   /* captions on dark            6.09:1           */
+  --mist:        #C7C9C1;   /* body copy on dark          11.66:1           */
+  --bone:        #F7F7F4;   /* headlines on dark          18.18:1           */
 
-  /* The single rule that keeps this palette premium:
-     600 fills actions · 800 writes text · 500 draws graphics.
-     Headlines are never orange. Body copy is never orange. */
+  /* --- 4.3 Accent — the logo green ladder ------------------------------ */
+  --lime-100:    #D4E3B4;   /* tint on dark, subtle fills                   */
+  --lime-200:    #ABC482;   /* links and eyebrows on dark 10.17:1           */
+  --lime-300:    #9BBE5E;   /* accent hover                9.22:1           */
+  --lime-500:    #8AB04B;   /* LOGO GREEN — primary accent and CTA fill     */
+  --green-600:   #739742;   /* CTA pressed on dark                          */
+  --green-700:   #617C36;   /* brand primary — the only CTA fill on light   */
+  --green-800:   #4B671E;   /* accent text on light        6.01:1           */
+  --green-900:   #2F4709;   /* deep accent on light        9.66:1           */
 
-  /* --- Illustration tints ----------------------------------------------
-     The built graphics (the solutions stage) need mid steps that sit between
-     the palette's stops. Declared here so no raw hex value appears in
-     component code; graphics only, never text or interface surfaces. */
-  --art-char-1:  #2A2622;   /* deep warm charcoal, between Ink and Graphite */
-  --art-amber-1: #F5C79A;   /* between Amber Wash and Amber 300            */
+  /* --- 4.4 Supporting — sage, teal, olive, gold ------------------------ */
+  --sage:        #6F9A6B;   /* flame gradient tip, chart series 2  6.05:1   */
+  --teal-400:    #5C8A7E;   /* brand secondary 2, chart series 3            */
+  --teal-700:    #26574B;   /* cool depth panels           7.68:1 on bone   */
+  --teal-800:    #15493C;   /* deep cool accent band                        */
+  --gold-200:    #D4CE8D;   /* premium detail on dark     12.09:1           */
+  --gold-400:    #ADA65B;   /* rules and ornament — never small text        */
+  --olive-600:   #86803A;   /* brand secondary 1                            */
+  --olive-900:   #4D470A;   /* deep olive, rare                             */
 
-  /* --- 1.4 Radii -------------------------------------------------------- */
-  --radius-input: 4px;   /* inputs and small controls                      */
-  --radius-card:  8px;   /* cards and media — nothing rectangular above 8  */
-  --radius-pill:  999px; /* pills only                                     */
+  /* --- 4.5 Light surfaces and neutrals -------------------------------- */
+  --paper:       #FFFFFF;   /* cards on light sections                      */
+  --linen:       #EDEEE7;   /* alternating light band                       */
+  --line-light:  #E6E7E2;   /* hairlines on light                           */
+  --slate:       #5A5D55;   /* secondary text on light     6.25:1           */
+  --graphite:    #33362F;   /* body copy on light         11.45:1           */
+  /* --bone and --obsidian above double as light-surface tokens.           */
 
-  /* --- 1.4 Elevation — warm-tinted, never pure black. Two levels total. - */
-  --elev-1: 0 1px 2px rgba(28, 26, 24, .04), 0 8px 24px rgba(28, 26, 24, .05);
-  --elev-2: 0 2px 4px rgba(28, 26, 24, .05), 0 16px 40px rgba(28, 26, 24, .08);
-  --accent-glow: 0 8px 24px rgba(210, 98, 26, .22); /* primary CTA hover only */
+  /* --- 4.7 Semantic states — form and system feedback only ------------ */
+  --success:     #6D9F4A;   /* deliberately inside the green family         */
+  --error:       #C4573A;   /* the only warm colour in the system           */
+  --warning:     #C9A227;
+  --info:        #5C8A7E;
 
-  /* --- 1.4 Gradient bloom — permitted exactly twice per page ------------ */
-  --bloom: radial-gradient(60% 60% at 70% 30%,
-             var(--amber-300) 0%, var(--amber-wash) 45%, transparent 75%);
-  /* The same bloom anchored to its own centre, for the bottom-centred one. */
-  --bloom-centered: radial-gradient(58% 58% at 50% 50%,
-             var(--amber-300) 0%, var(--amber-wash) 46%, transparent 76%);
-  --bloom-opacity: .55;
+  /* --- 4.7 The ember gradient — the one signature effect ---------------
+     Derived from the flame. Permitted twice per page, maximum.           */
+  --ember: radial-gradient(65% 65% at 50% 100%,
+             rgba(138, 176, 75, .28),
+             rgba(111, 154, 107, .10) 45%,
+             transparent 72%);
 
-  /* --- 2.1 Type families ----------------------------------------------- */
-  --font-display: 'Plus Jakarta Sans', 'Segoe UI', system-ui, sans-serif;
-  --font-ui:      'Inter', system-ui, -apple-system, 'Segoe UI', sans-serif;
+  /* --- 5.1 Typefaces --------------------------------------------------- */
+  --font-display: 'General Sans', 'Inter Display', 'Inter', system-ui, sans-serif;
+  --font-body:    'Inter', system-ui, -apple-system, 'Segoe UI', sans-serif;
 
-  /* --- 2.1 Type scale — desktop values; media queries below reassign ---- */
-  --display-xl: 76px;  --display-xl-lh: 1.02;  --display-xl-tr: -.025em;
+  /* --- 5.2 Type scale — desktop; reassigned per breakpoint below ------- */
+  --display-xl: 80px;  --display-xl-lh: 1.02;  --display-xl-tr: -.025em;
   --display-l:  56px;  --display-l-lh:  1.08;  --display-l-tr:  -.02em;
   --display-m:  40px;  --display-m-lh:  1.15;  --display-m-tr:  -.015em;
-  --numeral:    72px;  --numeral-lh:    1;     --numeral-tr:    -.03em;
+  --numeral:    76px;  --numeral-lh:    1;     --numeral-tr:    -.03em;
   --heading-s:  22px;  --heading-s-lh:  1.3;   --heading-s-tr:  -.005em;
   --body-l:     18px;
   --body:       16px;
@@ -68,57 +78,115 @@
   --caption:    13px;
   --button:     15px;
 
-  /* --- 2.2 Spacing scale ------------------------------------------------ */
+  /* --- 5.3 Spacing scale ---------------------------------------------- */
   --space-1: 4px;    --space-2: 8px;    --space-3: 16px;   --space-4: 24px;
   --space-5: 32px;   --space-6: 48px;   --space-7: 72px;   --space-8: 120px;
-  --space-9: 160px;
+  --space-9: 168px;
+  /* Section padding is 120px desktop, x0.72 tablet, x0.55 mobile. Hero and
+     final CTA use 168. Every other token is fixed across breakpoints. */
+  --section-scale: 1;
 
-  /* --- 2.3 Grid and alignment ------------------------------------------ */
-  --container: 1280px;
+  /* --- 5.3 Grid --------------------------------------------------------- */
+  --container:       1320px;
   --container-bleed: 1440px;
-  --gutter: 32px;
+  --gutter:      32px;
   --page-margin: 80px;
   --measure-lead: 62ch;
   --measure-body: 68ch;
 
-  /* --- 3.1 Motion tokens ------------------------------------------------ */
-  --motion-instant: 120ms;  --ease-instant: cubic-bezier(.4, 0, .2, 1);
-  --motion-quick:   240ms;  --ease-quick:   cubic-bezier(.4, 0, .2, 1);
-  --motion-base:    420ms;  --ease-base:    cubic-bezier(.22, 1, .36, 1);
-  --motion-reveal:  760ms;  --ease-reveal:  cubic-bezier(.16, 1, .3, 1);
-  --motion-mask:   1000ms;  --ease-mask:    cubic-bezier(.65, 0, .35, 1);
-  --motion-count:  1800ms;  /* easeOutExpo, applied in JS                  */
-  --stagger:         80ms;
+  /* --- 5.3 Radius ------------------------------------------------------- */
+  --radius-control: 4px;    /* controls and inputs                          */
+  --radius-card:    8px;    /* cards and media — nothing higher             */
+  --radius-pill:  999px;
 
-  /* Section padding derives from this scale so rhythm is preserved without
-     letting mobile become cramped or desktop-tall. Media queries reassign it. */
-  --section-pad-scale: 1;
+  /* --- 5.3 Elevation ---------------------------------------------------
+     On dark, shadows are nearly invisible, so elevation is expressed
+     through surface lightness plus a 1px hairline. On light it is shadow. */
+  --e1: 0 1px 2px rgba(11, 13, 10, .04), 0 8px 24px rgba(11, 13, 10, .05);
+  --e2: 0 2px 4px rgba(11, 13, 10, .05), 0 16px 40px rgba(11, 13, 10, .08);
+  --accent-glow: 0 8px 28px rgba(138, 176, 75, .30);   /* primary CTA hover only */
 
-  /* --- Header ----------------------------------------------------------- */
+  /* --- 6.1 Timing tokens ----------------------------------------------- */
+  --t-instant: 120ms;   --e-instant: cubic-bezier(.4, 0, .2, 1);
+  --t-quick:   240ms;   --e-quick:   cubic-bezier(.4, 0, .2, 1);
+  --t-base:    420ms;   --e-base:    cubic-bezier(.22, 1, .36, 1);
+  --t-reveal:  780ms;   --e-reveal:  cubic-bezier(.16, 1, .3, 1);
+  --t-mask:   1100ms;   --e-mask:    cubic-bezier(.65, 0, .35, 1);
+  --t-count:  2000ms;                /* easeOutExpo, applied in JS          */
+  --t-page-in:  560ms;  --t-page-out: 380ms;
+  --stagger:    80ms;
+
+  /* --- Shell ------------------------------------------------------------ */
   --header-h: 72px;
-  --blur: 12px;
+  --blur: 14px;
+
+  /* --- Surface contract -------------------------------------------------
+     `Section` sets these three per surface. Every colour decision inside a
+     section reads them, which is how one component set serves both the dark
+     and light surfaces without duplicated variants. */
+  --surface:     var(--obsidian);
+  --on-surface:  var(--bone);      /* headlines                            */
+  --on-surface-2:var(--mist);      /* body copy                            */
+  --on-surface-3:var(--ash);       /* captions                             */
+  --hairline:    var(--char-line);
+  --accent:      var(--lime-500);  /* icons, rules, numerals               */
+  --accent-text: var(--lime-200);  /* eyebrows, links                      */
+  --card:        var(--slate-moss);
 }
 
-/* --- 2.1 / 10.1 Tablet — 768–1279px ------------------------------------- */
+/* --- Surfaces --------------------------------------------------------- */
+
+[data-surface='obsidian'] { --surface: var(--obsidian); }
+[data-surface='carbon']   { --surface: var(--carbon); }
+[data-surface='void']     { --surface: var(--void); }
+
+[data-surface='obsidian'],
+[data-surface='carbon'],
+[data-surface='void'] {
+  --on-surface:   var(--bone);
+  --on-surface-2: var(--mist);
+  --on-surface-3: var(--ash);
+  --hairline:     var(--char-line);
+  --accent:       var(--lime-500);
+  --accent-text:  var(--lime-200);
+  --card:         var(--slate-moss);
+}
+
+[data-surface='bone']  { --surface: var(--bone); }
+[data-surface='linen'] { --surface: var(--linen); }
+
+[data-surface='bone'],
+[data-surface='linen'] {
+  --on-surface:   var(--obsidian);
+  --on-surface-2: var(--graphite);
+  --on-surface-3: var(--slate);
+  --hairline:     var(--line-light);
+  /* On light, the logo green fails at 2.33:1 — icons and fills step down to
+     green-700 and accent text to green-800. */
+  --accent:       var(--green-700);
+  --accent-text:  var(--green-800);
+  --card:         var(--paper);
+}
+
+/* --- 5.2 Tablet 768–1279 ---------------------------------------------- */
 @media (max-width: 1279px) {
   :root {
-    --display-xl: 58px;  --display-l: 44px;  --display-m: 34px;
-    --numeral:    56px;  --heading-s: 20px;  --body-l:    17px;
+    --display-xl: 60px;  --display-l: 44px;  --display-m: 34px;
+    --numeral:    58px;  --heading-s: 20px;  --body-l:    17px;
     --gutter: 24px;      --page-margin: 48px;
-    --section-pad-scale: .72;
+    --section-scale: .72;
   }
 }
 
-/* --- 2.1 / 10.1 Mobile — 360–767px -------------------------------------- */
+/* --- 5.2 Mobile 360–767 ------------------------------------------------ */
 @media (max-width: 767px) {
   :root {
     --display-xl: 40px;  --display-l: 32px;  --display-m: 27px;
     --numeral:    44px;  --heading-s: 19px;  --body-l:    16px;
     --body:       15px;  --eyebrow:   11px;
     --gutter: 16px;      --page-margin: 20px;
-    --section-pad-scale: .55;
+    --section-scale: .55;
     --header-h: 64px;
-    --blur: 6px;                 /* 10.3 — blur reduces on mobile          */
-    --bloom-opacity: .4;         /* 10.3 — blooms halve and drop opacity   */
+    --blur: 7px;         /* 19.2 — blur halves on mobile                   */
   }
 }
