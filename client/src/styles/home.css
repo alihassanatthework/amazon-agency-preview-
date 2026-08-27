@@ -935,8 +935,16 @@ html:not(.motion-on) .approach__emphasis { color: var(--amber-800); }
   .solutions--pinned { height: 240vh; }         /* pin shortened */
   .solutions__grid { grid-template-columns: 1fr; }
   .solutions__index-col, .solutions__stage { grid-column: 1 / -1; }
-  .solutions__stage { max-height: 34vh; aspect-ratio: 16 / 9; margin-top: var(--space-5); }
-  .solutions__detail { min-height: 130px; }
+  /* The stage sits beneath the text at this breakpoint, so the whole stack
+     has to fit one viewport — it is capped rather than proportional. */
+  .solutions__stage {
+    height: 26vh;
+    max-height: 300px;
+    aspect-ratio: auto;
+    margin-top: var(--space-4);
+  }
+  .solutions__detail { min-height: 118px; }
+  .solutions__list { margin-bottom: var(--space-4); }
 }
 
 @media (max-width: 767px) {
@@ -1057,13 +1065,13 @@ html:not(.motion-on) .approach__emphasis { color: var(--amber-800); }
 .cases__viewport {
   position: sticky;
   top: 0;
-  min-height: 100vh;
+  height: 100vh;
   display: flex;
   flex-direction: column;
   justify-content: center;
-  gap: var(--space-6);
+  gap: var(--space-5);
   overflow: hidden;
-  padding-block: var(--space-6);
+  padding-block: var(--space-5);
 }
 
 .cases__track-wrap { overflow: hidden; }
@@ -1091,18 +1099,26 @@ html:not(.motion-on) .approach__emphasis { color: var(--amber-800); }
   transform: scaleX(0);
 }
 
+/* The card is capped against the viewport so the pinned track always fits
+   under the section header, and the media takes whatever height is left. */
 .case-card {
   flex: none;
   width: 480px;
-  min-height: 560px;
+  height: min(560px, calc(100vh - 232px));
   display: flex;
   flex-direction: column;
   padding: 0;
   overflow: hidden;
   background: var(--white);
 }
-.case-card__media { height: 300px; flex: none; border-radius: 0; }
-.case-card__body { padding: var(--space-5); display: flex; flex-direction: column; gap: var(--space-2); }
+.case-card__media { flex: 1 1 auto; min-height: 130px; border-radius: 0; }
+.case-card__body {
+  flex: none;
+  padding: var(--space-4) var(--space-5) var(--space-5);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+}
 
 .case-card__category {
   margin: 0;
@@ -1113,25 +1129,23 @@ html:not(.motion-on) .approach__emphasis { color: var(--amber-800); }
   color: var(--amber-800);
 }
 .case-card__line { color: var(--graphite); margin: 0; }
-.case-card__line span {
-  display: block;
-  font-size: var(--caption);
-  color: var(--stone);
-}
+/* The problem is stated in the muted tone and the strategy answers it in the
+   body tone, so the pair reads as a turn without needing labels. */
+.case-card__line--problem { color: var(--stone); }
 
 /* The result metric is the largest element in the card — the card sells the
    outcome first and the client second. */
 .case-card__metric {
-  margin: var(--space-3) 0 0;
+  margin: var(--space-2) 0 0;
   font-family: var(--font-display);
-  font-size: 40px;
+  font-size: 36px;
   line-height: 1.1;
   font-weight: 600;
   letter-spacing: -.02em;
   color: var(--amber-800);
   font-variant-numeric: tabular-nums;
 }
-.case-card__link { margin-top: auto; padding-top: var(--space-4); align-self: flex-start; }
+.case-card__link { margin-top: auto; padding-top: var(--space-3); align-self: flex-start; }
 
 .case-card--end {
   display: flex;
@@ -1143,6 +1157,7 @@ html:not(.motion-on) .approach__emphasis { color: var(--amber-800); }
   background: var(--amber-wash);
   border: 0;
 }
+.cases__carousel .case-card, .cases__carousel .case-card--end { height: auto; }
 .case-card--end .display-m { margin: 0; }
 .case-card--end p { color: var(--graphite); }
 

@@ -17,8 +17,8 @@ const CASES: CaseStudy[] = [
   {
     category: 'Beauty',
     brand: 'Lumière',
-    problem: 'Ad spend was buying back customers the brand already owned.',
-    strategy: 'Rebuilt targeting around competitor conquesting and margin-weighted bids.',
+    problem: 'Spend was buying back customers they already owned.',
+    strategy: 'Retargeted on conquesting and margin-weighted bids.',
     metric: { to: 214, suffix: '%', label: 'Net revenue growth, 11 months' },
     image: '/media/case-beauty.jpg',
     alt: 'Serum being dispensed from a dropper bottle in soft daylight',
@@ -26,8 +26,8 @@ const CASES: CaseStudy[] = [
   {
     category: 'Apparel',
     brand: 'NORTHSIDE',
-    problem: 'A 900-ASIN catalogue with no variation architecture and flat conversion.',
-    strategy: 'Consolidated variations, rebuilt A+ and imagery around the top 40 ASINs.',
+    problem: '900 ASINs, no variation architecture, flat conversion.',
+    strategy: 'Consolidated variations and rebuilt the top 40 ASINs.',
     metric: { to: 61, suffix: '%', label: 'Sales per visitor' },
     image: '/media/case-apparel.jpg',
     alt: 'A studio rail of outerwear in neutral tones',
@@ -35,8 +35,8 @@ const CASES: CaseStudy[] = [
   {
     category: 'Food & beverage',
     brand: 'Verdant',
-    problem: 'Growing revenue while contribution margin fell every quarter.',
-    strategy: 'Repriced the range, cut unprofitable ASINs and re-targeted DSP to repeat buyers.',
+    problem: 'Revenue grew while contribution margin fell.',
+    strategy: 'Repriced the range and aimed DSP at repeat buyers.',
     metric: { to: 9.4, decimals: 1, prefix: '$', suffix: 'M', label: 'Exit valuation, 2025' },
     image: '/media/case-food.jpg',
     alt: 'A portafilter of ground coffee and a flat white on a wooden board',
@@ -192,8 +192,11 @@ function CaseCard({ study, animate }: { study: CaseStudy; animate: boolean }) {
       <div className="case-card__body">
         <p className="case-card__category">{study.category}</p>
         <h3 className="heading-s">{study.brand}</h3>
-        <p className="body-s case-card__line"><span>Problem</span> {study.problem}</p>
-        <p className="body-s case-card__line"><span>Strategy</span> {study.strategy}</p>
+        {/* Problem then strategy, in that order — the sequence carries the
+            meaning, so labelling each one costs the card two lines it does not
+            have inside the pinned viewport. */}
+        <p className="body-s case-card__line case-card__line--problem">{study.problem}</p>
+        <p className="body-s case-card__line">{study.strategy}</p>
 
         <p className="case-card__metric">
           {animate ? (
