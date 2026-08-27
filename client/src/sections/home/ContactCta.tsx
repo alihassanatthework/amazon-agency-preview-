@@ -60,7 +60,7 @@ export function ContactCta() {
           as="h2"
           id="cta-title"
           className="display-l cta__title"
-          lines={['Find out what your Amazon', 'account is leaving on the table.']}
+          lines={['Find out what your', 'Amazon account is', 'leaving on the table.']}
         />
 
         <Reveal delay={120}>

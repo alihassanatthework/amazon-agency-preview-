@@ -1345,10 +1345,12 @@ html:not(.motion-on) .comparison__panel { transform: none; opacity: 1; }
 .cta { overflow: hidden; text-align: center; }
 .cta__bloom {
   left: 50%;
-  bottom: -40%;
-  width: 90vw;
-  height: 70vw;
-  max-width: 1100px;
+  bottom: -34%;
+  width: 92vw;
+  height: 64vw;
+  max-width: 1120px;
+  max-height: 760px;
+  background: var(--bloom-centered);
   transform: translateX(-50%);
 }
 .motion-on .cta__bloom { animation: bloomIn 1200ms var(--ease-reveal) both; }

@@ -195,6 +195,11 @@ body.is-locked { overflow: hidden; }
    -------------------------------------------------------------------------- */
 
 .footer { background: var(--ink-deep); color: rgba(252, 250, 248, .72); }
+.footer::before {
+  background:
+    radial-gradient(60% 100% at 18% 0%, rgba(237, 124, 36, .16) 0%, transparent 62%),
+    radial-gradient(46% 80% at 88% 100%, rgba(245, 166, 91, .08) 0%, transparent 66%);
+}
 .footer__inner {
   padding-top: calc(var(--space-8) * var(--section-pad-scale));
   padding-bottom: calc(var(--space-6) * var(--section-pad-scale));
@@ -214,7 +219,13 @@ body.is-locked { overflow: hidden; }
   line-height: 1.7;
 }
 
-.footer__social { display: flex; gap: var(--space-3); margin-bottom: var(--space-4); }
+.footer__social {
+  display: flex;
+  gap: var(--space-3);
+  margin: 0 0 var(--space-4);
+  padding: 0;
+  list-style: none;   /* this is a separate list from the link columns */
+}
 .footer__social a {
   display: grid;
   place-items: center;
@@ -245,7 +256,10 @@ body.is-locked { overflow: hidden; }
   margin: 0 0 var(--space-4);
 }
 .footer__col ul { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: var(--space-3); }
-.footer__col a {
+/* Scoped to the link lists: an unscoped `.footer__col a` also matched the
+   Get-started button and overrode its flex layout, wrapping the arrow icon
+   onto its own line. */
+.footer__col ul a {
   display: inline-block;
   font-size: var(--body-s);
   color: rgba(252, 250, 248, .72);
@@ -254,7 +268,7 @@ body.is-locked { overflow: hidden; }
               transform var(--motion-quick) var(--ease-quick);
 }
 @media (hover: hover) and (pointer: fine) {
-  .footer__col a:hover { color: var(--canvas); transform: translateX(3px); }
+  .footer__col ul a:hover { color: var(--canvas); transform: translateX(3px); }
 }
 
 .footer__start p { font-size: var(--body-s); color: rgba(252, 250, 248, .6); }

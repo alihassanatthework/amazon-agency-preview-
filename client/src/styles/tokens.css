@@ -46,6 +46,9 @@
   /* --- 1.4 Gradient bloom — permitted exactly twice per page ------------ */
   --bloom: radial-gradient(60% 60% at 70% 30%,
              var(--amber-300) 0%, var(--amber-wash) 45%, transparent 75%);
+  /* The same bloom anchored to its own centre, for the bottom-centred one. */
+  --bloom-centered: radial-gradient(58% 58% at 50% 50%,
+             var(--amber-300) 0%, var(--amber-wash) 46%, transparent 76%);
   --bloom-opacity: .55;
 
   /* --- 2.1 Type families ----------------------------------------------- */

@@ -176,7 +176,13 @@
   box-shadow: 0 0 0 1px var(--line), var(--elev-1);
 }
 
-.contact-side__social { list-style: none; display: flex; gap: var(--space-2); margin: var(--space-5) 0 0; padding: 0; }
+.contact-side__social {
+  list-style: none;
+  display: flex;
+  gap: var(--space-2);
+  margin: var(--space-5) 0 0;
+  padding: 0;
+}
 .contact-side__social a {
   display: grid;
   place-items: center;

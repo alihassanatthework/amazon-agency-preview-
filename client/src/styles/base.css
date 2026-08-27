@@ -184,6 +184,7 @@ p:last-child { margin-bottom: 0; }
   font-weight: 600;
   letter-spacing: .02em;
   text-decoration: none;
+  white-space: nowrap;
   cursor: pointer;
   will-change: transform;
   transition:
@@ -582,13 +583,13 @@ p:last-child { margin-bottom: 0; }
    from a warm radial light source, a fine texture and an edge highlight.
    -------------------------------------------------------------------------- */
 
-.bg-ink {
+.bg-ink, .footer {
   position: relative;
   isolation: isolate;
 }
 
 /* Warm light source, offset so the band is lit rather than uniformly filled. */
-.bg-ink::before {
+.bg-ink::before, .footer::before {
   content: '';
   position: absolute;
   inset: 0;
@@ -601,7 +602,7 @@ p:last-child { margin-bottom: 0; }
 
 /* A fine texture stops large dark areas from banding, and an edge highlight
    catches the top of the band where it meets the light section above. */
-.bg-ink::after {
+.bg-ink::after, .footer::after {
   content: '';
   position: absolute;
   inset: 0;
