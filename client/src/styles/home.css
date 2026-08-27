@@ -121,7 +121,13 @@
   font-weight: 600;
 }
 
+/* SVG presentation attributes do not accept var(), so the chart takes its
+   colours from CSS. Amber 500 is the graphics weight — correct for a curve. */
 .hero__chart { width: 100%; height: 150px; }
+.hero__curve { stroke: var(--amber-500); fill: none; }
+.hero__curve-stop { stop-color: var(--amber-500); }
+.hero__curve-stop--from { stop-opacity: .22; }
+.hero__curve-stop--to { stop-opacity: 0; }
 .motion-on .hero__curve {
   stroke-dasharray: 640;
   stroke-dashoffset: 640;

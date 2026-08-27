@@ -48,8 +48,6 @@ export function BackgroundLayer() {
     const layer = ref.current;
     if (!layer) return;
 
-    document.documentElement.classList.add('has-bg-layer');
-
     let ticking = false;
     let sections: HTMLElement[] = [];
     let COLOURS = readPalette();
@@ -60,37 +58,53 @@ export function BackgroundLayer() {
 
     const paint = () => {
       ticking = false;
-      if (!sections.length) return;
 
       const vh = window.innerHeight;
-      // A collapsed or not-yet-measured viewport would degenerate the gradient
-      // into a single hard stop; leave the last good paint in place instead.
-      if (vh <= 0) return;
-      const stops: string[] = [];
-      let previousKey = sections[0].dataset.bg ?? 'canvas';
 
-      stops.push(`${COLOURS[previousKey]} 0px`);
+      // If the layer cannot paint a meaningful gradient — no sections yet, or a
+      // collapsed / not-yet-measured viewport — hand rendering back to the
+      // per-section backgrounds rather than leaving the page unpainted.
+      if (!sections.length || vh <= 0) {
+        document.documentElement.classList.remove('has-bg-layer');
+        return;
+      }
+
+      const stops: string[] = [];
+      // The colour at any point is the colour of the last section whose top
+      // edge is above it. `currentKey` therefore tracks the section covering
+      // the point the walk has reached — starting at the top of the viewport.
+      let currentKey = sections[0].dataset.bg ?? 'canvas';
 
       for (const section of sections) {
         const key = section.dataset.bg ?? 'canvas';
         const top = section.getBoundingClientRect().top;
+        const overlap = overlapFor(currentKey, key);
 
-        // Only boundaries near or inside the viewport affect what is painted.
-        if (top > vh + 200 || top < -200) {
-          previousKey = key;
+        // Fully above the viewport: it simply becomes the running colour.
+        if (top <= -overlap / 2) {
+          currentKey = key;
           continue;
         }
 
-        const overlap = overlapFor(previousKey, key);
-        const start = Math.round(top - overlap / 2);
-        const end = Math.round(top + overlap / 2);
+        // Beyond the viewport: nothing further can affect what is painted, and
+        // crucially it must not advance the running colour — otherwise the
+        // trailing stop would take the last section's colour rather than the
+        // one actually covering the bottom of the screen.
+        if (top >= vh + overlap / 2) break;
 
-        stops.push(`${COLOURS[previousKey]} ${start}px`, `${COLOURS[key]} ${end}px`);
-        previousKey = key;
+        stops.push(
+          `${COLOURS[currentKey]} ${Math.round(top - overlap / 2)}px`,
+          `${COLOURS[key]} ${Math.round(top + overlap / 2)}px`,
+        );
+        currentKey = key;
       }
 
-      stops.push(`${COLOURS[previousKey]} ${vh}px`);
+      // A single-colour viewport still needs two stops to be a valid gradient.
+      if (!stops.length) stops.push(`${COLOURS[currentKey]} 0px`);
+      stops.push(`${COLOURS[currentKey]} ${vh}px`);
       layer.style.backgroundImage = `linear-gradient(to bottom, ${stops.join(', ')})`;
+      // Only now is it safe for the sections to go transparent.
+      document.documentElement.classList.add('has-bg-layer');
     };
 
     const onScroll = () => {
