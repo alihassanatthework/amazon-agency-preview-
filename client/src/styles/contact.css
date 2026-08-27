@@ -342,6 +342,7 @@ html:not(.motion-on) .process__marker { transform: none; }
   gap: var(--gutter);
 }
 .faq__aside { grid-column: 1 / span 4; }
+.faq__header { max-width: none; }
 .faq__aside > * { position: sticky; top: calc(var(--header-h) + var(--space-5)); }
 .faq__prompt { margin-top: var(--space-5); color: var(--graphite); }
 .faq__prompt .link { margin-top: var(--space-2); }

@@ -84,6 +84,19 @@ p:last-child { margin-bottom: 0; }
   transform-origin: left center;
 }
 .eyebrow--center { justify-content: center; }
+.eyebrow--center::after {
+  content: '';
+  width: 32px;
+  height: 1px;
+  flex: none;
+  background: var(--amber-500);
+  transform-origin: right center;
+}
+.motion-on [data-reveal] .eyebrow--center::after { transform: scaleX(0); }
+.motion-on [data-reveal].is-revealed .eyebrow--center::after {
+  transform: scaleX(1);
+  transition: transform var(--motion-reveal) var(--ease-reveal) 120ms;
+}
 .eyebrow--dark { color: var(--amber-300); }
 
 /* --- Layout primitives --------------------------------------------------- */

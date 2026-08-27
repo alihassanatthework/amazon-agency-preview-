@@ -44,8 +44,20 @@ export function SectionHeader({
     .filter(Boolean)
     .join(' ');
 
+  /* The eyebrow is a flex row, so a centred header has to centre it
+     explicitly — text-align alone would leave it hanging to the left. */
   const eyebrowEl = (
-    <p className={onDark ? 'eyebrow eyebrow--dark' : 'eyebrow'}>{eyebrow}</p>
+    <p
+      className={[
+        'eyebrow',
+        onDark ? 'eyebrow--dark' : '',
+        variant === 'center' ? 'eyebrow--center' : '',
+      ]
+        .filter(Boolean)
+        .join(' ')}
+    >
+      {eyebrow}
+    </p>
   );
 
   const leadEl = lead ? <p className="body-l section-header__lead">{lead}</p> : null;

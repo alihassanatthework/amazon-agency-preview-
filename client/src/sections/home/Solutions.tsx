@@ -1,14 +1,15 @@
 import { useEffect, useRef, useState } from 'react';
 import { CountUp, RevealGroup, useMediaQuery, useReducedMotion } from '../../motion';
 import { SectionHeader } from '../../components/ui/SectionHeader';
+import { STAGES, type StageKey } from './SolutionStages';
 
 interface Solution {
   index: string;
   title: string;
   description: string;
   metrics: { to: number; suffix?: string; prefix?: string; label: string }[];
-  /** Panel accent used by the stage illustration. */
-  tone: string;
+  /** Which built interface panel this solution shows. */
+  stage: StageKey;
 }
 
 const SOLUTIONS: Solution[] = [
@@ -21,7 +22,7 @@ const SOLUTIONS: Solution[] = [
       { to: 42, suffix: '%', label: 'Avg. ad revenue lift' },
       { to: 11, suffix: '%', label: 'Median TACoS' },
     ],
-    tone: 'ads',
+    stage: 'ads',
   },
   {
     index: '02',
@@ -32,7 +33,7 @@ const SOLUTIONS: Solution[] = [
       { to: 98, suffix: '%', label: 'In-stock rate' },
       { to: 4, suffix: 'd', label: 'Avg. case resolution' },
     ],
-    tone: 'ops',
+    stage: 'ops',
   },
   {
     index: '03',
@@ -43,7 +44,7 @@ const SOLUTIONS: Solution[] = [
       { to: 47, suffix: '%', label: 'Sales per visitor' },
       { to: 320, label: 'ASINs rebuilt' },
     ],
-    tone: 'catalogue',
+    stage: 'catalogue',
   },
   {
     index: '04',
@@ -54,7 +55,7 @@ const SOLUTIONS: Solution[] = [
       { to: 21, suffix: 'd', label: 'Avg. time to live' },
       { to: 100, suffix: '%', label: 'Registry approval' },
     ],
-    tone: 'setup',
+    stage: 'setup',
   },
 ];
 
@@ -155,7 +156,7 @@ export function Solutions() {
           <RevealGroup className="solutions__stack">
             {SOLUTIONS.map((s) => (
               <article className="solutions__card card" key={s.index}>
-                <SolutionStage tone={s.tone} title={s.title} />
+                <SolutionStage stage={s.stage} title={s.title} />
                 <p className="solutions__index">{s.index}</p>
                 <h3 className="heading-s">{s.title}</h3>
                 <p className="body-s solutions__desc">{s.description}</p>
@@ -221,7 +222,7 @@ export function Solutions() {
                   }`}
                   key={s.index}
                 >
-                  <SolutionStage tone={s.tone} title={s.title} />
+                  <SolutionStage stage={s.stage} title={s.title} />
                 </div>
               ))}
             </div>
@@ -257,14 +258,12 @@ function SolutionMetrics({
   );
 }
 
-/** Abstract stage illustration per solution — built, not photographed. */
-function SolutionStage({ tone, title }: { tone: string; title: string }) {
+/** Each solution shows its own built interface panel. */
+function SolutionStage({ stage, title }: { stage: StageKey; title: string }) {
+  const Stage = STAGES[stage];
   return (
-    <div className={`stage stage--${tone}`} role="img" aria-label={`${title} illustration`}>
-      <div className="stage__bar stage__bar--a" />
-      <div className="stage__bar stage__bar--b" />
-      <div className="stage__bar stage__bar--c" />
-      <div className="stage__chip">{title}</div>
+    <div className="stage-wrap" role="img" aria-label={`${title} — interface preview`}>
+      <Stage />
     </div>
   );
 }
