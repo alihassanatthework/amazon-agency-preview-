@@ -85,7 +85,7 @@ export function ContactForm() {
     setMessage('');
 
     try {
-      const res = await fetch('/api/leads', {
+      const res = await fetch(`${import.meta.env.VITE_API_URL ?? ''}/api/leads`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(values),
@@ -330,6 +330,7 @@ export function ContactForm() {
 
             <fieldset
               className={`${fieldClass('markets')} form-grid__full form-subgroup`}
+              aria-invalid={errors.markets ? true : undefined}
               aria-describedby={errors.markets ? 'markets-error' : undefined}
             >
               <legend className="field__label">
@@ -362,6 +363,7 @@ export function ContactForm() {
 
             <fieldset
               className={`${fieldClass('setup')} form-grid__full form-subgroup`}
+              aria-invalid={errors.setup ? true : undefined}
               aria-describedby={errors.setup ? 'setup-error' : undefined}
             >
               <legend className="field__label">

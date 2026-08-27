@@ -90,10 +90,38 @@ measurement pass.
   than on keystroke, errors are announced through a live region, and focus moves
   to the first invalid field.
 
+## Deploying
+
+The client is a static Vite build; the API is a separate Node service.
+
+**Client on Vercel** — import the repo and set:
+
+| Setting | Value |
+| --- | --- |
+| Root Directory | `client` |
+| Framework Preset | **Vite** (not Create React App) |
+| Build Command | `npm run build` |
+| Output Directory | `dist` |
+
+`client/vercel.json` rewrites unknown paths to `index.html`, without which a
+direct load of `/contact` returns 404 — React Router owns that route on the
+client, so the server has to hand it the shell.
+
+**API** — Vercel's static output cannot run Express, so deploy `server/` to a
+Node host (Render, Railway, Fly, a container) and set `VITE_API_URL` in the
+Vercel project to that origin. Left unset, the form posts to the same origin
+and will 404 in production. Set `CLIENT_ORIGIN` on the API to the deployed
+client origin so CORS is not left open.
+
 ## Known gaps
 
 - MongoDB was not running in the environment this was built in, so the persisted
   path (`201` + stored document) is untested end to end; validation, the failure
   path and the 503 recovery path were verified against the running API.
-- The imagery is built from the palette rather than photographed. Replacing the
-  illustration blocks with real assets is a drop-in change.
+- Photography is stock, and the testimonial quote, client names and metrics are
+  placeholders. Replace both with real client assets and verified figures before
+  this goes live — a real face attached to an invented quote and attribution is
+  not something to ship.
+- The mobile contact hero lands at 67vh rather than the roadmap's 60vh target.
+  The requirement behind that number is met: the form card and its first input
+  both sit above the fold at 375×812.
