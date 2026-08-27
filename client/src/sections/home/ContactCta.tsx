@@ -29,16 +29,18 @@ export function ContactCta() {
       const rect = el.getBoundingClientRect();
       const dx = e.clientX - (rect.left + rect.width / 2);
       const dy = e.clientY - (rect.top + rect.height / 2);
-      // Translates up to 6px toward the cursor.
+      // Translates up to 6px toward the cursor, with the standard -2px button
+      // lift folded in, since the inline transform supersedes the CSS one.
       setOffset({
         x: Math.max(-6, Math.min(6, dx * 0.18)),
-        y: Math.max(-6, Math.min(6, dy * 0.3)),
+        y: Math.max(-6, Math.min(6, dy * 0.3)) - 2,
       });
     },
     [magnetic],
   );
 
   const onLeave = useCallback(() => setOffset({ x: 0, y: 0 }), []);
+  const atRest = offset.x === 0 && offset.y === 0;
 
   useEffect(() => {
     if (!magnetic) setOffset({ x: 0, y: 0 });
@@ -75,12 +77,10 @@ export function ContactCta() {
             to="/contact"
             onMouseMove={onMove}
             onMouseLeave={onLeave}
-            style={{
-              transform: `translate3d(${offset.x}px, ${offset.y}px, 0)`,
-              transition: offset.x === 0 && offset.y === 0
-                ? 'transform 420ms cubic-bezier(.22,1,.36,1), background-color 240ms cubic-bezier(.4,0,.2,1), box-shadow 240ms cubic-bezier(.4,0,.2,1)'
-                : 'transform 120ms cubic-bezier(.4,0,.2,1), background-color 240ms cubic-bezier(.4,0,.2,1), box-shadow 240ms cubic-bezier(.4,0,.2,1)',
-            }}
+            /* Tracking the cursor uses motion-instant; the spring return on
+               exit uses motion-base. Both come from the token layer. */
+            data-returning={atRest ? 'true' : 'false'}
+            style={{ transform: `translate3d(${offset.x}px, ${offset.y}px, 0)` }}
           >
             Get a free audit
             <ArrowRight />

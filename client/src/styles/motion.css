@@ -130,3 +130,31 @@
     scroll-behavior: auto !important;
   }
 }
+
+/* --- 3.4 Hover treatments under reduced motion ---------------------------
+   Hover lifts are retained as colour and border changes only, with no
+   translate and no scale. Listing them explicitly matters: shortening the
+   transition duration would still move the element, just instantly. */
+@media (prefers-reduced-motion: reduce) {
+  .btn:hover,
+  .btn--secondary:hover,
+  .card--interactive:hover,
+  .hero__float:hover,
+  .video__frame:hover .video__play,
+  .footer__social a:hover,
+  .footer__col a:hover,
+  .contact-side__social a:hover,
+  .solutions__entry:not(.is-active):hover,
+  .cta__btn {
+    transform: none !important;
+  }
+  .card--interactive:hover .media-frame > img,
+  .card--interactive:hover .media-frame > .media-fill,
+  .video__frame:hover .video__poster-art,
+  .about__frame:hover .about-art {
+    transform: none !important;
+  }
+  /* Marquee, blooms and the pinned sections have no animation to suspend
+     because the motion-on class is never applied. */
+  .logos__track { animation: none !important; }
+}

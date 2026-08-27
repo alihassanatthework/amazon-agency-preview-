@@ -15,12 +15,23 @@ import { useReducedMotion } from '../../motion';
  * every boundary is a crossfade rather than a hard edge.
  */
 
-const COLOURS: Record<string, string> = {
-  white: '#FFFFFF',
-  canvas: '#FCFAF8',
-  'canvas-deep': '#F6F1EC',
-  ink: '#0F0E0D',
+/** Token names, resolved from the token layer so there is one source of truth. */
+const BG_TOKENS: Record<string, string> = {
+  white: '--white',
+  canvas: '--canvas',
+  'canvas-deep': '--canvas-deep',
+  ink: '--ink-deep',
 };
+
+function readPalette(): Record<string, string> {
+  const styles = getComputedStyle(document.documentElement);
+  return Object.fromEntries(
+    Object.entries(BG_TOKENS).map(([key, token]) => [
+      key,
+      styles.getPropertyValue(token).trim(),
+    ]),
+  );
+}
 
 /** Light-to-dark resolves get a wider overlap than light-to-light ones. */
 function overlapFor(from: string, to: string) {
@@ -41,6 +52,7 @@ export function BackgroundLayer() {
 
     let ticking = false;
     let sections: HTMLElement[] = [];
+    let COLOURS = readPalette();
 
     const collect = () => {
       sections = Array.from(document.querySelectorAll<HTMLElement>('[data-bg]'));
@@ -88,6 +100,7 @@ export function BackgroundLayer() {
     };
 
     const onResize = () => {
+      COLOURS = readPalette();
       collect();
       paint();
     };

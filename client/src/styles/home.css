@@ -698,7 +698,7 @@ html:not(.motion-on) .approach__emphasis { color: var(--amber-800); }
   background:
     radial-gradient(70% 90% at 30% 20%, rgba(245, 166, 91, .5), transparent 60%),
     radial-gradient(60% 80% at 80% 80%, rgba(210, 98, 26, .35), transparent 65%),
-    linear-gradient(155deg, #2A2622, #4F4B47);
+    linear-gradient(155deg, var(--art-char-1), var(--graphite));
   transition: transform var(--motion-base) var(--ease-base);
 }
 .video__player { width: 100%; height: 100%; border: 0; }
@@ -848,9 +848,9 @@ html:not(.motion-on) .approach__emphasis { color: var(--amber-800); }
 
 /* Card artwork — built from the palette, never stock photography */
 .case-art { width: 100%; height: 100%; }
-.case-art--beauty  { background: radial-gradient(80% 90% at 25% 20%, #F5A65B, transparent 60%), linear-gradient(150deg, #F6F1EC, #E0CDBB); }
-.case-art--apparel { background: radial-gradient(75% 85% at 75% 25%, #ED7C24, transparent 62%), linear-gradient(150deg, #2A2622, #4F4B47); }
-.case-art--food    { background: radial-gradient(85% 85% at 40% 75%, #D2621A, transparent 60%), linear-gradient(150deg, #FDF0E4, #F5C79A); }
+.case-art--beauty  { background: radial-gradient(80% 90% at 25% 20%, var(--amber-300), transparent 60%), linear-gradient(150deg, var(--canvas-deep), var(--art-sand-1)); }
+.case-art--apparel { background: radial-gradient(75% 85% at 75% 25%, var(--amber-500), transparent 62%), linear-gradient(150deg, var(--art-char-1), var(--graphite)); }
+.case-art--food    { background: radial-gradient(85% 85% at 40% 75%, var(--amber-600), transparent 60%), linear-gradient(150deg, var(--amber-wash), var(--art-amber-1)); }
 
 /* Mobile carousel / reduced-motion stack */
 .cases__carousel {
@@ -1011,7 +1011,7 @@ html:not(.motion-on) .comparison__divider { transform: scaleX(1); }
   background:
     radial-gradient(70% 60% at 30% 15%, rgba(245, 166, 91, .55), transparent 60%),
     radial-gradient(80% 70% at 80% 90%, rgba(210, 98, 26, .3), transparent 65%),
-    linear-gradient(160deg, #F6F1EC 0%, #D9C6B4 100%);
+    linear-gradient(160deg, var(--canvas-deep) 0%, var(--art-sand-2) 100%);
 }
 @media (hover: hover) and (pointer: fine) {
   .about__frame:hover .about-art { transform: scale(1.02); }
@@ -1087,6 +1087,24 @@ html:not(.motion-on) .comparison__divider { transform: scaleX(1); }
 }
 /* The only place on the homepage where whitespace around a button exceeds 64px. */
 .cta__btn { min-height: 56px; padding-inline: var(--space-5); }
+
+/* Magnetic hover — the only magnetic element on either page, which is what
+   makes it register. Tracking is instant; the return springs back over
+   motion-base. */
+.cta__btn[data-returning='false'] {
+  transition:
+    transform        var(--motion-instant) var(--ease-instant),
+    background-color var(--motion-quick)   var(--ease-quick),
+    box-shadow       var(--motion-quick)   var(--ease-quick);
+}
+.cta__btn[data-returning='true'] {
+  transition:
+    transform        var(--motion-base)  var(--ease-base),
+    background-color var(--motion-quick) var(--ease-quick),
+    box-shadow       var(--motion-quick) var(--ease-quick);
+}
+/* The inline magnetic transform supersedes the shared .btn hover lift, so the
+   lift is folded into the magnetic offset itself rather than declared here. */
 
 .cta__trust {
   display: flex;

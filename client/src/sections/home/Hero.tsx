@@ -105,8 +105,8 @@ export function Hero() {
                 <svg className="hero__chart" viewBox="0 0 420 150" fill="none" preserveAspectRatio="none">
                   <defs>
                     <linearGradient id="heroCurveFill" x1="0" y1="0" x2="0" y2="1">
-                      <stop offset="0%" stopColor="#ED7C24" stopOpacity=".22" />
-                      <stop offset="100%" stopColor="#ED7C24" stopOpacity="0" />
+                      <stop offset="0%" stopColor="var(--amber-500)" stopOpacity=".22" />
+                      <stop offset="100%" stopColor="var(--amber-500)" stopOpacity="0" />
                     </linearGradient>
                   </defs>
                   <path
@@ -116,7 +116,7 @@ export function Hero() {
                   <path
                     className="hero__curve"
                     d="M0 122 L52 112 L104 118 L156 92 L208 98 L260 66 L312 58 L364 34 L420 18"
-                    stroke="#ED7C24"
+                    stroke="var(--amber-500)"
                     strokeWidth="2.5"
                     strokeLinecap="round"
                     strokeLinejoin="round"
