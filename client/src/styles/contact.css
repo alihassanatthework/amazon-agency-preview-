@@ -203,9 +203,12 @@
 
 .process__steps { position: relative; margin-top: calc(var(--space-7) * var(--section-pad-scale)); }
 
+/* The rail runs from the centre of the first marker to the centre of the
+   last, so it terminates on a marker rather than trailing into the margin. */
 .process__rail {
   position: absolute;
-  left: 0; right: 0;
+  left: 32px;
+  right: calc((100% - 3 * var(--gutter)) / 4 - 32px);
   top: 32px;
   height: 1px;
   background: var(--line);
@@ -434,7 +437,7 @@ html:not(.motion-on) .faq__answer { opacity: 1; transform: none; }
   .contact-side__list { grid-template-columns: repeat(3, 1fr); }
 
   .process__list { grid-template-columns: repeat(2, 1fr); row-gap: var(--space-7); }
-  .process__rail { display: none; }
+  .process__rail { display: none; }   /* the rail is redrawn per row of two */
   .process__step { position: relative; }
 
   .faq__grid { grid-template-columns: 1fr; }

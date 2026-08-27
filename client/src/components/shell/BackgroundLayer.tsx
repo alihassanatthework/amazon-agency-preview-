@@ -34,15 +34,21 @@ function readPalette(): Record<string, string> {
 }
 
 /**
- * Overlap widths are deliberately short. Interpolating white to black across a
- * long distance passes through mid-grey and reads as a smudge rather than a
- * handoff; the dark bands carry their own edge lighting instead, so the layer
- * only has to soften the seam.
+ * Overlap widths.
+ *
+ * Between the three light surfaces the values are so close that a generous
+ * overlap is free — nothing muddy can happen between #FFFFFF and #FCFAF8.
+ *
+ * Against a dark band the opposite is true: any ramp from near-white to near-
+ * black spends its middle in mid-grey, and over a long distance that reads as
+ * a smudge rather than as a handoff. Those edges are kept tight so they read
+ * as a deliberate band edge, and the dark bands carry their own internal edge
+ * lighting to do the softening instead.
  */
 function overlapFor(from: string, to: string) {
   const darkInvolved = from === 'ink' || to === 'ink';
-  if (from === 'canvas' && to === 'ink') return 96; // H10 → H11 / C5 → C6
-  return darkInvolved ? 64 : 48;
+  if (from === 'canvas' && to === 'ink') return 40; // H10 → H11 / C5 → C6
+  return darkInvolved ? 24 : 64;
 }
 
 export function BackgroundLayer() {
