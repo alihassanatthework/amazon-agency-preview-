@@ -46,7 +46,7 @@ export function ContactFaq() {
     setOpen((o) => (o.includes(i) ? o.filter((x) => x !== i) : [...o, i]));
 
   return (
-    <section className="section faq bg-white" aria-labelledby="faq-title">
+    <section className="section faq bg-white" aria-labelledby="faq-title" data-bg="white">
       <div className="container faq__grid">
         <div className="faq__aside">
           <SectionHeader

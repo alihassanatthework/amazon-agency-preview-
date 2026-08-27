@@ -26,7 +26,7 @@ export function Approach() {
   const reduced = useReducedMotion();
 
   return (
-    <section className="section approach bg-canvas-deep" aria-labelledby="approach-title">
+    <section className="section approach bg-canvas-deep" aria-labelledby="approach-title" data-bg="canvas-deep">
       <div className="container">
         <Reveal className="approach__header">
           <p className="eyebrow">Our approach</p>

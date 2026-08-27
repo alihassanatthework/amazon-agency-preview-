@@ -20,7 +20,7 @@ export function About() {
   const imageRef = useParallax<HTMLDivElement>(-30);
 
   return (
-    <section className="section about bg-white" id="about" aria-labelledby="about-title">
+    <section className="section about bg-white" id="about" aria-labelledby="about-title" data-bg="white">
       <div className="container about__grid">
         <div className="about__media" ref={imageRef}>
           <MaskWipe className="about__frame media-frame">

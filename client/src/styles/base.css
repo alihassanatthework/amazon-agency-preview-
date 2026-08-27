@@ -103,10 +103,26 @@ p:last-child { margin-bottom: 0; }
 .section--compact  { padding-block: calc(var(--space-7) * var(--section-pad-scale)); }
 .section--quiet    { padding-block: calc(var(--space-6) * var(--section-pad-scale)); }
 
+/* Section backgrounds. When the shared interpolated layer is active these
+   become transparent and the layer paints instead, so boundaries crossfade
+   rather than meeting at a hard edge. Text colour is unaffected either way. */
 .bg-white      { background: var(--white); }
 .bg-canvas     { background: var(--canvas); }
 .bg-canvas-deep{ background: var(--canvas-deep); }
 .bg-ink        { background: var(--ink-deep); color: rgba(252, 250, 248, .78); }
+
+.bg-layer {
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  background-color: var(--canvas);
+}
+.has-bg-layer .bg-white,
+.has-bg-layer .bg-canvas,
+.has-bg-layer .bg-canvas-deep,
+.has-bg-layer .bg-ink { background: transparent; }
+.has-bg-layer body { background: transparent; }
 .bg-ink h1, .bg-ink h2, .bg-ink h3, .bg-ink .numeral { color: var(--canvas); }
 
 /* 2.3 — the section header stack, identical everywhere:

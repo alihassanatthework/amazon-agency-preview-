@@ -26,7 +26,7 @@ const METRICS: Metric[] = [
 
 export function KpiBand() {
   return (
-    <section className="section kpi bg-ink" aria-labelledby="kpi-title">
+    <section className="section kpi bg-ink" aria-labelledby="kpi-title" data-bg="ink">
       <div className="container">
         <SectionHeader
           eyebrow="Performance"

@@ -26,7 +26,7 @@ export function Footer() {
   const isOpen = (heading: string) => !isMobile || open === heading;
 
   return (
-    <footer className="footer" role="contentinfo">
+    <footer className="footer" role="contentinfo" data-bg="ink">
       <div className="container footer__inner">
         <RevealGroup className="footer__upper">
           <div className="footer__brand">

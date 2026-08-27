@@ -16,7 +16,7 @@ const METRICS = [
 
 export function TrustBand() {
   return (
-    <section className="section section--compact trust bg-ink" aria-label="Client proof">
+    <section className="section section--compact trust bg-ink" aria-label="Client proof" data-bg="ink">
       <div className="container">
         <RevealGroup className="trust__row" stagger={90}>
           {METRICS.map((m) => (

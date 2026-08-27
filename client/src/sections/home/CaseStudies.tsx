@@ -134,7 +134,7 @@ export function CaseStudies() {
 
   if (carousel) {
     return (
-      <section className="section cases bg-canvas" id="results" aria-labelledby="results-title">
+      <section className="section cases bg-canvas" id="results" aria-labelledby="results-title" data-bg="canvas">
         <div className="container">{header}</div>
         <div className={`cases__carousel${reduced ? ' cases__carousel--stacked' : ''}`}>
           {cards}
@@ -149,6 +149,7 @@ export function CaseStudies() {
       className="cases cases--pinned bg-canvas"
       id="results"
       aria-labelledby="results-title"
+      data-bg="canvas"
     >
       <div className="cases__viewport">
         <div className="container">{header}</div>

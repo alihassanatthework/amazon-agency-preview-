@@ -35,7 +35,7 @@ export function Process() {
   const { ref, revealed } = useReveal<HTMLDivElement>();
 
   return (
-    <section className="section process bg-canvas-deep" aria-labelledby="process-title">
+    <section className="section process bg-canvas-deep" aria-labelledby="process-title" data-bg="canvas-deep">
       <div className="container">
         <SectionHeader
           eyebrow="The process"

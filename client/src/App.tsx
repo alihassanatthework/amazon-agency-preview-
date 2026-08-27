@@ -2,6 +2,7 @@ import { useEffect } from 'react';
 import { Route, Routes, useLocation } from 'react-router-dom';
 import { Header } from './components/shell/Header';
 import { Footer } from './components/shell/Footer';
+import { BackgroundLayer } from './components/shell/BackgroundLayer';
 import { useMotionRoot } from './motion';
 import HomePage from './pages/HomePage';
 import ContactPage from './pages/ContactPage';
@@ -35,6 +36,7 @@ export default function App() {
     <>
       <a className="skip-link" href="#main">Skip to content</a>
       <ScrollManager />
+      <BackgroundLayer />
       <Header solid={solidHeader} />
 
       <main id="main">

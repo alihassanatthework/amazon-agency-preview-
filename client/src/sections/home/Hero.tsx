@@ -50,6 +50,7 @@ export function Hero() {
         pastCue ? ' is-past-cue' : ''
       }`}
       aria-labelledby="hero-title"
+      data-bg="canvas"
     >
       {/* Gradient bloom 1 of 2 — anchored behind the visual at 70% / 30%. */}
       <div ref={bloomRef} className="bloom hero__bloom" aria-hidden="true" />

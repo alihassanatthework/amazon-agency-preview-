@@ -61,6 +61,7 @@ export function LogoBand() {
       ref={sectionRef}
       className={`section section--quiet logos bg-white${visibleOnScreen ? ' is-visible' : ''}`}
       aria-label="Client brands"
+      data-bg="white"
     >
       <div className="container">
         <Reveal>

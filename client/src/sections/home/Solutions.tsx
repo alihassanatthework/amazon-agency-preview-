@@ -149,7 +149,7 @@ export function Solutions() {
   /* --- Stacked recomposition: mobile and reduced motion ------------------ */
   if (stacked) {
     return (
-      <section className="section solutions bg-canvas" id="solutions" aria-labelledby="solutions-title">
+      <section className="section solutions bg-canvas" id="solutions" aria-labelledby="solutions-title" data-bg="canvas">
         <div className="container">
           {header}
           <RevealGroup className="solutions__stack">
@@ -174,6 +174,7 @@ export function Solutions() {
       className={`solutions solutions--pinned bg-canvas${pinned ? ' is-pinned' : ''}`}
       id="solutions"
       aria-labelledby="solutions-title"
+      data-bg="canvas"
     >
       <div className="solutions__viewport">
         <div className="container solutions__inner">

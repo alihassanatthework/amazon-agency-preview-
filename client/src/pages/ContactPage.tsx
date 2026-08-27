@@ -15,7 +15,7 @@ export default function ContactPage() {
     <>
       <ContactHero />
 
-      <section className="section contact-main bg-white" aria-label="Request an audit">
+      <section className="section contact-main bg-white" aria-label="Request an audit" data-bg="white">
         <div className="container contact-main__grid">
           <div className="contact-main__form">
             <ContactForm />

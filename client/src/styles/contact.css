@@ -8,12 +8,17 @@
    C1 — Contact hero. Compact, never full-height.
    -------------------------------------------------------------------------- */
 
+/* Deliberately short — roughly 42vh — so the first form field in C2 is
+   reachable without a scroll gesture on desktop. */
 .contact-hero {
   position: relative;
   overflow: hidden;
   min-height: 42vh;
-  padding-top: calc(var(--header-h) + var(--space-8) * var(--section-pad-scale));
+  padding-top: calc(var(--header-h) + var(--space-6) * var(--section-pad-scale));
+  padding-bottom: calc(var(--space-6) * var(--section-pad-scale));
 }
+/* No section on this page may push the form below the fold. */
+.contact-main { padding-top: calc(var(--space-7) * var(--section-pad-scale)); }
 .contact-hero__bloom {
   top: -30%;
   right: -10%;
@@ -430,7 +435,9 @@ html:not(.motion-on) .faq__answer { opacity: 1; transform: none; }
 }
 
 @media (max-width: 767px) {
-  .contact-hero { min-height: 0; }
+  /* Total section height kept under 60vh so the first form field is reachable
+     in one scroll gesture. */
+  .contact-hero { min-height: 0; padding-bottom: var(--space-5); }
   .contact-hero__card {
     background: var(--amber-wash);
     border-color: transparent;

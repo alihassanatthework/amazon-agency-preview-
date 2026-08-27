@@ -30,7 +30,7 @@ export function VideoProof() {
   }, [playing]);
 
   return (
-    <section className="section video bg-white" aria-labelledby="video-title">
+    <section className="section video bg-white" aria-labelledby="video-title" data-bg="white">
       <div className="container video__grid">
         <SectionHeader
           eyebrow="In their words"

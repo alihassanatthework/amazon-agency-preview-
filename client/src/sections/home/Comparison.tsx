@@ -42,7 +42,7 @@ export function Comparison() {
   const { ref, revealed } = useReveal<HTMLDivElement>();
 
   return (
-    <section className="section comparison bg-canvas-deep" aria-labelledby="comparison-title">
+    <section className="section comparison bg-canvas-deep" aria-labelledby="comparison-title" data-bg="canvas-deep">
       <div className="container">
         <SectionHeader
           eyebrow="The difference"

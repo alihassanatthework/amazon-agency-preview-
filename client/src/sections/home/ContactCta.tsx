@@ -45,7 +45,7 @@ export function ContactCta() {
   }, [magnetic]);
 
   return (
-    <section className="section section--emphasis cta bg-canvas" aria-labelledby="cta-title">
+    <section className="section section--emphasis cta bg-canvas" aria-labelledby="cta-title" data-bg="canvas">
       {/* Gradient bloom 2 of 2 — anchored bottom-centre, bleeding toward the footer. */}
       <div className="bloom cta__bloom" aria-hidden="true" />
 

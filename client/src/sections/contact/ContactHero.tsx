@@ -18,7 +18,7 @@ export function ContactHero() {
   const bloomRef = useParallax<HTMLDivElement>(20);
 
   return (
-    <section className="section contact-hero bg-canvas" aria-labelledby="contact-title">
+    <section className="section contact-hero bg-canvas" aria-labelledby="contact-title" data-bg="canvas">
       <div ref={bloomRef} className="bloom contact-hero__bloom" aria-hidden="true" />
 
       <div className="container contact-hero__grid">
