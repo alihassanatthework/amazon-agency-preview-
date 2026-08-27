@@ -5,19 +5,36 @@ import { LeadModel } from '../models/Lead.js';
 
 export const leadsRouter = Router();
 
-/** Server-side validation mirrors the client's, because the client's can be bypassed. */
+/**
+ * Server-side validation mirrors the client's, because the client's can be
+ * bypassed. Every rule carries its own message: these strings are rendered
+ * beneath the offending field, so a default like "expected string, received
+ * undefined" would be shown to the person filling the form in.
+ */
+const required = (message: string) => z.string({ message }).trim().min(1, message);
+
 const leadSchema = z.object({
-  firstName: z.string().trim().min(1, 'Enter your first name').max(80),
-  lastName: z.string().trim().min(1, 'Enter your last name').max(80),
-  email: z.string().trim().email('Enter a valid work email address').max(200),
-  company: z.string().trim().min(1, 'Enter your company name').max(160),
+  firstName: required('Enter your first name').max(80),
+  lastName: required('Enter your last name').max(80),
+  email: required('Enter your work email address')
+    .max(200)
+    .pipe(z.email('Enter a valid work email address')),
+  company: required('Enter your company name').max(160),
   phone: z.string().trim().max(40).optional().or(z.literal('')),
 
-  brand: z.string().trim().min(1, 'Enter your brand or storefront name').max(160),
-  revenue: z.enum(['under-50k', '50k-250k', '250k-1m', '1m-plus']),
-  asinCount: z.enum(['under-25', '25-100', '100-500', '500-plus']),
-  markets: z.array(z.enum(['US', 'CA', 'UK', 'EU', 'other'])).min(1, 'Select at least one market'),
-  setup: z.enum(['seller-central', 'vendor-central', 'both', 'not-yet-selling']),
+  brand: required('Enter your brand or storefront name').max(160),
+  revenue: z.enum(['under-50k', '50k-250k', '250k-1m', '1m-plus'], {
+    message: 'Select your monthly Amazon revenue',
+  }),
+  asinCount: z.enum(['under-25', '25-100', '100-500', '500-plus'], {
+    message: 'Select an approximate ASIN count',
+  }),
+  markets: z
+    .array(z.enum(['US', 'CA', 'UK', 'EU', 'other']), { message: 'Select at least one market' })
+    .min(1, 'Select at least one market'),
+  setup: z.enum(['seller-central', 'vendor-central', 'both', 'not-yet-selling'], {
+    message: 'Select your current setup',
+  }),
   goal: z.string().trim().max(2000).optional().or(z.literal('')),
   consent: z.literal(true, { message: 'Please accept the privacy policy to continue' }),
 });
