@@ -66,9 +66,9 @@ export function Comparison() {
           ref={ref}
         >
           <div className="comparison__grid">
-            {/* The raised panel — a grid item, not an overlay. Its row span is
-                explicit: `1 / -1` would collapse, because with no explicit rows
-                the -1 line resolves to the start of the grid. */}
+            {/* The three surfaces are real grid items, not overlays. Their row
+                spans are explicit: `1 / -1` would collapse, because with no
+                explicit rows the -1 line resolves to the start of the grid. */}
             <div
               className="comparison__panel"
               style={{ gridRow: `1 / span ${ROWS.length + 1}` }}
@@ -76,6 +76,16 @@ export function Comparison() {
             >
               <LineDraw className="comparison__panel-rule" delay={400} />
             </div>
+            <div
+              className="comparison__spine"
+              style={{ gridRow: `1 / span ${ROWS.length + 1}` }}
+              aria-hidden="true"
+            />
+            <div
+              className="comparison__foil"
+              style={{ gridRow: `1 / span ${ROWS.length + 1}` }}
+              aria-hidden="true"
+            />
 
             <span className="comparison__corner" aria-hidden="true" />
             <span className="comparison__col-title comparison__col-title--us">

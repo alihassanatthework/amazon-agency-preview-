@@ -32,6 +32,9 @@ than reporting a false success.
 
 Other scripts: `npm run build`, `npm run typecheck`, `npm run lint`.
 
+See [ARCHITECTURE.md](ARCHITECTURE.md) for why the code is split into two
+packages, how a form submission travels, and the rules each layer follows.
+
 ## Structure
 
 ```

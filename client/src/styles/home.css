@@ -1191,15 +1191,19 @@ html:not(.motion-on) .approach__emphasis { color: var(--amber-800); }
 
 /* --------------------------------------------------------------------------
    H8 — Comparison
+
+   The two positions sit either side of a central label spine, so the section
+   reads as one thing weighed against another rather than as a table with a
+   thin column of labels stranded on the left. The asymmetry still does the
+   argument: the favourable side is a raised white surface under an amber
+   filament; the other is flat, recessed and muted.
    -------------------------------------------------------------------------- */
 
 .comparison__table { margin-top: calc(var(--space-7) * var(--section-pad-scale)); }
 
-/* One grid holds the header, every row and the raised panel, so the panel can
-   never drift out of alignment with the cells it sits behind. */
 .comparison__grid {
   display: grid;
-  grid-template-columns: 168px minmax(0, 1fr) minmax(0, 1fr);
+  grid-template-columns: minmax(0, 1fr) 152px minmax(0, 1fr);
   align-items: stretch;
 }
 
@@ -1207,12 +1211,17 @@ html:not(.motion-on) .approach__emphasis { color: var(--amber-800); }
    row itself remains a single hover target. */
 .comparison__row { display: contents; }
 
+/* --- The raised side ------------------------------------------------------ */
+
 .comparison__panel {
   position: relative;
-  grid-column: 2;
-  background: var(--white);
+  grid-column: 1;
+  background: linear-gradient(180deg, var(--white) 0%, var(--white) 72%, #FFFCFA 100%);
   border-radius: var(--radius-card);
-  box-shadow: var(--elev-1);
+  box-shadow:
+    0 1px 2px rgba(28, 26, 24, .04),
+    0 18px 44px rgba(28, 26, 24, .09),
+    0 42px 90px rgba(143, 61, 16, .05);
   transform: scale(.985);
   opacity: 0;
   transition: transform var(--motion-reveal) var(--ease-reveal),
@@ -1221,31 +1230,65 @@ html:not(.motion-on) .approach__emphasis { color: var(--amber-800); }
 .comparison__table.is-revealed .comparison__panel { transform: none; opacity: 1; }
 html:not(.motion-on) .comparison__panel { transform: none; opacity: 1; }
 
+/* An amber filament along the top edge with a soft bloom beneath it. */
 .comparison__panel-rule {
   position: absolute;
   left: 0; right: 0; top: 0;
   height: 2px;
-  background: var(--amber-600);
   border-radius: var(--radius-card) var(--radius-card) 0 0;
+  background: linear-gradient(90deg,
+    var(--amber-600) 0%, var(--amber-500) 42%, var(--amber-300) 72%, var(--amber-500) 100%);
+  box-shadow: 0 0 18px rgba(237, 124, 36, .45);
 }
 
-.comparison__corner { grid-area: 1 / 1; }
-.comparison__col-title--us { grid-area: 1 / 2; }
+/* --- The recessed side ---------------------------------------------------- */
+
+.comparison__foil {
+  grid-column: 3;
+  border-radius: var(--radius-card);
+  background: linear-gradient(180deg, rgba(28, 26, 24, .022) 0%, rgba(28, 26, 24, .01) 100%);
+  box-shadow: inset 0 1px 0 rgba(28, 26, 24, .05);
+}
+
+/* --- The spine ------------------------------------------------------------ */
+
+.comparison__spine {
+  grid-column: 2;
+  position: relative;
+}
+.comparison__spine::before {
+  content: '';
+  position: absolute;
+  left: 50%; top: 12px; bottom: 12px;
+  width: 1px;
+  margin-left: -.5px;
+  background: linear-gradient(180deg, transparent, var(--line) 12%, var(--line) 88%, transparent);
+}
+
+/* --- Column titles -------------------------------------------------------- */
+
+.comparison__corner { grid-area: 1 / 2; }
+.comparison__col-title--us { grid-area: 1 / 1; }
 .comparison__col-title--them { grid-area: 1 / 3; }
 
 .comparison__corner,
 .comparison__col-title {
-  padding: 0 var(--space-5) var(--space-4);
+  position: relative;
+  z-index: 1;
+  padding: var(--space-5) var(--space-5) var(--space-4);
   align-self: end;
   font-family: var(--font-display);
   font-size: var(--body);
   font-weight: 600;
+  letter-spacing: -.005em;
   color: var(--stone);
 }
-.comparison__col-title--us { color: var(--ink); position: relative; z-index: 1; }
+.comparison__col-title--us { color: var(--ink); }
 
-.comparison__label { grid-column: 1; grid-row: var(--row); }
-.comparison__cell--us { grid-column: 2; grid-row: var(--row); }
+/* --- Rows ----------------------------------------------------------------- */
+
+.comparison__label { grid-column: 2; grid-row: var(--row); }
+.comparison__cell--us { grid-column: 1; grid-row: var(--row); }
 .comparison__cell--them { grid-column: 3; grid-row: var(--row); }
 
 .comparison__label,
@@ -1253,30 +1296,50 @@ html:not(.motion-on) .comparison__panel { transform: none; opacity: 1; }
   position: relative;
   z-index: 1;
   padding: var(--space-4) var(--space-5);
-  border-top: 1px solid var(--line);
 }
-.comparison__row:first-of-type .comparison__label,
-.comparison__row:first-of-type .comparison__cell { border-top: 0; }
 
+/* The label sits on the spine and punches through the line behind it. */
 .comparison__label {
-  font-size: var(--body-s);
+  align-self: center;
+  justify-self: center;
+  padding: var(--space-2) var(--space-3);
+  background: var(--canvas-deep);
+  font-size: var(--caption);
   font-weight: 600;
-  color: var(--ink);
-  border-top-color: transparent;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+  color: var(--stone);
+  text-align: center;
+  white-space: nowrap;
+  transition: color var(--motion-base) var(--ease-base);
 }
 
 .comparison__cell { display: flex; gap: var(--space-3); color: var(--graphite); }
-.comparison__cell--us { border-top-color: var(--line); }
 .comparison__cell--them {
   color: var(--stone);
-  border-top-color: var(--line);
   transition: color var(--motion-base) var(--ease-base);
 }
+
+/* Hairlines separate rows inside each side, inset from the surface edges. */
+.comparison__cell::before {
+  content: '';
+  position: absolute;
+  left: var(--space-5); right: var(--space-5); top: 0;
+  height: 1px;
+  background: var(--line);
+  transform: scaleX(0);
+  transform-origin: left center;
+  transition: transform var(--motion-reveal) var(--ease-reveal);
+  transition-delay: var(--reveal-delay, 0ms);
+}
+.comparison__table.is-revealed .comparison__cell::before { transform: scaleX(1); }
+html:not(.motion-on) .comparison__cell::before { transform: scaleX(1); }
+.comparison__row:first-of-type .comparison__cell::before { display: none; }
 
 .comparison__mark { flex: none; margin-top: 5px; color: var(--stone); }
 .comparison__mark--us { color: var(--amber-600); }
 
-/* Rows rise in sequence, each preceded by its divider. */
+/* Rows rise in sequence. */
 .motion-on .comparison__label,
 .motion-on .comparison__cell {
   opacity: 0;
@@ -1291,12 +1354,13 @@ html:not(.motion-on) .comparison__panel { transform: none; opacity: 1; }
   transition-delay: var(--reveal-delay, 0ms);
 }
 
-/* Row hover raises the entire pair — the contrast becomes active without
+/* Row hover raises the whole triplet — the contrast becomes active without
    adding a single new element. */
 @media (hover: hover) and (pointer: fine) {
-  .comparison__row:hover .comparison__cell--us { background: rgba(253, 240, 228, .55); }
-  .comparison__row:hover .comparison__cell--them { color: var(--graphite); }
   .comparison__cell--us { transition: background var(--motion-base) var(--ease-base); }
+  .comparison__row:hover .comparison__cell--us { background: rgba(253, 240, 228, .6); }
+  .comparison__row:hover .comparison__cell--them { color: var(--graphite); }
+  .comparison__row:hover .comparison__label { color: var(--amber-800); }
 }
 
 .comparison__cta { margin-top: var(--space-7); }
@@ -1451,10 +1515,12 @@ html:not(.motion-on) .comparison__panel { transform: none; opacity: 1; }
   .cases--pinned { height: 180vh; }
   .case-card { width: 400px; }
 
-  /* Row labels move above each pair. The raised panel gives way to a tint on
-     the favourable cell, so the asymmetry survives without the overlay. */
+  /* The spine collapses: labels move above each pair and the raised panel
+     gives way to a tint on the favourable cell. */
   .comparison__grid { display: block; }
-  .comparison__panel, .comparison__corner, .comparison__col-title { display: none; }
+  .comparison__panel, .comparison__foil, .comparison__spine,
+  .comparison__corner, .comparison__col-title { display: none; }
+  .comparison__cell::before { display: none; }
   .comparison__row {
     display: grid;
     grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
@@ -1466,8 +1532,9 @@ html:not(.motion-on) .comparison__panel { transform: none; opacity: 1; }
   .comparison__label {
     grid-column: 1 / -1;
     grid-row: auto;
+    justify-self: start;
     padding: 0 0 var(--space-3);
-    border-top: 0;
+    background: transparent;
   }
   .comparison__cell { grid-row: auto; border-top: 0; padding: var(--space-4); }
   .comparison__cell--us {
@@ -1511,10 +1578,18 @@ html:not(.motion-on) .comparison__panel { transform: none; opacity: 1; }
     background: var(--white);
   }
   .comparison__row:first-of-type { border: 1px solid var(--line); }
+  /* The stacked card's header strip. Width and alignment are restated
+     explicitly, since the desktop spine rule centres and shrink-wraps it. */
   .comparison__label {
     display: block;
+    width: 100%;
+    justify-self: stretch;
+    align-self: stretch;
+    text-align: left;
+    white-space: normal;
     padding: var(--space-3) var(--space-4);
-    border-bottom: 1px solid var(--line);
+    background: var(--white);
+    border-bottom: 0;
   }
   .comparison__cell { padding: var(--space-4); border-top: 0; border-radius: 0; box-shadow: none; }
   .comparison__cell--us { background: var(--amber-wash); border-top: 0; }
