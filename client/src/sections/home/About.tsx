@@ -24,7 +24,15 @@ export function About() {
       <div className="container about__grid">
         <div className="about__media" ref={imageRef}>
           <MaskWipe className="about__frame media-frame">
-            <div className="about-art media-fill" role="img" aria-label="The Northbeam strategy team in the Chicago office" />
+            <img
+              src="/media/about-team.jpg"
+              alt="Strategists working through an account review around a table"
+              width={1100}
+              height={1375}
+              loading="lazy"
+              decoding="async"
+            />
+            <span className="media-frame__scrim" aria-hidden="true" />
           </MaskWipe>
         </div>
 

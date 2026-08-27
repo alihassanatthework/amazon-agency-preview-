@@ -9,7 +9,8 @@ interface CaseStudy {
   problem: string;
   strategy: string;
   metric: { to: number; prefix?: string; suffix?: string; decimals?: number; label: string };
-  tone: string;
+  image: string;
+  alt: string;
 }
 
 const CASES: CaseStudy[] = [
@@ -19,7 +20,8 @@ const CASES: CaseStudy[] = [
     problem: 'Ad spend was buying back customers the brand already owned.',
     strategy: 'Rebuilt targeting around competitor conquesting and margin-weighted bids.',
     metric: { to: 214, suffix: '%', label: 'Net revenue growth, 11 months' },
-    tone: 'beauty',
+    image: '/media/case-beauty.jpg',
+    alt: 'Serum being dispensed from a dropper bottle in soft daylight',
   },
   {
     category: 'Apparel',
@@ -27,7 +29,8 @@ const CASES: CaseStudy[] = [
     problem: 'A 900-ASIN catalogue with no variation architecture and flat conversion.',
     strategy: 'Consolidated variations, rebuilt A+ and imagery around the top 40 ASINs.',
     metric: { to: 61, suffix: '%', label: 'Sales per visitor' },
-    tone: 'apparel',
+    image: '/media/case-apparel.jpg',
+    alt: 'A studio rail of outerwear in neutral tones',
   },
   {
     category: 'Food & beverage',
@@ -35,7 +38,8 @@ const CASES: CaseStudy[] = [
     problem: 'Growing revenue while contribution margin fell every quarter.',
     strategy: 'Repriced the range, cut unprofitable ASINs and re-targeted DSP to repeat buyers.',
     metric: { to: 9.4, decimals: 1, prefix: '$', suffix: 'M', label: 'Exit valuation, 2025' },
-    tone: 'food',
+    image: '/media/case-food.jpg',
+    alt: 'A portafilter of ground coffee and a flat white on a wooden board',
   },
 ];
 
@@ -174,7 +178,15 @@ function CaseCard({ study, animate }: { study: CaseStudy; animate: boolean }) {
   return (
     <article className="case-card card card--interactive" tabIndex={0}>
       <MaskWipe className="case-card__media media-frame">
-        <div className={`case-art case-art--${study.tone} media-fill`} />
+        <img
+          src={study.image}
+          alt={study.alt}
+          width={1000}
+          height={1250}
+          loading="lazy"
+          decoding="async"
+        />
+        <span className="media-frame__scrim" aria-hidden="true" />
       </MaskWipe>
 
       <div className="case-card__body">

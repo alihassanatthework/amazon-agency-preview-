@@ -39,7 +39,15 @@ export function ContactDetails() {
         </dl>
 
         <div className="contact-side__person">
-          <span className="contact-side__portrait" aria-hidden="true" />
+          <img
+            className="contact-side__portrait"
+            src="/media/strategist.jpg"
+            alt=""
+            width={400}
+            height={400}
+            loading="lazy"
+            decoding="async"
+          />
           <p className="body-s">
             <strong>Marcus Hale</strong> reads every submission and replies
             personally. He has run Amazon accounts for eleven years.

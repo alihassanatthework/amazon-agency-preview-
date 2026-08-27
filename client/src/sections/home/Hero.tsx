@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
-import { LineDraw, MaskWipe, WordRise, useParallax, useReducedMotion } from '../../motion';
+import { LineDraw, MaskWipe, WordRise, useParallax, useReducedMotion, useTilt } from '../../motion';
 import { ArrowRight } from '../../components/ui/Icon';
 
 /**
@@ -21,6 +21,10 @@ export function Hero() {
   const metricRef = useParallax<HTMLDivElement>(-24);
   const listingRef = useParallax<HTMLDivElement>(-96);
   const bloomRef = useParallax<HTMLDivElement>(30);
+
+  /* The hero composition is the page's one full 3D moment: the panel and the
+     two floating cards separate along Z and rotate together toward the cursor. */
+  const tilt = useTilt<HTMLDivElement>({ max: 4 });
 
   /* Entrance sequence runs on load, total under 1.4 seconds. */
   useEffect(() => {
@@ -90,8 +94,15 @@ export function Hero() {
         </div>
 
         {/* A layered marketplace-performance object, not a stock photograph. */}
-        <div className="hero__visual" aria-hidden="true">
-          <div ref={panelRef} className="hero__panel-wrap">
+        <div
+          className="hero__visual tilt-scene"
+          aria-hidden="true"
+          ref={tilt.ref}
+          onPointerMove={tilt.onPointerMove}
+          onPointerLeave={tilt.onPointerLeave}
+        >
+         <div className="hero__stage tilt-stage" style={tilt.style}>
+          <div ref={panelRef} className="hero__panel-wrap tilt-layer" style={{ ['--z' as string]: '0' }}>
             <MaskWipe className="hero__panel">
               <div className="hero__panel-inner">
                 <div className="hero__panel-head">
@@ -129,19 +140,28 @@ export function Hero() {
             </MaskWipe>
           </div>
 
-          <div ref={metricRef} className="hero__float hero__float--metric card card--elevated">
+          <div
+            ref={metricRef}
+            className="hero__float hero__float--metric card card--elevated tilt-layer"
+            style={{ ['--z' as string]: '58' }}
+          >
             <p className="caption">TACoS</p>
             <p className="hero__float-figure">11.4<span>%</span></p>
             <p className="caption hero__float-note">−4.6 pts vs. Q2</p>
           </div>
 
-          <div ref={listingRef} className="hero__float hero__float--listing card card--elevated">
+          <div
+            ref={listingRef}
+            className="hero__float hero__float--listing card card--elevated tilt-layer"
+            style={{ ['--z' as string]: '86' }}
+          >
             <div className="hero__thumb" />
             <div>
               <p className="hero__float-title">Best Seller</p>
               <p className="caption">Hair Care · #1</p>
             </div>
           </div>
+         </div>
         </div>
       </div>
 

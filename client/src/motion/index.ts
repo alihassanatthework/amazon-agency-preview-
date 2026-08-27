@@ -8,3 +8,4 @@ export { useReveal } from './useReveal';
 export { useParallax } from './useParallax';
 export { useReducedMotion, useMotionRoot } from './useReducedMotion';
 export { useMediaQuery } from './useMediaQuery';
+export { useTilt } from './useTilt';

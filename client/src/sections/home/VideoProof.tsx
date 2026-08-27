@@ -54,7 +54,16 @@ export function VideoProof() {
               />
             ) : (
               <div className="video__poster media-fill">
-                <div className="video__poster-art" aria-hidden="true" />
+                <img
+                  className="video__poster-art"
+                  src="/media/testimonial-poster.jpg"
+                  alt=""
+                  width={1600}
+                  height={900}
+                  loading="lazy"
+                  decoding="async"
+                />
+                <span className="video__poster-scrim" aria-hidden="true" />
                 <button
                   ref={playRef}
                   className="video__play"

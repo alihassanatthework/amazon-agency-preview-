@@ -84,8 +84,16 @@
   position: relative;
   min-height: 420px;
 }
+.hero__stage { position: relative; width: 100%; height: 100%; min-height: inherit; }
 
-.hero__panel-wrap { transform: translate3d(0, var(--parallax, 0px), 0); will-change: transform; }
+/* The floating cards keep their scroll parallax while the stage rotates
+   around them, so the two effects compose instead of overwriting each other. */
+.hero__panel-wrap, .hero__float { transform-style: preserve-3d; }
+
+.hero__panel-wrap {
+  transform: translate3d(0, var(--parallax, 0px), 0);
+  will-change: transform;
+}
 
 .hero__panel {
   border-radius: var(--radius-card);
@@ -148,8 +156,10 @@
 .hero__float {
   position: absolute;
   padding: var(--space-4);
-  transition: transform var(--motion-base) var(--ease-base),
-              box-shadow var(--motion-base) var(--ease-base);
+  transform:
+    translate3d(0, var(--parallax, 0px), 0)
+    translateZ(calc(var(--z, 0) * 1px * var(--tilt-depth, 1)));
+  transition: box-shadow var(--motion-base) var(--ease-base);
 }
 .hero__float--metric { left: -6%; bottom: 4%; width: 168px; --enter-delay: 180ms; }
 .hero__float--listing {
@@ -180,9 +190,15 @@
   background: linear-gradient(140deg, var(--amber-300), var(--amber-600));
 }
 
-/* Floating cards lift on hover — no rotation */
+/* Floating cards lift on hover — no rotation of their own; the stage carries
+   the rotation, and the card only steps further forward. */
 @media (hover: hover) and (pointer: fine) {
-  .hero__float:hover { transform: translate3d(0, calc(var(--parallax, 0px) - 6px), 0); box-shadow: var(--elev-2); }
+  .hero__float:hover {
+    box-shadow: var(--elev-2);
+    transform:
+      translate3d(0, calc(var(--parallax, 0px) - 6px), 0)
+      translateZ(calc((var(--z, 0) + 24) * 1px * var(--tilt-depth, 1)));
+  }
 }
 
 /* Scroll cue — a 24px vertical line with a 6px amber segment on a 2s cycle */
@@ -787,11 +803,21 @@ html:not(.motion-on) .approach__emphasis { color: var(--amber-800); }
 .video__poster-art {
   position: absolute;
   inset: 0;
-  background:
-    radial-gradient(70% 90% at 30% 20%, rgba(245, 166, 91, .5), transparent 60%),
-    radial-gradient(60% 80% at 80% 80%, rgba(210, 98, 26, .35), transparent 65%),
-    linear-gradient(155deg, var(--art-char-1), var(--graphite));
+  width: 100%; height: 100%;
+  object-fit: cover;
   transition: transform var(--motion-base) var(--ease-base);
+}
+
+/* A warm graded scrim so the white play control always has contrast beneath
+   it, whatever the poster frame happens to contain. */
+.video__poster-scrim {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background:
+    radial-gradient(58% 58% at 50% 50%, rgba(28, 26, 24, .42) 0%, transparent 72%),
+    linear-gradient(to top, rgba(28, 26, 24, .34) 0%, transparent 46%),
+    linear-gradient(120deg, rgba(210, 98, 26, .14) 0%, transparent 52%);
 }
 .video__player { width: 100%; height: 100%; border: 0; }
 
@@ -938,11 +964,8 @@ html:not(.motion-on) .approach__emphasis { color: var(--amber-800); }
 .case-card--end .display-m { margin: 0; }
 .case-card--end p { color: var(--graphite); }
 
-/* Card artwork — built from the palette, never stock photography */
-.case-art { width: 100%; height: 100%; }
-.case-art--beauty  { background: radial-gradient(80% 90% at 25% 20%, var(--amber-300), transparent 60%), linear-gradient(150deg, var(--canvas-deep), var(--art-sand-1)); }
-.case-art--apparel { background: radial-gradient(75% 85% at 75% 25%, var(--amber-500), transparent 62%), linear-gradient(150deg, var(--art-char-1), var(--graphite)); }
-.case-art--food    { background: radial-gradient(85% 85% at 40% 75%, var(--amber-600), transparent 60%), linear-gradient(150deg, var(--amber-wash), var(--art-amber-1)); }
+/* Card media — a cinematic crop of the real photograph. */
+.case-card__media img { width: 100%; height: 100%; object-fit: cover; }
 
 /* Mobile carousel / reduced-motion stack */
 .cases__carousel {
@@ -1096,14 +1119,10 @@ html:not(.motion-on) .comparison__panel { transform: none; opacity: 1; }
   transform: translate3d(0, var(--parallax, 0px), 0);
 }
 .about__frame { aspect-ratio: 4 / 5; }
-.about-art {
-  background:
-    radial-gradient(70% 60% at 30% 15%, rgba(245, 166, 91, .55), transparent 60%),
-    radial-gradient(80% 70% at 80% 90%, rgba(210, 98, 26, .3), transparent 65%),
-    linear-gradient(160deg, var(--canvas-deep) 0%, var(--art-sand-2) 100%);
-}
+.about__frame img { width: 100%; height: 100%; object-fit: cover; }
+.about__frame { box-shadow: var(--elev-2); }
 @media (hover: hover) and (pointer: fine) {
-  .about__frame:hover .about-art { transform: scale(1.02); }
+  .about__frame:hover img { transform: scale(1.02); }
 }
 
 /* The text column begins 64px below the image top — an intentional stagger. */

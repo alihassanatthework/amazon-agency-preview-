@@ -27,15 +27,11 @@
      Headlines are never orange. Body copy is never orange. */
 
   /* --- Illustration tints ----------------------------------------------
-     The built artwork (hero panel, case-study media, portraits) needs mid
-     steps that sit between the palette's stops. They are declared here so no
-     raw hex value ever appears in component code, and they are used for
-     graphics only — never for text or interface surfaces. */
+     The built graphics (the solutions stage) need mid steps that sit between
+     the palette's stops. Declared here so no raw hex value appears in
+     component code; graphics only, never text or interface surfaces. */
   --art-char-1:  #2A2622;   /* deep warm charcoal, between Ink and Graphite */
-  --art-sand-1:  #E0CDBB;
-  --art-sand-2:  #D9C6B4;
-  --art-sand-3:  #C9B6A4;
-  --art-amber-1: #F5C79A;   /* between Amber Wash and Amber 300           */
+  --art-amber-1: #F5C79A;   /* between Amber Wash and Amber 300            */
 
   /* --- 1.4 Radii -------------------------------------------------------- */
   --radius-input: 4px;   /* inputs and small controls                      */

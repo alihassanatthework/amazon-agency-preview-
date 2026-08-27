@@ -151,10 +151,35 @@
   .card--interactive:hover .media-frame > img,
   .card--interactive:hover .media-frame > .media-fill,
   .video__frame:hover .video__poster-art,
-  .about__frame:hover .about-art {
+  .about__frame:hover img {
     transform: none !important;
   }
   /* Marquee, blooms and the pinned sections have no animation to suspend
      because the motion-on class is never applied. */
   .logos__track { animation: none !important; }
+}
+
+/* --- Tilt: layered depth on a pointer-fine device ------------------------
+   The scene establishes perspective; the stage rotates inside it; layers
+   separate along Z. Only transform is animated, so it stays on the compositor. */
+.tilt-scene { perspective: 1400px; perspective-origin: 50% 50%; }
+
+.tilt-stage {
+  transform: rotateX(var(--tilt-x, 0deg)) rotateY(var(--tilt-y, 0deg));
+  transform-style: preserve-3d;
+  transition: transform var(--tilt-ease, var(--motion-base) var(--ease-base));
+  will-change: transform;
+}
+
+/* Each layer declares how far forward it sits. Elements that already own a
+   transform — scroll parallax, for instance — compose the translateZ into
+   their own rule instead; home.css loads after this file, so those win. */
+.tilt-layer {
+  transform: translateZ(calc(var(--z, 0) * 1px * var(--tilt-depth, 1)));
+  transform-style: preserve-3d;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .tilt-stage { transform: none !important; }
+  .tilt-layer { transform: none !important; }
 }
