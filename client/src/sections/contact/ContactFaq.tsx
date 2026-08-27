@@ -83,7 +83,11 @@ export function ContactFaq() {
                 <FaqPanel id={`faq-panel-${i}`} labelledBy={`faq-button-${i}`} open={isOpen}>
                   <p className="body">
                     {item.a}{' '}
-                    {item.link ? <a className="link" href={item.link.href}>{item.link.label}</a> : null}
+                    {item.link ? (
+                      <a className="link link--inline" href={item.link.href}>
+                        {item.link.label}
+                      </a>
+                    ) : null}
                   </p>
                 </FaqPanel>
               </div>

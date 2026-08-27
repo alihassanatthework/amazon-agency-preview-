@@ -1,10 +1,12 @@
 import { Reveal, RevealGroup, WordRise, useParallax } from '../../motion';
 import { site } from '../../data/site';
 
+/* Kept short deliberately: each one has to sit on a single line inside the
+   compact mobile panel, which is what keeps C1 under 60vh. */
 const RETURNS = [
-  'A written review of the account as it stands today',
-  'An advertising and contribution-margin assessment',
-  'A 30-minute call to walk through the findings',
+  'A written account review',
+  'An advertising and margin assessment',
+  'A 30-minute call',
 ];
 
 /**
@@ -37,9 +39,9 @@ export function ContactHero() {
 
           <Reveal delay={140}>
             <p className="body-l contact-hero__lead">
-              The audit covers advertising, listing quality, catalogue health and
-              competitive position. You get the findings in writing, whether or
-              not you go on to work with us.
+              Advertising, listing quality, catalogue health and competitive
+              position — reviewed in writing, whether or not you go on to work
+              with us.
             </p>
           </Reveal>
         </div>

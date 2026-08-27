@@ -523,6 +523,22 @@ p:last-child { margin-bottom: 0; }
 }
 .bg-ink :focus-visible, .footer :focus-visible { outline-color: var(--amber-300); }
 
+/* --- Touch target floor --------------------------------------------------
+   Every target a finger has to hit is at least 44px tall on a coarse pointer.
+   Links that sit inline inside a sentence are exempt via .link--inline, since
+   padding them out would break the line rhythm of the paragraph they are in. */
+@media (pointer: coarse) {
+  .link:not(.link--inline),
+  .pill,
+  .wordmark,
+  .skip-link {
+    min-height: 44px;
+    align-items: center;
+  }
+  .pill { padding-inline: var(--space-4); }
+  .btn--sm { min-height: 44px; }
+}
+
 /* --- Utilities ----------------------------------------------------------- */
 
 .visually-hidden {

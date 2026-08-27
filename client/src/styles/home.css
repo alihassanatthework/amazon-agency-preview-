@@ -458,7 +458,9 @@ html:not(.motion-on) .logos__track { animation: none; }
 
   .hero__actions { flex-direction: column; align-items: stretch; gap: var(--space-3); }
   .hero__actions .btn { width: 100%; }
-  .hero__secondary { justify-content: center; }
+  /* Left-aligned like everything else in the hero — the section is not one of
+     the three places centred alignment is permitted. */
+  .hero__secondary { align-self: flex-start; }
   .hero__cue-wrap { display: none; }
 
   .logos__filters {

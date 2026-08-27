@@ -449,14 +449,25 @@ html:not(.motion-on) .faq__answer { opacity: 1; transform: none; }
 @media (max-width: 767px) {
   /* Total section height kept under 60vh so the first form field is reachable
      in one scroll gesture. */
-  .contact-hero { min-height: 0; padding-bottom: var(--space-5); }
+  .contact-hero {
+    min-height: 0;
+    padding-top: calc(var(--header-h) + var(--space-4) * var(--section-pad-scale));
+    padding-bottom: var(--space-4);
+  }
+  .contact-hero__lead { font-size: var(--body); }
   .contact-hero__card {
+    margin-top: var(--space-5);
     background: var(--amber-wash);
     border-color: transparent;
     box-shadow: none;
     padding: var(--space-4);
   }
-  .contact-hero__list { grid-template-columns: 1fr; gap: var(--space-2); }
+  .contact-hero__list { grid-template-columns: 1fr; gap: var(--space-2); margin-top: var(--space-3); }
+  .contact-hero__turnaround {
+    margin-top: var(--space-3);
+    padding-top: var(--space-2);
+    border-top-color: rgba(143, 61, 16, .18);
+  }
 
   /* Card border removed and padding reduced so fields use the full width. */
   .form-card { border: 0; border-radius: 0; padding: 20px 0; }

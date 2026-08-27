@@ -413,7 +413,8 @@ export function ContactForm() {
                 />
                 <span>
                   I agree to Northbeam storing my details to respond to this
-                  request, as described in the <a className="link" href="#privacy">privacy policy</a>.
+                  request, as described in the{' '}
+                  <a className="link link--inline" href="#privacy">privacy policy</a>.
                 </span>
               </label>
               <FieldError name="consent" errors={errors} />

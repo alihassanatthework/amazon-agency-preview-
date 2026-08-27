@@ -290,6 +290,14 @@ body.is-locked { overflow: hidden; }
 @media (hover: hover) and (pointer: fine) { .footer__lower a:hover { color: var(--canvas); } }
 .footer__copy { margin-left: auto; }
 
+/* Footer links are stacked lists on touch, so they take the 44px floor too. */
+@media (pointer: coarse) {
+  .footer__col ul a,
+  .footer__contact a,
+  .footer__lower a { min-height: 44px; display: inline-flex; align-items: center; }
+  .footer__col ul { gap: 0; }
+}
+
 /* Footer accordion — mobile only; a plain heading everywhere else */
 .footer__toggle {
   display: none;
