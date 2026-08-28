@@ -1,11 +1,10 @@
 export { Reveal } from './Reveal';
 export { RevealGroup } from './RevealGroup';
-export { MaskWipe } from './MaskWipe';
+export { EmberWipe } from './EmberWipe';
 export { LineDraw } from './LineDraw';
 export { WordRise } from './WordRise';
-export { CountUp } from './CountUp';
-export { useReveal } from './useReveal';
-export { useParallax } from './useParallax';
-export { useReducedMotion, useMotionRoot } from './useReducedMotion';
+export { Counter } from './Counter';
+export { useDrift } from './Drift';
+export { useInView } from './useInView';
 export { useMediaQuery } from './useMediaQuery';
-export { useTilt } from './useTilt';
+export { useReducedMotion, useMotionRoot } from './useReducedMotion';

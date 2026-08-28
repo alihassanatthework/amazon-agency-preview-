@@ -1,59 +1,39 @@
-import type { ElementType } from 'react';
-import { useReveal } from './useReveal';
+import type { ElementType, ReactNode } from 'react';
+import { useInView } from './useInView';
 import { useReducedMotion } from './useReducedMotion';
 
-interface WordRiseProps {
-  /** One entry per line. Real authored breaks, not measured ones. */
-  lines: string[];
+interface Props {
+  lines: (string | ReactNode)[];
   as?: ElementType;
   className?: string;
   id?: string;
-  /** Cascade between lines. */
   stagger?: number;
-  /** Skip the observer — used by on-load entrance sequences. */
   immediate?: boolean;
 }
 
 /**
- * Word-rise — the headline is split by line and each line rises from a clipped
- * container at a 60ms cascade. Permitted on the hero headline and the two
- * largest section headlines only; overuse cheapens it.
+ * Word-rise — each authored line rises from a clipped container at a 70ms
+ * cascade. Permitted twice per page maximum; overuse destroys its impact.
  */
-export function WordRise({
-  lines,
-  as,
-  className,
-  id,
-  stagger = 60,
-  immediate = false,
-}: WordRiseProps) {
+export function WordRise({ lines, as, className, id, stagger = 70, immediate }: Props) {
   const Tag = (as ?? 'h2') as ElementType;
   const reduced = useReducedMotion();
-  const { ref, revealed } = useReveal<HTMLHeadingElement>({ immediate });
+  const { ref, inView } = useInView<HTMLHeadingElement>(immediate);
 
-  // With motion off the headline is plain text — no clipping wrappers at all.
   if (reduced) {
     return (
       <Tag className={className} id={id}>
-        {lines.map((line, i) => (
-          <span key={line}>
-            {line}
-            {i < lines.length - 1 ? <br /> : null}
-          </span>
+        {lines.map((l, i) => (
+          <span key={i}>{l}{i < lines.length - 1 ? <br /> : null}</span>
         ))}
       </Tag>
     );
   }
-
   return (
-    <Tag
-      ref={ref}
-      id={id}
-      className={[className, revealed ? 'is-revealed' : ''].filter(Boolean).join(' ')}
-    >
-      {lines.map((line, i) => (
-        <span className="line-clip" key={line}>
-          <span style={{ ['--reveal-delay' as string]: `${i * stagger}ms` }}>{line}</span>
+    <Tag ref={ref} id={id} className={[className, inView ? 'is-in' : ''].filter(Boolean).join(' ')}>
+      {lines.map((l, i) => (
+        <span className="line-clip" key={i}>
+          <span style={{ ['--d' as string]: `${i * stagger}ms` }}>{l}</span>
         </span>
       ))}
     </Tag>

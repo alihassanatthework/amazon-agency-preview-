@@ -1,25 +1,18 @@
-import { useReveal } from './useReveal';
+import type { CSSProperties } from 'react';
+import { useInView } from './useInView';
 
-interface LineDrawProps {
-  className?: string;
-  vertical?: boolean;
-  delay?: number;
-}
-
-/**
- * Line-draw — a 1px amber rule scales from scaleX(0) to 1 from the left edge
- * over motion-reveal. Used for eyebrow rules, section dividers and row separators.
- */
-export function LineDraw({ className, vertical = false, delay = 0 }: LineDrawProps) {
-  const { ref, revealed } = useReveal<HTMLDivElement>();
-
+export function LineDraw(
+  { className, vertical, delay = 0, style }:
+  { className?: string; vertical?: boolean; delay?: number; style?: CSSProperties },
+) {
+  const { ref, inView } = useInView<HTMLDivElement>();
   return (
     <div
       ref={ref}
-      data-line-draw={vertical ? 'vertical' : ''}
-      className={[className, revealed ? 'is-revealed' : ''].filter(Boolean).join(' ')}
-      style={delay ? ({ '--reveal-delay': `${delay}ms` } as React.CSSProperties) : undefined}
+      data-line={vertical ? 'y' : ''}
       aria-hidden="true"
+      className={[className, inView ? 'is-in' : ''].filter(Boolean).join(' ')}
+      style={{ ...style, ...(delay ? { ['--d' as string]: `${delay}ms` } : null) }}
     />
   );
 }

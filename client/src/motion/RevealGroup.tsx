@@ -1,49 +1,29 @@
 import { Children, cloneElement, isValidElement } from 'react';
-import type { ElementType, ReactElement, ReactNode } from 'react';
-import { useReveal } from './useReveal';
+import type { CSSProperties, ElementType, ReactElement, ReactNode } from 'react';
+import { useInView } from './useInView';
 
-interface RevealGroupProps {
+interface Props {
   as?: ElementType;
   children: ReactNode;
   className?: string;
-  /** Cascade between siblings. 80ms is the token default. */
   stagger?: number;
-  [key: string]: unknown;
+  [k: string]: unknown;
 }
 
-/**
- * Rise-stagger — rise applied to children with a cascade in DOM order.
- * The delay is capped at 400ms total so content is never gated behind motion.
- */
-export function RevealGroup({
-  as,
-  children,
-  className,
-  stagger = 80,
-  ...rest
-}: RevealGroupProps) {
+/** Rise-stagger — 80ms cascade, capped at 400ms so nothing gates reading. */
+export function RevealGroup({ as, children, className, stagger = 80, ...rest }: Props) {
   const Tag = (as ?? 'div') as ElementType;
-  const { ref, revealed } = useReveal<HTMLDivElement>();
-
-  const staggered = Children.map(children, (child, i) => {
+  const { ref, inView } = useInView<HTMLDivElement>();
+  const kids = Children.map(children, (child, i) => {
     if (!isValidElement(child)) return child;
-    const el = child as ReactElement<{ style?: React.CSSProperties }>;
+    const el = child as ReactElement<{ style?: CSSProperties }>;
     return cloneElement(el, {
-      style: {
-        ...el.props.style,
-        ['--reveal-delay' as string]: `${Math.min(i * stagger, 400)}ms`,
-      },
+      style: { ...el.props.style, ['--d' as string]: `${Math.min(i * stagger, 400)}ms` },
     });
   });
-
   return (
-    <Tag
-      ref={ref}
-      data-reveal-group=""
-      className={[className, revealed ? 'is-revealed' : ''].filter(Boolean).join(' ')}
-      {...rest}
-    >
-      {staggered}
+    <Tag ref={ref} data-reveal-group="" className={[className, inView ? 'is-in' : ''].filter(Boolean).join(' ')} {...rest}>
+      {kids}
     </Tag>
   );
 }
