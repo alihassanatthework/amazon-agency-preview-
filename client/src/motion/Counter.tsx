@@ -49,8 +49,11 @@ export function Counter({
 
   // §9.5 — a non-countable value renders as a static display value with a
   // fade-in rather than a broken counter.
+  // A value like "1 yr 7 mo" is not numerically countable, so it renders as a
+  // static string. It also carries far more glyphs than a two-digit numeral,
+  // so it is set a step down to sit on one line beside the counted cells.
   if (displayValue) {
-    return <span ref={ref} className={className}>{displayValue}</span>;
+    return <span ref={ref} className={[className, 'count--text'].filter(Boolean).join(' ')}>{displayValue}</span>;
   }
 
   const final = fmt(to ?? 0, decimals);
