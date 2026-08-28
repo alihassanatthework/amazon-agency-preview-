@@ -4,9 +4,11 @@
   "description": "Express + Mongoose API for the contact page audit request form",
   "main": "index.js",
   "scripts": {
-    "dev": "tsx watch src/index.ts",
-    "build": "tsc",
-    "start": "node dist/index.js"
+    "dev": "node --watch src/server.js",
+    "start": "node src/server.js",
+    "migrate": "psql \"$DATABASE_URL\" -v ON_ERROR_STOP=1 -f src/db/migrations/001_init.sql",
+    "seed": "node src/db/seeds/seed_content.js",
+    "seed:admin": "node src/db/seeds/seed_admin.js"
   },
   "keywords": [],
   "author": "",
