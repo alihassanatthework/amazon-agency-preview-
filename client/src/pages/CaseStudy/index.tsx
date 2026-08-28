@@ -1,8 +1,8 @@
+import { lazy, Suspense } from 'react';
 import { Link, useParams } from 'react-router-dom';
-import {
-  CartesianGrid, Line, LineChart, ResponsiveContainer, Tooltip, XAxis, YAxis,
-} from 'recharts';
 import { Counter, EmberWipe, Reveal, RevealGroup, useInView } from '../../motion';
+const CaseChart = lazy(() => import('../Home/sections/CaseChart'));
+
 import { Section, Container } from '../../components/layout/Section';
 import { PageHero } from '../../components/layout/PageHero';
 import { CtaSection } from '../../components/common/CtaSection';
@@ -74,18 +74,9 @@ export default function CaseStudy() {
               <div className="case__panel-inner">
                 <p className="caption case__chart-label">Ordered product sales — year on year</p>
                 <div className="case__chart">
-                  <ResponsiveContainer width="100%" height="100%">
-                    <LineChart data={DATA} margin={{ top: 8, right: 8, bottom: 0, left: -12 }}>
-                      <CartesianGrid stroke="rgba(142,145,136,.12)" vertical={false} />
-                      <XAxis dataKey="month" stroke="#8E9188" tickLine={false} axisLine={false} tick={{ fontSize: 12 }} />
-                      <YAxis stroke="#8E9188" tickLine={false} axisLine={false} width={54} tick={{ fontSize: 12 }}
-                             tickFormatter={(v: number) => `$${Math.round(v / 1000)}k`} />
-                      <Tooltip contentStyle={{ background: '#131711', border: '1px solid #2A3124', borderRadius: 8, color: '#C7C9C1', fontSize: 13 }}
-                               formatter={(v) => [`$${Number(v).toLocaleString()}`, ''] as [string, string]} />
-                      <Line type="monotone" dataKey="prior" stroke="#6F9A6B" strokeWidth={2} strokeOpacity={.6} dot={false} isAnimationActive={inView} animationDuration={1400} />
-                      <Line type="monotone" dataKey="current" stroke="#8AB04B" strokeWidth={2.5} dot={false} isAnimationActive={inView} animationDuration={1400} />
-                    </LineChart>
-                  </ResponsiveContainer>
+                  <Suspense fallback={<div className="skeleton case__chart-skeleton" />}>
+                    <CaseChart data={DATA} animate={inView} />
+                  </Suspense>
                 </div>
                 <div className="case__legend">
                   <span><i style={{ background: '#8AB04B' }} />This year</span>

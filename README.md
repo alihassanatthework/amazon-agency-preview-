@@ -1,130 +1,126 @@
-# Amazon Growth Agency — Homepage & Contact Page
+# BLAZON — Amazon account management & growth
 
-A MERN build of the *Homepage and Contact Page Roadmap* specification: two pages
-on a unified white + amber-orange visual system, with a full design-token layer,
-seven reusable motion primitives, and a first-class reduced-motion rendering path.
+Implementation of the *BLAZON Master Implementation Blueprint*. Dark obsidian
+foundation, logo-derived lime accent, editorial luxury.
 
-- **Client** — Vite + React 19 + TypeScript, React Router
-- **Server** — Express + Mongoose (MongoDB), Zod validation
+**Stack (fixed):** React 18 + Vite · Node.js + Express · PostgreSQL · JWT auth
 
-## Getting started
+---
+
+## Running it
 
 ```bash
 npm run install:all
 ```
 
-Copy the server environment file and point it at a MongoDB instance:
+**Database** — PostgreSQL must be running.
 
 ```bash
-cp server/.env.example server/.env
+createdb blazon_dev
+cd server
+cp .env.example .env          # then fill in the two JWT secrets
+npm run migrate               # 24 tables, 23 triggers, clean on empty
+npm run seed                  # content from the _Marketing archive
+npm run seed:admin            # first admin; there is no public registration
 ```
 
-Run the client and API together:
+**Both servers**
 
 ```bash
-npm run dev
+npm run dev                   # client on :5173, API on :4000
 ```
 
-The client runs on `http://localhost:5173` and proxies `/api` to the API on
-`http://localhost:4000`. The API starts without MongoDB so the front end can be
-developed against it, but submissions then return 503 and log the payload rather
-than reporting a false success.
+The client proxies `/api` to the API in development. In production set
+`VITE_API_URL` on the client and `CLIENT_URL` on the API.
 
-Other scripts: `npm run build`, `npm run typecheck`, `npm run lint`.
+---
 
-See [ARCHITECTURE.md](ARCHITECTURE.md) for why the code is split into two
-packages, how a form submission travels, and the rules each layer follows.
+## What is built
+
+| Phase | Status |
+| --- | --- |
+| 1 · Tokens and asset prep | **Done** |
+| 2 · Primitives and motion | **Done** |
+| 3 · Database | **Done** |
+| 4 · Backend read + write endpoints | **Done** |
+| 5 · Auth | **Done** |
+| 6 · Lead pipeline | **Done** |
+| 7 · Homepage | **Done** |
+| 8 · Remaining pages | **Done** |
+| 9 · Motion pass | **Done** |
+| 10 · Admin panel | API done; **UI not built** |
+| 11 · Integration (prerender, sitemap, consent, analytics) | **Partial** — per-route SEO and JSON-LD done |
+| 12 · QA and production | Ongoing |
+
+### Not yet built
+
+- **Admin panel UI.** Every endpoint exists and is verified (`/api/admin/*` —
+  dashboard, leads with filter/search/sort/paginate, lead detail with event
+  timeline, status updates, CSV export, messages, content listing, audit log,
+  settings). There are no React screens in front of them yet.
+- **Prerendering.** The blueprint calls this the one genuine SEO weakness of a
+  Vite SPA (§19.3). Per-route metadata, canonicals, OG and Schema.org are all
+  applied client-side, but crawlers would be better served by prerendered HTML.
+- **Cookie consent banner and analytics.** The footer control and the
+  `POST /api/consent` endpoint exist; the overlay and GA4 injection do not.
+- **Media upload.** `media_assets` and the schema are in place; the upload route
+  with magic-number validation is not.
+- **Content is currently rendered from typed modules in `client/src/data/`,
+  not fetched from the API.** Both carry identical content — the seed and the
+  modules come from the same source documents — but the admin panel will only
+  be useful once the pages read from `/api`.
+
+---
 
 ## Structure
 
 ```
 client/src
-  styles/tokens.css     Phase 01 — colour, type, spacing, radius, shadow, motion tokens
-  styles/base.css       Phase 02 — primitives: button, link, input, card, pill, eyebrow
-  styles/motion.css     Phase 03 — the CSS half of the motion primitives
-  styles/shell.css      Phase 04 — header states, mobile drawer, footer
-  styles/home.css       H1–H10
-  styles/contact.css    C1–C5
-  motion/               Reveal, RevealGroup, MaskWipe, LineDraw, WordRise, CountUp,
-                        useReveal, useParallax, useReducedMotion, useMediaQuery
-  components/shell/     Header, Footer, BackgroundLayer
-  components/ui/        SectionHeader, icons
-  sections/home/        H1 Hero … H10 ContactCta, plus the mobile sticky CTA
-  sections/contact/     C1 ContactHero … C5 ContactFaq, form schema
-  pages/                HomePage, ContactPage
+  styles/tokens.css     blueprint §04–06 in one file — no hardcoded values after this
+  styles/base.css       primitives, every state
+  styles/motion.css     the CSS half of the seven reveal patterns
+  styles/layout.css     header, dropdowns, drawer, footer
+  styles/pages.css      section and page styles
+  motion/               Reveal, RevealGroup, EmberWipe, LineDraw, WordRise,
+                        Counter, useDrift — each reduced-motion aware
+  components/layout/    Section, SectionHeader, PageHero, Header, Footer,
+                        PublicLayout (route wipe), Logo
+  components/common/    CtaSection, TestimonialWall, FaqAccordion, Seo,
+                        EmptyState, StickyCta
+  data/                 site, services (36 items), testimonials (12), articles
+  pages/                Home (13 sections) + 14 routes
 
 server/src
-  index.ts              App, CORS, rate limiting, health check, Mongo connection
-  models/Lead.ts        Audit request schema
-  routes/leads.ts       POST /api/leads with server-side validation
+  config/env.js         validated at boot; the process refuses to start if invalid
+  db/migrations/        001_init.sql — 20 tables
+  db/seeds/             content.data.js, seed_content.js, seed_admin.js
+  db/repositories/      SQL lives only here
+  services/             plain arguments in, plain data out; never touch req/res
+  routes/               public, auth, admin
+  middleware/           auth, validate, error
 ```
 
-## How the harder pieces work
+---
 
-**Reduced motion is a rendering path, not a fallback.** The hidden initial
-states live behind `html.motion-on`, which is only ever added when JavaScript
-runs *and* `prefers-reduced-motion` is unset. With motion off, nothing is hidden
-and both pages render complete and well-composed.
+## Things worth knowing
 
-**Two sections recompose rather than shrink.** H4 (pinned solutions) and H7
-(horizontal case studies) drop their pins below 768px and become stacked cards
-and a native snap carousel. Scroll-driven pinning on touch fights the platform's
-native scroll.
+**Dark is the foundation because of contrast, not taste.** The logo green
+`#8AB04B` measures 7.80:1 on near-black and 2.33:1 on off-white. On a light
+site the brand's own accent could not legally carry text. `Section` takes a
+`surface` prop that rewrites the colour tokens, so one component set serves
+both — on light surfaces the accent steps down to `green-700` for fills and
+`green-800` for text automatically.
 
-**Section boundaries crossfade on one shared layer.** `BackgroundLayer` paints a
-fixed gradient whose stops are the on-screen section boundaries, softened over a
-per-boundary overlap. Animating each section's own background produces a visible
-seam; interpolating one layer beneath the content does not. Sections only go
-transparent once the layer has painted, so a viewport it cannot measure falls
-back to per-section backgrounds.
+**Reduced motion is a rendering path, not a fallback.** Hidden initial states
+are scoped to `html.motion-on`, added only when JS runs *and*
+`prefers-reduced-motion` is unset. Both pages render complete without either.
 
-**Count-up reserves its own width.** The final value renders as an inert spacer
-stacked beneath the animating one, so there is zero layout shift and no
-measurement pass.
+**No lead is ever lost.** The lead commits to PostgreSQL with its first event
+in one transaction, before any notification is attempted. With SMTP
+unconfigured the lead still persists and surfaces on the dashboard as
+`notify_status='failed'`. Verified by running exactly that.
 
-## Rules this build holds to
-
-- Orange at three fixed weights: **600 fills actions, 800 writes text, 500 draws
-  graphics.** No orange headlines; Amber 500 never carries text below 24px.
-- No duration or easing outside the token table, and no raw hex in component code.
-- Transform and opacity only — nothing animates a layout property.
-- Reveals fire once and never replay on upward scroll.
-- Every form field has a persistent visible label, validation runs on blur rather
-  than on keystroke, errors are announced through a live region, and focus moves
-  to the first invalid field.
-
-## Deploying
-
-The client is a static Vite build; the API is a separate Node service.
-
-**Client on Vercel** — import the repo and set:
-
-| Setting | Value |
-| --- | --- |
-| Root Directory | `client` |
-| Framework Preset | **Vite** (not Create React App) |
-| Build Command | `npm run build` |
-| Output Directory | `dist` |
-
-`client/vercel.json` rewrites unknown paths to `index.html`, without which a
-direct load of `/contact` returns 404 — React Router owns that route on the
-client, so the server has to hand it the shell.
-
-**API** — Vercel's static output cannot run Express, so deploy `server/` to a
-Node host (Render, Railway, Fly, a container) and set `VITE_API_URL` in the
-Vercel project to that origin. Left unset, the form posts to the same origin
-and will 404 in production. Set `CLIENT_ORIGIN` on the API to the deployed
-client origin so CORS is not left open.
-
-## Known gaps
-
-- MongoDB was not running in the environment this was built in, so the persisted
-  path (`201` + stored document) is untested end to end; validation, the failure
-  path and the 503 recovery path were verified against the running API.
-- Photography is stock, and the testimonial quote, client names and metrics are
-  placeholders. Replace both with real client assets and verified figures before
-  this goes live — a real face attached to an invented quote and attribution is
-  not something to ship.
-- The mobile contact hero lands at 67vh rather than the roadmap's 60vh target.
-  The requirement behind that number is met: the form card and its first input
-  both sit above the fold at 375×812.
+**Discrepancies between the blueprint and the source archive are recorded, not
+resolved silently.** See [BLAZON-FINDINGS.md](BLAZON-FINDINGS.md) — most
+importantly the service count, which the blueprint prints as 38 in shipping
+headline copy while the source document lists 36.
