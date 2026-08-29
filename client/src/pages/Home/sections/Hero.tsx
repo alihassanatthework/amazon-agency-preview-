@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import { WordRise, useDrift, useReducedMotion } from '../../../motion';
 import { Container } from '../../../components/layout/Section';
 import { ArrowRight } from '../../../components/ui/Icon';
-import flame from '../../../assets/logo/flame.png';
+import { FlameEnergy } from '../../../components/common/FlameEnergy';
 
 /**
  * H1 / §9.3 — the claim. Centred across columns 3–10, one of the three
@@ -45,7 +45,7 @@ export function Hero() {
     >
       <div ref={emberRef} className="ember-gradient hero__ember" aria-hidden="true" />
       <div ref={flameRef} className="hero__watermark" aria-hidden="true">
-        <img src={flame} alt="" />
+        <FlameEnergy />
       </div>
 
       <Container className="hero__inner">

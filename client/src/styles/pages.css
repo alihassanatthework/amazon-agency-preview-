@@ -23,7 +23,34 @@
   transform: translateY(-50%) translate3d(0, var(--drift, 0px), 0);
   opacity: .04; pointer-events: none;
 }
-.hero__watermark img { width: 46vw; max-width: 620px; height: auto; }
+.hero__watermark img,
+.hero__watermark svg.flame-energy { width: 46vw; max-width: 620px; height: auto; overflow: visible; }
+
+/* --- Hero flame energy loop ----------------------------------------------
+   A small dot rises through the existing hero watermark flame, leaving a
+   green fill behind it, then fades and resets. Ambient and continuous — not
+   the logo's single load-time shimmer, and scoped to this one large
+   background mark rather than the header/footer lockup.
+
+   6.4s is a deliberate pace choice, not one of the six fixed timing tokens:
+   none of them are meant to span a full ambient loop, and the brand's own
+   motion philosophy calls for "slow, weighted, deliberate" over abundant.
+   The curve reuses --e-mask, the token already used for large media reveals. */
+.flame-energy__runner {
+  animation: flame-rise 6.4s var(--e-mask) infinite;
+  will-change: transform, opacity;
+}
+@keyframes flame-rise {
+  0%     { transform: translateY(0); opacity: 1; }
+  78%    { transform: translateY(-204px); opacity: 1; }
+  88%    { transform: translateY(-204px); opacity: 0; }
+  88.1%  { transform: translateY(0); opacity: 0; }
+  100%   { transform: translateY(0); opacity: 1; }
+}
+/* Global rule in motion.css forces animation-duration to .01ms under
+   prefers-reduced-motion, which collapses this to its 100% frame: opacity 1,
+   translateY(0) — the dot at rest at the flame's base, fill invisible. A
+   static flame, exactly as it renders today. */
 
 .hero__inner { position: relative; z-index: 1; max-width: 1120px; }
 /* The real headline is a 29-character question. display-xl at a flat 80px
