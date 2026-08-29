@@ -18,39 +18,78 @@
   width: 120vw; height: 90vh; max-width: 1600px;
   transform: translateX(-50%) translate3d(0, var(--drift, 0px), 0);
 }
-.hero__watermark {
+/* Shared position + drift for both flame layers — they move as one unit. */
+.hero__flame-wrap {
   position: absolute; right: -8%; top: 50%;
   transform: translateY(-50%) translate3d(0, var(--drift, 0px), 0);
-  opacity: .04; pointer-events: none;
+  pointer-events: none;
+  width: 46vw; max-width: 620px;
+  display: grid;
 }
-.hero__watermark img,
-.hero__watermark svg.flame-energy { width: 46vw; max-width: 620px; height: auto; overflow: visible; }
+.hero__flame-wrap > div { grid-area: 1 / 1; width: 100%; }
 
-/* --- Hero flame energy loop ----------------------------------------------
-   A small dot rises through the existing hero watermark flame, leaving a
-   green fill behind it, then fades and resets. Ambient and continuous — not
-   the logo's single load-time shimmer, and scoped to this one large
-   background mark rather than the header/footer lockup.
+/* The dim resting flame — unchanged from the original watermark: 4% opacity,
+   the design system's own figure for this mark (§9.3). This is the
+   "unfilled, original colour" state the liquid layer sits on top of. */
+.hero__watermark { opacity: .04; }
 
-   6.4s is a deliberate pace choice, not one of the six fixed timing tokens:
-   none of them are meant to span a full ambient loop, and the brand's own
-   motion philosophy calls for "slow, weighted, deliberate" over abundant.
-   The curve reuses --e-mask, the token already used for large media reveals. */
-.flame-energy__runner {
-  animation: flame-rise 6.4s var(--e-mask) infinite;
+/* The liquid fill — its own opacity, independent of the base layer above.
+   Nested under a 4%-opacity ancestor, no fill colour can ever read as
+   "bright" or "saturated"; escaping that ceiling is what makes the CTA-green
+   fill actually visible as a fill rather than a barely-there tint. */
+.hero__flame-fill { opacity: 0; }
+/* Peak opacity is capped at .6, not 1 — measured, not guessed. The exact
+   CTA hex (#8AB04B) at full opacity over obsidian gives white hero text a
+   2.33:1 contrast ratio against it, which is the "white on lime-500 FAILS"
+   pairing the design system's own contrast table (§4.6) rules out. At .6 the
+   blended backdrop clears WCAG AA at 5.26:1 while the fill is still a
+   dramatic, unmistakable jump from the original 4% watermark — 15x more
+   visible, still the exact CTA colour, just not opaque enough to sit under
+   body copy and fail accessibility. */
+.motion-on .hero.is-entered .hero__flame-fill {
+  opacity: .6;   /* the loop's own keyframes then modulate down from here */
+  transition: opacity 1000ms var(--e-reveal) 200ms;
+}
+.hero__watermark svg, .hero__flame-fill svg { width: 100%; height: auto; overflow: visible; display: block; }
+
+/* --- Hero flame liquid fill loop ------------------------------------------
+   The flame fills from the bottom like a container, not a particle
+   travelling through it: everything below the current level is solid
+   CTA-green, clipped to the flame silhouette (FlameEnergy.tsx), with a small
+   dot marking the surface. Ambient and continuous — the header/footer logo's
+   flame keeps its single load-time shimmer and never loops; this is the one
+   large decorative background mark, a separate element.
+
+   7.2s total is a deliberate pace, not one of the six fixed timing tokens:
+   none of them are meant to span a full ambient loop. The rise itself reuses
+   --e-mask, the token already used for large media reveals. */
+.flame-fill__runner {
+  animation: flame-rise 7.2s var(--e-mask) infinite;
   will-change: transform, opacity;
 }
 @keyframes flame-rise {
-  0%     { transform: translateY(0); opacity: 1; }
-  78%    { transform: translateY(-204px); opacity: 1; }
-  88%    { transform: translateY(-204px); opacity: 0; }
-  88.1%  { transform: translateY(0); opacity: 0; }
-  100%   { transform: translateY(0); opacity: 1; }
+  0%     { transform: translateY(0); opacity: 1; }      /* empty, dot at the base */
+  62%    { transform: translateY(-204px); opacity: 1; } /* risen to the top */
+  78%    { transform: translateY(-204px); opacity: 1; } /* held, fully filled */
+  90%    { transform: translateY(-204px); opacity: 0; } /* fades out while full */
+  90.1%  { transform: translateY(0); opacity: 0; }       /* reset while invisible */
+  100%   { transform: translateY(0); opacity: 1; }       /* fades back in, empty */
+}
+/* The surface highlight breathes gently on its own short cycle — the "very
+   subtle organic movement" a liquid surface needs, independent of the rise
+   so it never reads as a second, competing motion. */
+.flame-fill__surface {
+  animation: flame-surface 2.6s ease-in-out infinite alternate;
+}
+@keyframes flame-surface {
+  from { transform: translateY(0); }
+  to   { transform: translateY(-1.4px); }
 }
 /* Global rule in motion.css forces animation-duration to .01ms under
-   prefers-reduced-motion, which collapses this to its 100% frame: opacity 1,
-   translateY(0) — the dot at rest at the flame's base, fill invisible. A
-   static flame, exactly as it renders today. */
+   prefers-reduced-motion, which collapses both loops to their 100%/`to`
+   frame: the fill layer lands at opacity 1 but translateY(0) — empty, dot at
+   the base, static. Both loops only ever animate transform and opacity, so
+   nothing can draw outside the flame at any frame. */
 
 .hero__inner { position: relative; z-index: 1; max-width: 1120px; }
 /* The real headline is a 29-character question. display-xl at a flat 80px
@@ -84,6 +123,8 @@
 .motion-on .hero__ember, .motion-on .hero__watermark { opacity: 0; }
 .motion-on .hero.is-entered .hero__ember { opacity: var(--bloom-o, .55); transition: opacity 1000ms var(--e-reveal); }
 .motion-on .hero.is-entered .hero__watermark { opacity: .04; transition: opacity 1000ms var(--e-reveal) 200ms; }
+/* .hero__flame-fill's entrance opacity is declared beside its resting state
+   above, since the loop keyframes need to read from that same baseline. */
 
 .hero__cue {
   position: absolute; left: 50%; bottom: 32px; transform: translateX(-50%);

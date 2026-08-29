@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import { WordRise, useDrift, useReducedMotion } from '../../../motion';
 import { Container } from '../../../components/layout/Section';
 import { ArrowRight } from '../../../components/ui/Icon';
-import { FlameEnergy } from '../../../components/common/FlameEnergy';
+import { FlameBase, FlameLiquidFill } from '../../../components/common/FlameEnergy';
 
 /**
  * H1 / §9.3 — the claim. Centred across columns 3–10, one of the three
@@ -44,8 +44,14 @@ export function Hero() {
       aria-labelledby="hero-title"
     >
       <div ref={emberRef} className="ember-gradient hero__ember" aria-hidden="true" />
-      <div ref={flameRef} className="hero__watermark" aria-hidden="true">
-        <FlameEnergy />
+      {/* One positioned wrapper carries the scroll drift for both layers, so
+          they can never separate. The dim base flame keeps the design
+          system's 4% opacity untouched; the liquid fill is a sibling with
+          its own opacity, since no fill color can read as "bright" nested
+          inside a 4%-opacity ancestor. */}
+      <div ref={flameRef} className="hero__flame-wrap" aria-hidden="true">
+        <div className="hero__watermark"><FlameBase /></div>
+        <div className="hero__flame-fill"><FlameLiquidFill /></div>
       </div>
 
       <Container className="hero__inner">
