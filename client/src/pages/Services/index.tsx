@@ -6,6 +6,7 @@ import { PageHero } from '../../components/layout/PageHero';
 import { CtaSection } from '../../components/common/CtaSection';
 import { TestimonialWall } from '../../components/common/TestimonialWall';
 import { Seo } from '../../components/common/Seo';
+import { TiltCard } from '../../components/common/TiltCard';
 import { ArrowRight, Check } from '../../components/ui/Icon';
 import { services, totalServices, included } from '../../data/services';
 
@@ -27,7 +28,7 @@ export default function Services() {
         <Container>
           <RevealGroup className="svc__groups" stagger={80}>
             {services.map((g) => (
-              <article className="svc__group card" key={g.slug}>
+              <TiltCard as="article" className="svc__group card" key={g.slug}>
                 <header className="svc__group-head">
                   <h2 className="heading-s">{g.title}</h2>
                   {g.additionalCost && <span className="badge">Additional cost</span>}
@@ -48,7 +49,7 @@ export default function Services() {
                 <Link className="link svc__more" to={`/services/${g.slug}`}>
                   More on {g.short}<ArrowRight />
                 </Link>
-              </article>
+              </TiltCard>
             ))}
           </RevealGroup>
         </Container>
@@ -63,14 +64,14 @@ export default function Services() {
           />
           <RevealGroup className="incl__grid" stagger={80}>
             {included.map((block) => (
-              <div className="incl__block card" key={block.group}>
+              <TiltCard as="div" className="incl__block card" key={block.group}>
                 <h3 className="heading-s">{block.group}</h3>
                 <ul>
                   {block.items.map((i) => (
                     <li key={i}><span className="incl__tick" aria-hidden="true"><Check size={12} /></span>{i}</li>
                   ))}
                 </ul>
-              </div>
+              </TiltCard>
             ))}
           </RevealGroup>
           <Reveal className="incl__note">

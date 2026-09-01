@@ -5,6 +5,7 @@ import { SectionHeader } from '../../components/layout/SectionHeader';
 import { PageHero } from '../../components/layout/PageHero';
 import { CtaSection } from '../../components/common/CtaSection';
 import { Seo } from '../../components/common/Seo';
+import { TiltCard } from '../../components/common/TiltCard';
 import { ArrowRight } from '../../components/ui/Icon';
 import { articles } from '../../data/articles';
 
@@ -29,12 +30,12 @@ export default function Insights() {
         <Container>
           <RevealGroup className="insights__grid" stagger={80}>
             {live.map((a) => (
-              <Link className="insight card card--interactive" to={`/insights/${a.slug}`} key={a.slug}>
+              <TiltCard as={Link} className="insight card card--interactive" to={`/insights/${a.slug}`} key={a.slug}>
                 <p className="insight__meta">{a.readingMinutes} min read</p>
                 <h2 className="heading-s insight__title">{a.title}</h2>
                 <p className="body-s insight__excerpt">{a.excerpt}</p>
                 <span className="link insight__link">Read it<ArrowRight /></span>
-              </Link>
+              </TiltCard>
             ))}
           </RevealGroup>
 

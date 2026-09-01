@@ -1,6 +1,7 @@
 import { RevealGroup } from '../../../motion';
 import { Section, Container } from '../../../components/layout/Section';
 import { SectionHeader } from '../../../components/layout/SectionHeader';
+import { TiltCard } from '../../../components/common/TiltCard';
 
 /**
  * H4 / §9.6 — LIGHT SECTION. Names the pain in the reader's own words, drawn
@@ -27,10 +28,10 @@ export function Problem() {
         />
         <RevealGroup className="problem__grid" stagger={80}>
           {PROBLEMS.map(([title, body]) => (
-            <article className="problem__card card card--interactive" key={title}>
+            <TiltCard as="article" className="problem__card card card--interactive" key={title}>
               <h3 className="problem__title">{title}</h3>
               <p className="body-s">{body}</p>
-            </article>
+            </TiltCard>
           ))}
         </RevealGroup>
       </Container>

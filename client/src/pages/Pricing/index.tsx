@@ -7,6 +7,7 @@ import { PageHero } from '../../components/layout/PageHero';
 import { CtaSection } from '../../components/common/CtaSection';
 import { FaqAccordion } from '../../components/common/FaqAccordion';
 import { Seo } from '../../components/common/Seo';
+import { TiltCard } from '../../components/common/TiltCard';
 import { Check } from '../../components/ui/Icon';
 import { included } from '../../data/services';
 import { site } from '../../data/site';
@@ -103,7 +104,7 @@ export default function Pricing() {
 
           <RevealGroup className="pricing__grid" stagger={80} key={model}>
             {tiers.map((t) => (
-              <article className={`pricing__tier card${t.featured ? ' card--accent is-featured' : ''}`} key={t.name}>
+              <TiltCard as="article" className={`pricing__tier card${t.featured ? ' card--accent is-featured' : ''}`} key={t.name}>
                 {t.featured && <span className="pricing__flag">Most common</span>}
                 <h3 className="heading-s">{t.name}</h3>
                 <p className="caption pricing__skus">
@@ -131,7 +132,7 @@ export default function Pricing() {
                   </>
                 )}
                 <Link className="btn btn--secondary btn--sm pricing__cta" to="/get-started">Get a free audit</Link>
-              </article>
+              </TiltCard>
             ))}
           </RevealGroup>
         </Container>
@@ -205,12 +206,12 @@ export default function Pricing() {
           <SectionHeader eyebrow="What's included" headline={['Included every month.']} />
           <RevealGroup className="incl__grid" stagger={80}>
             {included.map((b) => (
-              <div className="incl__block card" key={b.group}>
+              <TiltCard as="div" className="incl__block card" key={b.group}>
                 <h3 className="heading-s">{b.group}</h3>
                 <ul>{b.items.map((i) => (
                   <li key={i}><span className="incl__tick" aria-hidden="true"><Check size={12} /></span>{i}</li>
                 ))}</ul>
-              </div>
+              </TiltCard>
             ))}
           </RevealGroup>
         </Container>

@@ -5,6 +5,7 @@ export { LineDraw } from './LineDraw';
 export { WordRise } from './WordRise';
 export { Counter } from './Counter';
 export { useDrift } from './Drift';
+export { useTilt } from './useTilt';
 export { useInView } from './useInView';
 export { useMediaQuery } from './useMediaQuery';
 export { useReducedMotion, useMotionRoot } from './useReducedMotion';
