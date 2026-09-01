@@ -10,18 +10,18 @@ import { TiltCard } from '../../components/common/TiltCard';
 import { ArrowRight, Check } from '../../components/ui/Icon';
 import { services, totalServices, included } from '../../data/services';
 
-/** §10.1 — the seven groups as one integrated system. */
+/** §10.1 — the six groups as one integrated system. */
 export default function Services() {
   return (
     <>
       <Seo
         route="/services" title={`${totalServices} Amazon services, one account team — BLAZON`}
-        description="Seven disciplines run as one system on your Amazon account: account management, listings, advertising, sales growth, operations, analytics and international expansion."
+        description="Six disciplines run as one system on your Amazon account: account setup, listing optimization, account health, advertising & marketing, value adds and team trainings."
       />
       <PageHero
         eyebrow="Services"
         headline={[`${totalServices} services.`, 'One account team.']}
-        lead="Most agencies work the handful of levers that produce the easy majority of sales. We work all of them, across seven disciplines, run as one system on your account."
+        lead="Most agencies work the handful of levers that produce the easy majority of sales. We work all of them, across six disciplines, run as one system on your account."
       />
 
       <Section surface="obsidian">
@@ -41,7 +41,7 @@ export default function Services() {
                       <span>
                         <strong>{it.name}</strong>
                         {it.additionalCost && <em className="svc__extra"> (additional cost)</em>}
-                        <span className="svc__desc"> — {it.description}</span>
+                        {it.description && <span className="svc__desc"> — {it.description}</span>}
                       </span>
                     </li>
                   ))}
@@ -60,7 +60,7 @@ export default function Services() {
           <SectionHeader
             eyebrow="What's included"
             headline={['Included every month.']}
-            lead="The work that happens on your account whether or not anything is on fire. Three items carry an additional cost and are marked as such — hiding that would be a trust failure."
+            lead="The work that happens on your account whether or not anything is on fire."
           />
           <RevealGroup className="incl__grid" stagger={80}>
             {included.map((block) => (
@@ -76,8 +76,7 @@ export default function Services() {
           </RevealGroup>
           <Reveal className="incl__note">
             <p className="caption">
-              Additional cost: Inventory &amp; Demand Planning · International Expansion ·
-              Localization &amp; Translation. Ad management is included up to $3,000/month in spend.
+              Ad management is included up to $3,000/month in spend.
             </p>
           </Reveal>
         </Container>

@@ -224,7 +224,7 @@ export default function Pricing() {
             { q: 'Is there a minimum term?', a: 'Three calendar months, because significant work is fronted to produce faster results. After that the agreement automatically becomes month-to-month and you can cancel at any time by emailing your account manager.' },
             { q: 'What does the 5% apply to?', a: 'Gross sales above your average monthly sales — so it is a share of the growth, not a share of the business you already had. It is charged once the calendar month is complete.' },
             { q: 'Is advertising management included?', a: 'Yes, up to $3,000/month in ad spend. Above that we hand off to a specialist partner rather than pretend otherwise. We also recommend an ad budget of 5–10% of monthly gross sales.' },
-            { q: 'Does this cover international marketplaces?', a: 'Prices are based on Amazon US management only. International markets are quoted separately, as are inventory and demand planning, and localisation and translation.' },
+            { q: 'Does this cover international marketplaces?', a: 'Prices are based on Amazon US management only. International marketplaces are quoted separately.' },
             { q: 'Can pricing be customised?', a: `Yes. Flexible and custom pricing is available — call ${site.phone} to discuss your specific situation.` },
           ]} />
         </Container>

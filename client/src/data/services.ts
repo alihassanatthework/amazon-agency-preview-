@@ -1,11 +1,12 @@
 /**
- * The seven service groups and their 36 items, verbatim from Our services.docx.
+ * The six service categories and their items — client-approved wording, used
+ * verbatim rather than rewritten. Every count on the site derives from this
+ * array so the published figure cannot drift.
  *
- * NOTE: the blueprint states 38 in three places, two of which are shipping copy.
- * The source document lists 36. Every count on the site derives from this array
- * so the published figure cannot drift — see BLAZON-FINDINGS.md, Q-11.
+ * Descriptions are intentionally omitted where none were supplied — the item
+ * names below are the exact, complete source of truth for each service.
  */
-export interface ServiceItem { name: string; description: string; additionalCost?: boolean }
+export interface ServiceItem { name: string; description?: string; additionalCost?: boolean }
 export interface ServiceGroup {
   slug: string; title: string; short: string; icon: string;
   summary: string; problem: string[]; additionalCost?: boolean;
@@ -14,95 +15,95 @@ export interface ServiceGroup {
 
 export const services: ServiceGroup[] = [
   {
-    slug: 'account-management', icon: 'settings',
-    title: 'Amazon Account Management & Strategy', short: 'Account Management & Strategy',
-    summary: 'Your account run as a system — set up correctly, positioned deliberately, and steered against a plan rather than a to-do list.',
-    problem: ['It becomes a second job', 'Opportunities stay invisible'],
+    slug: 'account-setup', icon: 'settings',
+    title: 'Account Setup', short: 'Account Setup',
+    summary: 'Everything set up right from day one — Brand Registry, settings, notifications and a seller and brand profile built to reduce fees and returns.',
+    problem: ['It becomes a second job', "There's no one to call"],
     items: [
-      { name: 'Amazon Account Setup & Management', description: 'Creating and managing seller/vendor accounts.' },
-      { name: 'Amazon Marketplace Strategy Development', description: 'Crafting tailored growth strategies.' },
-      { name: 'Competitor Research & Market Analysis', description: 'Identifying trends, strengths, and weaknesses of competitors.' },
-      { name: 'Amazon Category & Niche Selection', description: 'Choosing the right product categories for success.' },
-      { name: 'Brand Positioning & Differentiation', description: 'Helping brands stand out from the competition.' },
+      { name: 'Amazon Brand Registry' },
+      { name: 'All Setting Reconfiguration' },
+      { name: 'Amazon Money Back Programs' },
+      { name: 'Notifications/Customer Setup for Team' },
+      { name: 'Settings Reduce Return Rate' },
+      { name: 'Build Seller & Brand Profile' },
+      { name: 'Reduce Amazon Fees' },
     ],
   },
   {
     slug: 'listing-optimization', icon: 'brand-image',
-    title: 'Product Listing & Optimization', short: 'Listing & Optimization',
-    summary: 'Listings built to convert and to stay compliant — copy, imagery, A+ content and the variation architecture underneath them.',
+    title: 'Listing Optimization', short: 'Listing Optimization',
+    summary: 'Listings built to convert — organised catalogue structure, imagery, AI-assisted copy, A+ content and the bundle and variation work beneath them.',
     problem: ['Listings drift', 'The rules change constantly'],
     items: [
-      { name: 'Product Listing Creation & Optimization', description: 'Writing keyword-rich, high-converting titles, bullet points, and product descriptions.' },
-      { name: 'Amazon SEO (Search Engine Optimization)', description: 'Optimizing titles, descriptions, bullet points, and backend keywords.' },
-      { name: 'Premium A+ Content', description: 'Designing rich media content for increased conversions.' },
-      { name: 'Amazon Storefront Design & Optimization', description: 'Creating branded stores with engaging visuals and navigation.' },
-      { name: 'Product Photography & Videography Partnership', description: 'High-quality images, lifestyle photography, and product videos.' },
-      { name: '3D Product Imaging', description: 'Offering immersive product visualization to enhance conversions.' },
-      { name: 'Amazon Listing Compliance Checks', description: 'Ensuring listings meet Amazon’s guidelines to avoid suppression.' },
+      { name: 'Create new listings (FBA & FBM)' },
+      { name: 'Organize all products in Parent-Child relationships based on similarity' },
+      { name: 'Synchronize Product Reviews' },
+      { name: 'Create infographics' },
+      { name: 'Using Tools with AI Advances to Write Titles, bullet points, product descriptions' },
+      { name: 'Build Brand Story & Premium A+ Content' },
+      { name: '3D Images of all products' },
+      { name: 'Case work' },
+      { name: 'Product recommendations (bundles, colors, sizes)' },
     ],
   },
   {
-    slug: 'advertising', icon: 'marketing',
-    title: 'Advertising & Marketing', short: 'Advertising & Marketing',
-    summary: 'PPC and DSP managed to your targets, plus the external traffic, deals and partnerships most sellers never get to.',
-    problem: ['Fees keep climbing', 'Opportunities stay invisible'],
-    items: [
-      { name: 'Amazon PPC (Pay-Per-Click) Management', description: 'Running and optimizing Sponsored Ads campaigns.' },
-      { name: 'Amazon DSP (Demand-Side Platform) Advertising', description: 'Managing display, video, and retargeting ads.' },
-      { name: 'Amazon External Traffic Strategies', description: 'Driving traffic from Google, Facebook, Instagram, and TikTok to Amazon.' },
-      { name: 'Amazon Coupons, Deals, and Promotions Management', description: 'Setting up Lightning Deals, coupons, and special offers.' },
-      { name: 'Amazon Influencer & Affiliate Marketing', description: 'Leveraging influencer partnerships to drive traffic.' },
-      { name: 'Brand Awareness & Customer Engagement Strategies', description: 'Engaging customers through promotions and credits back on newsletters, social media, and Amazon Posts.' },
-    ],
-  },
-  {
-    slug: 'sales-growth', icon: 'increase',
-    title: 'Sales Optimization & Growth', short: 'Sales Optimization & Growth',
-    summary: 'The levers that move a listing from present to profitable — ranking, Buy Box, pricing, reviews and subscription revenue.',
-    problem: ['Fees keep climbing', 'Opportunities stay invisible'],
-    items: [
-      { name: 'Amazon Product Launch & Ranking Strategies', description: 'Implementing ranking strategies for new product launches.' },
-      { name: 'Review & Feedback Management', description: 'Encouraging authentic reviews and managing negative feedback.' },
-      { name: 'Amazon Buy Box Optimization', description: 'Improving pricing, fulfillment, and seller metrics to win the Buy Box.' },
-      { name: 'Repricing & Profitability Analysis', description: 'Using automated or manual strategies to maximize profit margins.' },
-      { name: 'Conversion Rate Optimization (CRO)', description: 'Enhancing listings for better click-through and conversion rates.' },
-      { name: 'Amazon Subscribe & Save Management', description: 'Optimizing recurring order subscriptions to increase customer retention and lifetime value.' },
-    ],
-  },
-  {
-    slug: 'operations-compliance', icon: 'rudder',
-    title: 'Operations, Logistics & Compliance', short: 'Operations & Compliance',
-    summary: 'Fulfilment, inventory and account health — including the suspensions and appeals that stop a business dead.',
+    slug: 'account-health', icon: 'rudder',
+    title: 'Account Health', short: 'Account Health',
+    summary: 'Account health monitored and protected — performance notifications, IPI, negative review removal and Voice of the Customer, checked on a schedule.',
     problem: ["There's no one to call", 'The rules change constantly'],
     items: [
-      { name: 'Amazon FBA & FBM Support', description: 'Advising on fulfillment strategies.' },
-      { name: 'Inventory & Demand Planning', description: 'Managing stock levels to avoid overstocking or stockouts.', additionalCost: true },
-      { name: 'Amazon Account & Listing Suspensions & Appeal Management', description: 'Resolving suspensions and reinstating accounts.' },
-      { name: 'Amazon Policy Compliance & Risk Management', description: 'Ensuring adherence to Amazon’s selling policies.' },
-      { name: 'Counterfeit & Unauthorized Seller Protection', description: 'Protecting brands from fake or unauthorized sellers.' },
+      { name: 'Check Account Health Regularly & Fix Issues' },
+      { name: 'Review all Performance notifications & address them as needed' },
+      { name: 'Inventory Performance Index Review & Resolve issues' },
+      { name: 'Monthly Negative Seller Reviews Removal' },
+      { name: 'Voice of the Customer Checks & Provide Recommendations' },
     ],
   },
   {
-    slug: 'analytics', icon: 'bar-chart',
-    title: 'Data Analytics & Reporting', short: 'Data Analytics & Reporting',
-    summary: 'What the numbers actually say — performance, ad efficiency, buying patterns and what competitors are doing about it.',
-    problem: ['Opportunities stay invisible'],
+    slug: 'advertising-marketing', icon: 'marketing',
+    title: 'Advertising & Marketing', short: 'Advertising & Marketing',
+    summary: 'Campaigns optimised against BLAZON’s organic growth strategy, plus the promotions, posts and influencer work most sellers never run.',
+    problem: ['Fees keep climbing', 'Opportunities stay invisible'],
     items: [
-      { name: 'Amazon Sales & Performance Analytics', description: 'Analyzing key performance metrics to inform decisions.' },
-      { name: 'Advertising ROI Analysis & Optimization', description: 'Maximizing ad spend efficiency.' },
-      { name: 'Customer Behavior & Buying Pattern Insights', description: 'Understanding customer trends and preferences.' },
-      { name: 'Competitor Pricing & Performance Tracking', description: 'Monitoring competitor movements and adjusting accordingly.' },
+      { name: 'Optimize ad campaigns' },
+      { name: 'Implement BLAZONs Organic Growth Strategy using ads' },
+      { name: 'Create Promotions for Event Days (Prime Day)' },
+      { name: 'B2B Pricing discounts, Brand Tailored Promotions, & Coupons' },
+      { name: 'Create Amazon Posts' },
+      { name: 'Manage Amazon Influencers' },
     ],
   },
   {
-    slug: 'international', icon: 'network', additionalCost: true,
-    title: 'International Expansion & Growth', short: 'International Expansion',
-    summary: 'New marketplaces opened properly — with the tax, compliance and localisation work that makes them hold.',
-    problem: ['Opportunities stay invisible'],
+    slug: 'value-adds', icon: 'increase',
+    title: 'Value Adds', short: 'Value Adds',
+    summary: 'The extras that compound — reviews, badges, financing, beta programs, store followers and testing, run alongside the core account work.',
+    problem: ['Opportunities stay invisible', 'It becomes a second job'],
     items: [
-      { name: 'Amazon Global Selling & International Expansion', description: 'Assisting brands in entering new marketplaces.' },
-      { name: 'Amazon VAT & Tax Compliance for International Sales', description: 'Helping with taxation and legal compliance.' },
-      { name: 'Localization & Translation Services', description: 'Translating listings to cater to global audiences.', additionalCost: true },
+      { name: '3rd Party Tools & Service Recommendations' },
+      { name: 'Increase Product Reviews' },
+      { name: 'Unlocking Badges on Listings' },
+      { name: 'Customer Financing' },
+      { name: 'Participating Amazon Programs & Events' },
+      { name: 'Unlocking Amazon Beta Programs' },
+      { name: 'Increase Store Followers' },
+      { name: 'A/B Testing' },
+      { name: 'Amazon Global Selling' },
+    ],
+  },
+  {
+    slug: 'team-trainings', icon: 'network',
+    title: 'Team Trainings', short: 'Team Trainings',
+    summary: 'Your team trained on the specifics — claims, compliance, shipping plans and the seller mistakes that are easiest to avoid.',
+    problem: ['It becomes a second job', "There's no one to call"],
+    items: [
+      { name: 'Customer Services' },
+      { name: 'A-Z Claims' },
+      { name: 'Safe-T Claims' },
+      { name: 'Compliance' },
+      { name: 'Best Practices' },
+      { name: 'Things to Avoid' },
+      { name: 'Shipping Plans' },
+      { name: 'Seller Misconduct Mistakes to Avoid' },
     ],
   },
 ];
@@ -110,8 +111,10 @@ export const services: ServiceGroup[] = [
 export const totalServices = services.reduce((n, g) => n + g.items.length, 0);
 
 /**
- * The "Top Items" list from the same document — more concrete and more
- * persuasive than the service names alone. Drives the Pricing page checklist.
+ * The "what's included every month" checklist — shown on the Services and
+ * Pricing pages. Five of its six blocks predate this restructure and keep
+ * their existing wording; "Team Trainings" is added using the exact items
+ * above so the checklist reflects all six categories.
  */
 export const included = [
   { group: 'Account Setup', items: [
@@ -144,5 +147,9 @@ export const included = [
     'Unlocking badges on listings', 'Customer financing',
     'Participating Amazon programs and events', 'Unlocking Amazon beta programs',
     'Increase store followers', 'A/B testing', 'Amazon global selling',
+  ]},
+  { group: 'Team Trainings', items: [
+    'Customer services', 'A-Z claims', 'Safe-T claims', 'Compliance',
+    'Best practices', 'Things to avoid', 'Shipping plans', 'Seller misconduct mistakes to avoid',
   ]},
 ];

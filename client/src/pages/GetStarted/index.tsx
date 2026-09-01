@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import { Reveal } from '../../motion';
 import { Section, Container } from '../../components/layout/Section';
 import { Seo } from '../../components/common/Seo';
+import { TiltCard } from '../../components/common/TiltCard';
 import { AlertIcon, ArrowRight, Check } from '../../components/ui/Icon';
 import { site } from '../../data/site';
 import { postLead } from '../../services/api';
@@ -46,7 +47,7 @@ export default function GetStarted() {
     sellingStatus: '' as Selling,
     brandName: '', storeUrl: '', website: '', productCategory: '',
     marketplaces: [] as string[], monthlyRevenueBand: '', skuCountBand: '',
-    platform: '', stage: '', primaryGoal: '', message: '',
+    platform: '', stage: '', primaryGoal: '', message: '', platformIssues: '',
     firstName: '', lastName: '', email: '', phone: '', consent: false,
     hp: '',
   });
@@ -74,15 +75,15 @@ export default function GetStarted() {
 
   const selling = values.sellingStatus === 'already_selling';
   const steps = selling
-    ? ['Selling status', 'Your brand', 'Your account', 'Your goal', 'You']
-    : ['Selling status', 'Your brand', 'Where you are', 'You'];
+    ? ['Selling status', 'Your business', 'Your account', 'Goals & concerns', 'You']
+    : ['Selling status', 'Your business', 'Where you are', 'Goals & concerns', 'You'];
   const total = values.sellingStatus ? steps.length : 5;
 
   function validateStep(): Record<string, string> {
     const e: Record<string, string> = {};
     const label = steps[step];
     if (label === 'Selling status' && !values.sellingStatus) e.sellingStatus = 'Choose one to continue';
-    if (label === 'Your brand' && !values.brandName.trim()) e.brandName = 'Enter your brand name';
+    if (label === 'Your business' && !values.brandName.trim()) e.brandName = 'Enter your brand name';
     if (label === 'Your account') {
       if (!values.monthlyRevenueBand) e.monthlyRevenueBand = 'Select a revenue band';
       if (!values.skuCountBand) e.skuCountBand = 'Select an approximate SKU count';
@@ -183,6 +184,10 @@ export default function GetStarted() {
                     ? 'Let’s get you started on Amazon.'
                     : 'Find out what your account is leaving on the table.'}
                 </h1>
+                <p className="body-s wizard__lede">
+                  Tell us about you: your business, your goals, your concerns, and any
+                  issues with Amazon &amp; Walmart.
+                </p>
               </Reveal>
 
               <div className="wizard__progress" aria-hidden="true">
@@ -211,7 +216,7 @@ export default function GetStarted() {
                   </fieldset>
                 )}
 
-                {steps[step] === 'Your brand' && (
+                {steps[step] === 'Your business' && (
                   <div className="form-grid">
                     <div className={`${cls('brandName')} form-grid__full`}>
                       <label className="field__label" htmlFor="brandName">Brand name <span className="field__req">(required)</span></label>
@@ -303,18 +308,24 @@ export default function GetStarted() {
                   </fieldset>
                 )}
 
-                {steps[step] === 'Your goal' && (
+                {steps[step] === 'Goals & concerns' && (
                   <div className="form-grid">
                     <div className="field form-grid__full">
-                      <label className="field__label" htmlFor="primaryGoal">Primary objective</label>
+                      <label className="field__label" htmlFor="primaryGoal">Goals</label>
                       <input className="input" id="primaryGoal" name="primaryGoal" value={values.primaryGoal}
                              onChange={(e) => set('primaryGoal', e.target.value)}
                              placeholder="e.g. grow revenue without growing ad spend" />
                     </div>
                     <div className="field form-grid__full">
-                      <label className="field__label" htmlFor="message">What would you like to fix first?</label>
-                      <textarea className="textarea" id="message" name="message" rows={4} value={values.message}
-                                onChange={(e) => set('message', e.target.value)} />
+                      <label className="field__label" htmlFor="message">Concerns</label>
+                      <textarea className="textarea" id="message" name="message" rows={3} value={values.message}
+                                onChange={(e) => set('message', e.target.value)}
+                                placeholder="What would you like to fix first?" />
+                    </div>
+                    <div className="field form-grid__full">
+                      <label className="field__label" htmlFor="platformIssues">Issues with Amazon &amp; Walmart</label>
+                      <textarea className="textarea" id="platformIssues" name="platformIssues" rows={3}
+                                value={values.platformIssues} onChange={(e) => set('platformIssues', e.target.value)} />
                     </div>
                   </div>
                 )}
@@ -379,7 +390,7 @@ export default function GetStarted() {
             </div>
 
             <aside className="wizard__value">
-              <div className="wizard__value-inner card">
+              <TiltCard as="div" className="wizard__value-inner card">
                 <p className="eyebrow">
                   {values.sellingStatus === 'not_yet_selling' ? 'Your free session covers' : 'Your free audit covers'}
                 </p>
@@ -394,7 +405,7 @@ export default function GetStarted() {
                 <p className="caption">
                   Prefer to talk? <a className="link link--inline" href={site.phoneHref}>{site.phone}</a>
                 </p>
-              </div>
+              </TiltCard>
             </aside>
           </div>
         </Container>

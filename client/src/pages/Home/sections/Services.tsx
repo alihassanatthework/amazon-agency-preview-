@@ -6,27 +6,23 @@ import { TiltCard } from '../../../components/common/TiltCard';
 import { ArrowRight } from '../../../components/ui/Icon';
 
 /**
- * H5 / §9.7 — the method, framed as levers. Seven cards in a 4+3 arrangement:
- * the asymmetry is deliberate and avoids a dead-generic 3x3 grid.
+ * H5 / §9.7 — the method, framed as levers. Six cards, a clean 3x2 grid.
  *
- * The service count is rendered from the data, not hardcoded — the source
- * document lists 36, not the 38 the blueprint prints. See BLAZON-FINDINGS Q-11.
+ * The service count is rendered from the data, not hardcoded.
  */
 const GROUPS = [
-  { slug: 'account-management',    title: 'Account Management & Strategy', count: 5,
-    summary: 'Your account run as a system — set up correctly, positioned deliberately, steered against a plan.' },
-  { slug: 'listing-optimization',  title: 'Listing & Optimization', count: 7,
-    summary: 'Listings built to convert and to stay compliant — copy, imagery, A+ and the variation architecture beneath.' },
-  { slug: 'advertising',           title: 'Advertising & Marketing', count: 6,
-    summary: 'PPC and DSP managed to your targets, plus the external traffic and deals most sellers never reach.' },
-  { slug: 'sales-growth',          title: 'Sales Optimization & Growth', count: 6,
-    summary: 'Ranking, Buy Box, pricing, reviews and subscription revenue — the levers that move a listing.' },
-  { slug: 'operations-compliance', title: 'Operations & Compliance', count: 5,
-    summary: 'Fulfilment, inventory and account health, including the suspensions that stop a business dead.' },
-  { slug: 'analytics',             title: 'Data Analytics & Reporting', count: 4,
-    summary: 'What the numbers actually say — performance, ad efficiency and competitor movement.' },
-  { slug: 'international',         title: 'International Expansion', count: 3,
-    summary: 'New marketplaces opened properly, with the tax and localisation work that makes them hold.' },
+  { slug: 'account-setup',         title: 'Account Setup', count: 7,
+    summary: 'Everything set up right from day one — Brand Registry, settings and a seller and brand profile built to reduce fees.' },
+  { slug: 'listing-optimization',  title: 'Listing Optimization', count: 9,
+    summary: 'Listings built to convert — catalogue structure, imagery, AI-assisted copy and the A+ content beneath them.' },
+  { slug: 'account-health',        title: 'Account Health', count: 5,
+    summary: 'Account health monitored and protected — performance notifications, IPI and negative review removal, on a schedule.' },
+  { slug: 'advertising-marketing', title: 'Advertising & Marketing', count: 6,
+    summary: 'Campaigns optimised against BLAZON’s organic growth strategy, plus the promotions and posts most sellers never run.' },
+  { slug: 'value-adds',            title: 'Value Adds', count: 9,
+    summary: 'The extras that compound — reviews, badges, financing, beta programs and testing, run alongside the core work.' },
+  { slug: 'team-trainings',        title: 'Team Trainings', count: 8,
+    summary: 'Your team trained on the specifics — claims, compliance, shipping plans and the mistakes that are easiest to avoid.' },
 ];
 
 const TOTAL = GROUPS.reduce((n, g) => n + g.count, 0);
@@ -39,7 +35,7 @@ export function Services() {
           eyebrow="What we actually do"
           headline={['Every lever, pulled deliberately.']}
           id="levers-title"
-          lead={`Most agencies work the handful of levers that produce the easy majority of sales. That's why most sellers land at average. We work all of them — ${TOTAL} services across seven disciplines, run as one system on your account.`}
+          lead={`Most agencies work the handful of levers that produce the easy majority of sales. That's why most sellers land at average. We work all of them — ${TOTAL} services across six disciplines, run as one system on your account.`}
         />
         <RevealGroup className="levers__grid" stagger={80}>
           {GROUPS.map((g) => (

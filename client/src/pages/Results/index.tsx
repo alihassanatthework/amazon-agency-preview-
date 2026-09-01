@@ -10,14 +10,15 @@ import { EmptyState } from '../../components/common/EmptyState';
 import { Seo } from '../../components/common/Seo';
 import { TiltCard } from '../../components/common/TiltCard';
 import { ArrowRight } from '../../components/ui/Icon';
+import { caseStudies } from '../../data/caseStudies';
 
 /**
  * §10.3 — case study index plus the full testimonial wall.
  *
- * Only Aloha Bay is written. Rick Young and Phone Skope have evidence but no
- * narrative (Q-02), so they are not published. The single-item state is the
- * realistic launch condition and is designed deliberately, not treated as an
- * edge case.
+ * Aloha Bay is the original, hand-written entry. The other four case studies
+ * are added from the shared caseStudies data file (see data/caseStudies.ts
+ * and pages/CaseStudy/index.tsx) rather than duplicated here — this card
+ * summary is derived from the same source the detail page reads.
  */
 const CASES = [
   {
@@ -25,8 +26,15 @@ const CASES = [
     categoryLabel: 'Supplements & wellness',
     headline: '3× sales increase',
     summary: 'Advertising was spending against its own branded search and Subscribe & Save was unconfigured. We rebuilt the catalogue structure and restructured advertising against contribution margin.',
-    metrics: [{ to: 3, suffix: '×', label: 'sales increase' }, { to: 14, suffix: '%', label: 'ACOS while raising prices' }],
   },
+  ...caseStudies.map((s) => ({
+    slug: s.slug,
+    client: s.descriptor ? `${s.client} — ${s.descriptor}` : s.client,
+    category: s.categoryId,
+    categoryLabel: s.categoryLabel,
+    headline: s.mainResult,
+    summary: s.summary,
+  })),
 ];
 
 const CATEGORIES = [
@@ -34,6 +42,10 @@ const CATEGORIES = [
   { id: 'supplements-wellness', label: 'Supplements & wellness' },
   { id: 'outdoor-recreation', label: 'Outdoor & recreation' },
   { id: 'automotive', label: 'Automotive' },
+  { id: 'coffee', label: 'Coffee' },
+  { id: 'veterinary', label: 'Veterinary' },
+  { id: 'apparel', label: 'Apparel' },
+  { id: 'new-to-amazon', label: 'New to Amazon' },
 ];
 
 const STATS = [
@@ -56,7 +68,7 @@ export default function Results() {
       <PageHero
         eyebrow="Client results"
         headline={['The numbers, and', 'the people behind them.']}
-        lead="Twelve clients answered directly. One full case study is published, with more being written from account data we already hold."
+        lead="Twelve clients answered directly, and five full case studies are published, with more being written from account data we already hold."
       />
 
       <Section surface="carbon" size="compact">

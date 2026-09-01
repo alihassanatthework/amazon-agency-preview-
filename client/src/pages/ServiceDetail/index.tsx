@@ -21,7 +21,7 @@ const PROBLEM_COPY: Record<string, string> = {
   'It becomes a second job': 'The day-to-day pulls your team away from the business you actually run.',
 };
 
-/** §10.2 — one template, seven records. 404 when the slug does not resolve. */
+/** §10.2 — one template, six records. 404 when the slug does not resolve. */
 export default function ServiceDetail() {
   const { slug } = useParams();
   const group = services.find((g) => g.slug === slug);
@@ -78,7 +78,7 @@ export default function ServiceDetail() {
                   {it.name}
                   {it.additionalCost && <em className="svc__extra"> (additional cost)</em>}
                 </h3>
-                <p className="body-s">{it.description}</p>
+                {it.description && <p className="body-s">{it.description}</p>}
               </TiltCard>
             ))}
           </RevealGroup>

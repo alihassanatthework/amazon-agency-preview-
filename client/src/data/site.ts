@@ -13,13 +13,12 @@ export const site = {
 } as const;
 
 export const serviceNav = [
-  { slug: 'account-management',    title: 'Account Management & Strategy', icon: 'settings' },
-  { slug: 'listing-optimization',  title: 'Listing & Optimization',        icon: 'brand-image' },
-  { slug: 'advertising',           title: 'Advertising & Marketing',       icon: 'marketing' },
-  { slug: 'sales-growth',          title: 'Sales Optimization & Growth',   icon: 'increase' },
-  { slug: 'operations-compliance', title: 'Operations & Compliance',       icon: 'rudder' },
-  { slug: 'analytics',             title: 'Data Analytics & Reporting',    icon: 'bar-chart' },
-  { slug: 'international',         title: 'International Expansion',       icon: 'network' },
+  { slug: 'account-setup',          title: 'Account Setup',          icon: 'settings' },
+  { slug: 'listing-optimization',   title: 'Listing Optimization',   icon: 'brand-image' },
+  { slug: 'account-health',         title: 'Account Health',         icon: 'rudder' },
+  { slug: 'advertising-marketing',  title: 'Advertising & Marketing', icon: 'marketing' },
+  { slug: 'value-adds',             title: 'Value Adds',             icon: 'increase' },
+  { slug: 'team-trainings',         title: 'Team Trainings',         icon: 'network' },
 ] as const;
 
 export const aboutNav = [

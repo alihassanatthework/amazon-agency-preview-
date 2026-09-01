@@ -175,19 +175,34 @@ html:not(.motion-on) .logos__viewport::before, html:not(.motion-on) .logos__view
 .stats__label { color: var(--ash); }
 .stats__note { margin-top: var(--space-7); color: var(--ash); max-width: 62ch; }
 
+/* The eight pitch-deck stats — a card grid (4x2 desktop) rather than the
+   four-metric instrument row above, which doesn't scale past ~4 items. */
+.stat-cards {
+  display: grid; grid-template-columns: repeat(4, 1fr); gap: var(--gutter);
+  margin-top: calc(var(--space-6) * var(--section-scale));
+}
+.stat-card { display: flex; align-items: center; min-height: 132px; }
+.stat-card__text { color: var(--bone); margin: 0; }
+/* Inline emphasis, not a separate line — the pitch-deck wording reads as a
+   sentence, not a clean isolated numeral, so the figure highlights in place
+   rather than breaking onto its own row (which reads oddly when the number
+   sits mid-phrase, e.g. "Currently Servicing over 100+ Brands"). */
+.stat-card__figure {
+  font-family: var(--font-display); font-weight: 700; font-size: 1.15em;
+  color: var(--lime-500);
+}
+
 /* --- H4 Problem (light) -------------------------------------------------- */
 .problem__grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: var(--gutter); }
 .problem__title { font-family: var(--font-display); font-size: var(--body); font-weight: 600; color: var(--obsidian); margin: 0 0 var(--space-2); }
 .problem__card p { color: var(--graphite); }
 
 /* --- H5 Levers ----------------------------------------------------------- */
-.levers__grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: var(--gutter); }
+.levers__grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: var(--gutter); }
 .lever {
   display: flex; flex-direction: column; gap: var(--space-3);
   text-decoration: none; color: inherit; position: relative; overflow: hidden;
 }
-/* The last three cards centre themselves — a deliberate 4+3, not a 3x3 grid. */
-.levers__grid > :nth-child(5) { grid-column: 1 / span 1; }
 .lever__title { color: var(--bone); }
 .lever__summary { color: var(--mist); }
 .lever__meta {
@@ -304,6 +319,45 @@ html:not(.motion-on) .compare__cell::before { transform: scaleX(1); }
 .case__metric-affix { color: var(--sage); font-size: 60%; }
 .case__link { margin-top: var(--space-6); }
 
+/* --- Case study graph — the non-recharts treatments for two-point,
+   qualitative-growth, indexed-growth and roadmap data. Sits inside the same
+   `.case__chart` box the line chart uses, so the panel/caption/legend shell
+   is identical across every case study regardless of which data shape it has. */
+.csg { height: 100%; display: flex; flex-direction: column; }
+.csg__bars { flex: 1; display: flex; align-items: flex-end; justify-content: center; gap: var(--space-6); padding-top: var(--space-5); }
+.csg__bar-col { display: flex; flex-direction: column; align-items: center; gap: var(--space-2); height: 100%; justify-content: flex-end; width: 96px; }
+.csg__bar-track { width: 100%; height: 100%; display: flex; align-items: flex-end; }
+.csg__bar {
+  width: 100%; border-radius: 6px 6px 0 0; background: var(--sage); opacity: .55;
+  transition: height 900ms var(--e-reveal);
+}
+.csg__bar--peak { background: var(--lime-500); opacity: 1; }
+.csg__bar-value { font-family: var(--font-display); font-size: var(--body); font-weight: 700; color: var(--bone); }
+.csg__bar-label { color: var(--ash); font-size: var(--caption); text-align: center; }
+.csg__arrow { flex: none; align-self: center; color: var(--slate); margin-bottom: 40px; }
+.csg__callout {
+  margin: var(--space-4) 0 0; text-align: center; font-family: var(--font-display);
+  font-weight: 600; color: var(--lime-500); font-size: var(--body);
+}
+.csg__callout span { display: block; color: var(--ash); font-family: var(--font-body); font-weight: 400; font-size: var(--caption); margin-top: 2px; }
+
+.csg__roadmap { flex: 1; display: flex; align-items: center; justify-content: center; gap: var(--space-3); flex-wrap: wrap; }
+.csg__roadmap-step { display: flex; flex-direction: column; align-items: center; gap: var(--space-2); width: 108px; text-align: center; }
+.csg__roadmap-num {
+  width: 30px; height: 30px; border-radius: 50%; display: flex; align-items: center; justify-content: center;
+  border: 1.5px solid var(--lime-500); color: var(--lime-500);
+  font-family: var(--font-display); font-size: 12px; font-weight: 600;
+}
+.csg__roadmap-label { color: var(--mist); font-size: var(--caption); }
+.csg__arrow--sm { margin-bottom: 0; }
+@media (max-width: 767px) {
+  .csg__bars { gap: var(--space-4); }
+  .csg__bar-col { width: 72px; }
+  .csg__arrow { margin-bottom: 30px; }
+  .csg__roadmap { flex-direction: column; }
+  .csg__arrow--sm { transform: rotate(90deg); }
+}
+
 /* --- H9 Testimonial wall ------------------------------------------------- */
 .wall { columns: 3; column-gap: var(--gutter); }
 .wall__card { break-inside: avoid; margin-bottom: var(--gutter); position: relative; padding: var(--space-5); }
@@ -387,6 +441,7 @@ html:not(.motion-on) .process__marker { transform: none; }
   .stats__row { grid-template-columns: repeat(2, 1fr); }
   .stats__cell:nth-child(odd) { border-left: 0; padding-left: 0; }
   .stats__cell:nth-child(n+3) { border-top: 1px solid var(--char-line); margin-top: var(--space-5); }
+  .stat-cards { grid-template-columns: repeat(2, 1fr); }
   .problem__grid { grid-template-columns: repeat(2, 1fr); }
   .levers__grid { grid-template-columns: repeat(2, 1fr); }
   .thesis__points { grid-template-columns: 1fr; gap: var(--space-5); }
@@ -437,6 +492,7 @@ html:not(.motion-on) .process__marker { transform: none; }
   .stats__cell:nth-child(2n) { padding-left: var(--space-4); border-left: 1px solid var(--char-line); }
 
   .problem__grid, .levers__grid { grid-template-columns: 1fr; }
+  .stat-cards { grid-template-columns: 1fr; }
   .wall { columns: 1; }
   .case__metrics { grid-template-columns: repeat(2, 1fr); }
 
@@ -581,6 +637,16 @@ html:not(.motion-on) .process__marker { transform: none; }
 .cs__block p { color: var(--mist); }
 .cs__back { margin-top: var(--space-6); }
 .cs__chart-wrap { margin-top: var(--space-4); }
+.cs__main-result { color: var(--lime-500); margin: 0 0 var(--space-4); }
+.cs__summary { max-width: 68ch; color: var(--mist); margin-bottom: var(--space-6); }
+
+/* Before/After — the new case studies' comparison block. Reuses the site's
+   existing checklist pattern; "before" gets a muted variant so With BLAZON
+   reads as the emphasised side without a second card/table treatment. */
+.cs__before-after { display: grid; grid-template-columns: 1fr 1fr; gap: var(--space-7); margin: var(--space-7) 0; }
+.cs__ba-col > .eyebrow { margin-bottom: var(--space-4); }
+.checklist--muted .checklist__tick { color: var(--slate); }
+.checklist--muted li span:last-child { color: var(--ash); }
 
 /* --- About --------------------------------------------------------------- */
 .mission { overflow: hidden; }
@@ -639,7 +705,8 @@ html:not(.motion-on) .process__marker { transform: none; }
 .wizard__ember { left: 50%; bottom: -50%; width: 110vw; height: 90vh; max-width: 1400px; transform: translateX(-50%); opacity: .5; }
 .wizard .container { position: relative; z-index: 1; }
 .wizard__grid { display: grid; grid-template-columns: minmax(0, 7fr) minmax(0, 4fr); gap: 64px; align-items: start; }
-.wizard__title { margin: var(--space-3) 0 var(--space-6); }
+.wizard__title { margin: var(--space-3) 0 var(--space-4); }
+.wizard__lede { margin: 0 0 var(--space-5); color: var(--mist); max-width: 56ch; }
 .wizard__progress { height: 2px; background: var(--char-line); overflow: hidden; border-radius: 2px; }
 .wizard__progress-fill { display: block; height: 100%; background: var(--lime-500); transform-origin: left center; transition: transform var(--t-base) var(--e-base); }
 .wizard__step-label { margin: var(--space-3) 0 var(--space-5); }
@@ -666,6 +733,23 @@ html:not(.motion-on) .process__marker { transform: none; }
 .keys__num { font-family: var(--font-display); font-size: 28px; font-weight: 600; color: var(--green-700); font-variant-numeric: tabular-nums; }
 .keys__item h3 { color: var(--obsidian); margin: var(--space-2) 0; }
 .keys__item p { color: var(--graphite); }
+
+/* --- Our approach — three-step flow -------------------------------------- */
+.approach-flow { display: flex; align-items: center; gap: var(--space-4); margin-top: calc(var(--space-6) * var(--section-scale)); }
+.approach-flow__step {
+  flex: 1; display: flex; flex-direction: column; align-items: center; gap: var(--space-2);
+  text-align: center; padding: var(--space-6) var(--space-5);
+}
+.approach-flow__num {
+  font-family: var(--font-display); font-size: var(--caption); font-weight: 700;
+  letter-spacing: .08em; color: var(--accent);
+}
+.approach-flow__step h3 { color: var(--obsidian); margin: 0; }
+.approach-flow__arrow { flex: none; color: var(--slate); display: flex; align-items: center; }
+@media (max-width: 767px) {
+  .approach-flow { flex-direction: column; }
+  .approach-flow__arrow { transform: rotate(90deg); }
+}
 
 /* --- FAQ ----------------------------------------------------------------- */
 .faq { margin: 0; }
@@ -707,6 +791,7 @@ html:not(.motion-on) .faq__answer { opacity: 1; transform: none; }
   .contact__grid, .wizard__grid { grid-template-columns: 1fr; gap: var(--space-7); }
   .contact__form-col, .contact__side { grid-column: 1 / -1; }
   .contact__side-inner, .wizard__value-inner { position: static; }
+  .approach-flow__step { padding: var(--space-5) var(--space-4); }
 }
 @media (max-width: 767px) {
   .form-card { border: 0; border-radius: 0; padding: 20px 0; }
@@ -714,6 +799,7 @@ html:not(.motion-on) .faq__answer { opacity: 1; transform: none; }
   .svc__groups, .cap__grid, .cadence, .incl__grid, .insights__grid,
   .pricing__grid, .keys, .checklist--wide { grid-template-columns: 1fr; }
   .cs__metrics { grid-template-columns: repeat(2, 1fr); }
+  .cs__before-after { grid-template-columns: 1fr; gap: var(--space-5); }
   .pricing__tier.is-featured { transform: none; order: -1; }
   .newsletter { flex-direction: column; align-items: stretch; }
   .tabs { width: 100%; }

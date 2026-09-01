@@ -4,17 +4,12 @@ import { Section, Container } from '../../components/layout/Section';
 import { SectionHeader } from '../../components/layout/SectionHeader';
 import { PageHero } from '../../components/layout/PageHero';
 import { CtaSection } from '../../components/common/CtaSection';
+import { TiltCard } from '../../components/common/TiltCard';
 import { Seo } from '../../components/common/Seo';
 import { ArrowRight, Check } from '../../components/ui/Icon';
 
-/** §08 — the distinct offer for brands not yet selling. */
-const KEYS = [
-  ['Understanding the marketplace', 'What Amazon rewards, what it punishes, and where your category actually sits.'],
-  ['Strategic planning', 'Which products to launch first, at what price, under which fulfilment model.'],
-  ['Listing optimisation', 'Titles, imagery, A+ and the variation structure — built right the first time.'],
-  ['Day-to-day operations', 'Inventory, cases, account health and the notifications that matter.'],
-  ['Building a competitive advantage', 'The programs and tools your competitors are not using.'],
-];
+/** The three-step process from the pitch deck, in order. */
+const APPROACH_STEPS = ['Listing Cleanup/Optimization', 'Organic Growth', 'Paid Ads'];
 
 export default function GettingStarted() {
   return (
@@ -35,19 +30,22 @@ export default function GettingStarted() {
 
       <Section surface="bone">
         <Container>
-          <SectionHeader
-            eyebrow="Free training session"
-            headline={['Five keys to getting', 'your store started.']}
-            lead="A free 60-minute session covering the five things that decide whether an Amazon launch works."
-          />
-          <RevealGroup className="keys" stagger={80}>
-            {KEYS.map(([t, b], i) => (
-              <article className="keys__item card" key={t}>
-                <span className="keys__num">{String(i + 1).padStart(2, '0')}</span>
-                <h3 className="heading-s">{t}</h3>
-                <p className="body-s">{b}</p>
-              </article>
-            ))}
+          <SectionHeader eyebrow="Our approach" headline={['Our Organic Approach that Works']} />
+          <RevealGroup className="approach-flow" stagger={100}>
+            {APPROACH_STEPS.flatMap((step, i) => {
+              const nodes = [
+                <TiltCard as="article" className="approach-flow__step card" key={step}>
+                  <span className="approach-flow__num">{String(i + 1).padStart(2, '0')}</span>
+                  <h3 className="heading-s">{step}</h3>
+                </TiltCard>,
+              ];
+              if (i < APPROACH_STEPS.length - 1) {
+                nodes.push(
+                  <span className="approach-flow__arrow" aria-hidden="true" key={`${step}-arrow`}><ArrowRight /></span>,
+                );
+              }
+              return nodes;
+            })}
           </RevealGroup>
         </Container>
       </Section>

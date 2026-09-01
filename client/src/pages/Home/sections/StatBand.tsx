@@ -1,38 +1,57 @@
-import { Counter, LineDraw, Reveal, RevealGroup } from '../../../motion';
+import type { ReactNode } from 'react';
+import { LineDraw, Reveal, RevealGroup } from '../../../motion';
 import { Section, Container } from '../../../components/layout/Section';
 import { SectionHeader } from '../../../components/layout/SectionHeader';
+import { TiltCard } from '../../../components/common/TiltCard';
 
 /**
- * H3 / §9.5 — the proof. One row, not a card grid, so the four metrics read as
- * a single instrument panel. All four verified from sales deck slides 3 and 7;
- * §22 Q-01 forbids adding a revenue figure.
+ * H3 / §9.5 — the proof, now eight cards instead of a four-metric instrument
+ * row. Wording is verbatim, client-approved: not paraphrased, not
+ * renumbered, nothing added.
  */
-const METRICS = [
-  { to: 80,   suffix: '+', label: 'brands currently managed' },
-  { to: 4,    suffix: '+', label: 'years managing Amazon accounts' },
-  { to: 9,    suffix: '',  label: 'specialists, all 4+ years experience' },
-  // Not numerically countable — a static display value, not a broken counter.
-  { to: null, display: '1 yr 7 mo', label: 'average client relationship' },
+const STATS = [
+  '5+ Years in Business',
+  '30+ Years of Combined Amazon Experience',
+  'Utah Based',
+  '10+ Employees',
+  '100+ Brands Currently Servicing',
+  '250+ Brands Worked With',
+  'Clients stay 19 months on average',
+  '4–6 Month to Sales Lift',
 ];
+
+// Highlights the leading figure inline (e.g. "5+", "100+", "4–6") without
+// altering, reordering or dropping any of the surrounding exact wording. A
+// stat with no figure at all ("Utah Based") renders wholesale as the accent.
+const FIGURE = /\d[\d,]*(?:[-–]\d+)?\+?/;
+function renderStat(text: string): ReactNode {
+  const match = FIGURE.exec(text);
+  if (!match) return <span className="stat-card__figure">{text}</span>;
+  const figure = match[0];
+  const before = text.slice(0, match.index);
+  const after = text.slice(match.index + figure.length);
+  return (
+    <>
+      {before}<span className="stat-card__figure">{figure}</span>{after}
+    </>
+  );
+}
 
 export function StatBand() {
   return (
     <Section surface="obsidian" className="stats" aria-labelledby="stats-title">
       <Container>
         <SectionHeader
-          eyebrow="By the numbers"
-          headline={['Four years. Eighty brands.', 'One approach.']}
+          eyebrow="The Numbers"
+          headline={['The numbers', 'behind the work.']}
           id="stats-title"
         />
         <LineDraw className="stats__rule" />
-        <RevealGroup className="stats__row" stagger={90}>
-          {METRICS.map((m) => (
-            <div className="stats__cell" key={m.label}>
-              <p className="numeral stats__value">
-                <Counter to={m.to} displayValue={m.display} suffix={m.suffix} affixClassName="stats__unit" />
-              </p>
-              <p className="caption stats__label">{m.label}</p>
-            </div>
+        <RevealGroup className="stat-cards" stagger={60}>
+          {STATS.map((s) => (
+            <TiltCard as="div" className="stat-card card card--interactive" key={s}>
+              <p className="body stat-card__text">{renderStat(s)}</p>
+            </TiltCard>
           ))}
         </RevealGroup>
         <Reveal>
