@@ -9,9 +9,9 @@ import { FlameBase, FlameLiquidFill } from '../../../components/common/FlameEner
  * H1 / §9.3 — the claim. Centred across columns 3–10, one of the three
  * permitted centred moments. Ember gradient 1 of 2 rises behind the content.
  *
- * The headline and its answer line are verbatim from sales deck slide 3. The
- * answer is the single permitted green headline moment on the page, and it
- * ignites after the line lands rather than arriving green.
+ * The tagline is verbatim from the BLAZON pitch deck. "Empires" carries the
+ * single permitted green headline moment on the page, and it ignites after
+ * the line lands rather than arriving green.
  */
 export function Hero() {
   const reduced = useReducedMotion();
@@ -60,9 +60,8 @@ export function Hero() {
         <WordRise
           as="h1" id="hero-title" className="display-xl hero__title" immediate
           lines={[
-            'How many levers will you pull',
-            'to increase your sales?',
-            <span className="accent-ignite" key="a">All of them.</span>,
+            'Turn Clicks into Customers',
+            <span key="a">and Brands into <span className="accent-ignite">Empires</span></span>,
           ]}
         />
 
