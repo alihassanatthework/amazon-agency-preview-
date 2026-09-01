@@ -17,15 +17,27 @@ export interface CaseStudyMetric {
   label: string;
 }
 
-export type CaseStudyGraph =
-  /** A confirmed start value and end value — no fabricated points between them. */
-  | { kind: 'two-point'; fromLabel: string; toLabel: string; fromValue: number; toValue: number; prefix?: string; unit?: string; caption: string }
-  /** Growth is confirmed to have happened, but no numbers were supplied for it. */
-  | { kind: 'qualitative-growth'; fromLabel: string; toLabel: string; callout: string; caption: string }
-  /** A confirmed multiple (1x -> Nx) over a confirmed number of months. */
-  | { kind: 'indexed-growth'; fromMultiple: number; toMultiple: number; months: number; sub?: { value: string; label: string }; caption: string }
-  /** No sales figures at all — a stage-based journey instead of a chart. */
-  | { kind: 'roadmap'; steps: string[]; caption: string };
+export interface CaseStudyGraphPoint { label: string; value: number }
+
+/**
+ * Every case study's graph is the same Aloha-Bay-style line chart (see
+ * pages/Home/sections/CaseChart.tsx) — only the points, axis formatting and
+ * an optional callout differ, and only to the extent the underlying data
+ * actually supports. `points` never contains a fabricated intermediate
+ * value: a two-point series is a straight confirmed-start-to-confirmed-end
+ * line, not an invented monthly progression.
+ */
+export interface CaseStudyGraph {
+  points: CaseStudyGraphPoint[];
+  caption: string;
+  /** Omit for a plain number axis; Aloha Bay itself uses $k via the chart's own default. */
+  yTickFormatter?: (v: number) => string;
+  /** Off when the values are an unlabelled index (qualitative growth, roadmap stages), not a real unit. */
+  showYAxis?: boolean;
+  showTooltip?: boolean;
+  /** A confirmed figure shown beside the chart rather than plotted, e.g. "$40K Ad Spend = 9% TACOS". */
+  callout?: string;
+}
 
 export interface CaseStudyStoryBlock { heading: string; body: string }
 
@@ -83,10 +95,12 @@ export const caseStudies: CaseStudy[] = [
       { to: 5000, suffix: '+', label: 'Monthly subscribers' },
     ],
     graph: {
-      kind: 'two-point',
-      fromLabel: 'Before BLAZON', toLabel: 'With BLAZON',
-      fromValue: 185, toValue: 425, prefix: '$', unit: 'K/mo',
+      points: [
+        { label: 'Before BLAZON', value: 185 },
+        { label: 'With BLAZON', value: 425 },
+      ],
       caption: 'Gross sales per month',
+      yTickFormatter: (v) => `$${v}K`,
     },
   },
   {
@@ -112,10 +126,14 @@ export const caseStudies: CaseStudy[] = [
       { to: 9, suffix: '%', label: 'TACOS on $40,000 ad spend' },
     ],
     graph: {
-      kind: 'qualitative-growth',
-      fromLabel: 'Brand New to Amazon', toLabel: 'Growth in One Month',
-      callout: '$40K Ad Spend = 9% TACOS',
+      points: [
+        { label: 'Brand New to Amazon', value: 1 },
+        { label: 'Growth in One Month', value: 2 },
+      ],
       caption: 'Growth in the first month',
+      showYAxis: false,
+      showTooltip: false,
+      callout: '$40K Ad Spend = 9% TACOS',
     },
   },
   {
@@ -142,10 +160,13 @@ export const caseStudies: CaseStudy[] = [
       { to: null, display: '$3MM/mo', label: 'Approx. monthly sales of direct competitors' },
     ],
     graph: {
-      kind: 'indexed-growth',
-      fromMultiple: 1, toMultiple: 3, months: 6,
-      sub: { value: '3,000+', label: 'New SKUs launched in 3 months' },
-      caption: 'Indexed sales growth',
+      points: [
+        { label: 'Month 0', value: 1 },
+        { label: 'Month 6', value: 3 },
+      ],
+      caption: 'Indexed sales growth — 1× to 3×',
+      yTickFormatter: (v) => `${v}×`,
+      callout: '3,000+ new SKUs launched in 3 months',
     },
   },
   {
@@ -165,9 +186,16 @@ export const caseStudies: CaseStudy[] = [
     ],
     metrics: [],
     graph: {
-      kind: 'roadmap',
-      steps: ['Launch', 'Brand Recognition', 'Rankings', 'Profitability', 'Sustainable Growth'],
+      points: [
+        { label: 'Launch', value: 1 },
+        { label: 'Brand Recognition', value: 2 },
+        { label: 'Rankings', value: 3 },
+        { label: 'Profitability', value: 4 },
+        { label: 'Sustainable Growth', value: 5 },
+      ],
       caption: 'The long-term path to sustainable growth',
+      showYAxis: false,
+      showTooltip: false,
     },
   },
 ];

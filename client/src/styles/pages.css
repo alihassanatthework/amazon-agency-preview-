@@ -303,7 +303,7 @@ html:not(.motion-on) .compare__cell::before { transform: scaleX(1); }
 .case__chart-col { grid-column: 1 / span 6; }
 .case__panel { border-radius: var(--radius-card); }
 .case__panel-inner { background: var(--slate-moss); border: 1px solid var(--char-line); border-radius: var(--radius-card); padding: var(--space-5); }
-.case__chart { height: 300px; margin-top: var(--space-4); }
+.case__chart { width: 100%; height: 300px; margin-top: var(--space-4); }
 .case__chart-label { color: var(--ash); }
 .case__legend { display: flex; gap: var(--space-5); margin-top: var(--space-4); font-size: var(--caption); color: var(--ash); }
 .case__legend span { display: inline-flex; align-items: center; gap: var(--space-2); }
@@ -319,43 +319,14 @@ html:not(.motion-on) .compare__cell::before { transform: scaleX(1); }
 .case__metric-affix { color: var(--sage); font-size: 60%; }
 .case__link { margin-top: var(--space-6); }
 
-/* --- Case study graph — the non-recharts treatments for two-point,
-   qualitative-growth, indexed-growth and roadmap data. Sits inside the same
-   `.case__chart` box the line chart uses, so the panel/caption/legend shell
-   is identical across every case study regardless of which data shape it has. */
-.csg { height: 100%; display: flex; flex-direction: column; }
-.csg__bars { flex: 1; display: flex; align-items: flex-end; justify-content: center; gap: var(--space-6); padding-top: var(--space-5); }
-.csg__bar-col { display: flex; flex-direction: column; align-items: center; gap: var(--space-2); height: 100%; justify-content: flex-end; width: 96px; }
-.csg__bar-track { width: 100%; height: 100%; display: flex; align-items: flex-end; }
-.csg__bar {
-  width: 100%; border-radius: 6px 6px 0 0; background: var(--sage); opacity: .55;
-  transition: height 900ms var(--e-reveal);
-}
-.csg__bar--peak { background: var(--lime-500); opacity: 1; }
-.csg__bar-value { font-family: var(--font-display); font-size: var(--body); font-weight: 700; color: var(--bone); }
-.csg__bar-label { color: var(--ash); font-size: var(--caption); text-align: center; }
-.csg__arrow { flex: none; align-self: center; color: var(--slate); margin-bottom: 40px; }
+/* --- Case study graph — every case study uses the same Aloha-Bay-style
+   recharts line chart (pages/Home/sections/CaseChart.tsx); this wrapper just
+   adds the caption above it and an optional confirmed-figure callout below,
+   matching the panel shell the line chart already sits inside. */
+.csg { height: 100%; }
 .csg__callout {
   margin: var(--space-4) 0 0; text-align: center; font-family: var(--font-display);
   font-weight: 600; color: var(--lime-500); font-size: var(--body);
-}
-.csg__callout span { display: block; color: var(--ash); font-family: var(--font-body); font-weight: 400; font-size: var(--caption); margin-top: 2px; }
-
-.csg__roadmap { flex: 1; display: flex; align-items: center; justify-content: center; gap: var(--space-3); flex-wrap: wrap; }
-.csg__roadmap-step { display: flex; flex-direction: column; align-items: center; gap: var(--space-2); width: 108px; text-align: center; }
-.csg__roadmap-num {
-  width: 30px; height: 30px; border-radius: 50%; display: flex; align-items: center; justify-content: center;
-  border: 1.5px solid var(--lime-500); color: var(--lime-500);
-  font-family: var(--font-display); font-size: 12px; font-weight: 600;
-}
-.csg__roadmap-label { color: var(--mist); font-size: var(--caption); }
-.csg__arrow--sm { margin-bottom: 0; }
-@media (max-width: 767px) {
-  .csg__bars { gap: var(--space-4); }
-  .csg__bar-col { width: 72px; }
-  .csg__arrow { margin-bottom: 30px; }
-  .csg__roadmap { flex-direction: column; }
-  .csg__arrow--sm { transform: rotate(90deg); }
 }
 
 /* --- H9 Testimonial wall ------------------------------------------------- */

@@ -119,6 +119,7 @@ function AlohaBayStudy() {
  * never a fabricated line chart.
  */
 function GenericStudy({ study }: { study: CaseStudyData }) {
+  const { ref, inView } = useInView<HTMLDivElement>();
   const displayName = study.descriptor ? `${study.client} — ${study.descriptor}` : study.client;
   const hasBeforeAfter = study.before.length > 0 || study.after.length > 0;
 
@@ -169,12 +170,10 @@ function GenericStudy({ study }: { study: CaseStudyData }) {
             </div>
           )}
 
-          <div className="cs__chart-wrap">
+          <div ref={ref} className="cs__chart-wrap">
             <EmberWipe className="case__panel">
               <div className="case__panel-inner">
-                <div className="case__chart">
-                  <CaseStudyGraph graph={study.graph} />
-                </div>
+                <CaseStudyGraph graph={study.graph} animate={inView} />
               </div>
             </EmberWipe>
           </div>
