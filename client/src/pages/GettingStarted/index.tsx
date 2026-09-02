@@ -35,7 +35,7 @@ export default function GettingStarted() {
             {APPROACH_STEPS.flatMap((step, i) => {
               const nodes = [
                 <Card as="article" interactive className="approach-flow__step" key={step}>
-                  <span className="approach-flow__num">{String(i + 1).padStart(2, '0')}</span>
+                  <span className="card__eyebrow approach-flow__num">{String(i + 1).padStart(2, '0')}</span>
                   <h3 className="heading-s">{step}</h3>
                 </Card>,
               ];

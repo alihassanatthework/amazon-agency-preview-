@@ -7,7 +7,7 @@ import type { ReactNode } from 'react';
  */
 export function EmptyState({ title, body, action }: { title: string; body: string; action?: ReactNode }) {
   return (
-    <div className="empty-state">
+    <div className="card card--note empty-state">
       <h3 className="heading-s">{title}</h3>
       <p className="body-s">{body}</p>
       {action}

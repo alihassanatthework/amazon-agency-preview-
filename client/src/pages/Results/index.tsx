@@ -110,8 +110,8 @@ export default function Results() {
             <RevealGroup className="cases__grid" stagger={80}>
               {shown.map((c) => (
                 <Card as={Link} interactive className="case-card" to={`/results/${c.slug}`} key={c.slug}>
-                  <p className="case-card__category">{c.categoryLabel}</p>
-                  <h3 className="display-m case-card__headline">{c.headline}</h3>
+                  <p className="card__eyebrow case-card__category">{c.categoryLabel}</p>
+                  <h3 className="display-m card__accent case-card__headline">{c.headline}</h3>
                   <p className="heading-s case-card__client">{c.client}</p>
                   <p className="body-s case-card__summary">{c.summary}</p>
                   <span className="link case-card__link">Read the case study<ArrowRight /></span>

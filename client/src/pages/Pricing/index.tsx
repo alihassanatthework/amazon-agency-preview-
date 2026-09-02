@@ -105,20 +105,20 @@ export default function Pricing() {
           <RevealGroup className="pricing__grid" stagger={80} key={model}>
             {tiers.map((t) => (
               <Card as="article" interactive accent={t.featured} className={`pricing__tier${t.featured ? ' is-featured' : ''}`} key={t.name}>
-                {t.featured && <span className="pricing__flag">Most common</span>}
+                {t.featured && <span className="card__badge pricing__flag">Most common</span>}
                 <h3 className="heading-s">{t.name}</h3>
                 <p className="caption pricing__skus">
                   {t.skuMax === null ? `${t.skuMin}+ SKUs` : `${t.skuMin}–${t.skuMax} SKUs`}
                 </p>
 
                 {t.quoteOnly ? (
-                  <p className="pricing__quote">Call for a quote</p>
+                  <p className="card__figure pricing__quote">Call for a quote</p>
                 ) : (
                   <>
                     {t.introFee && (
                       <p className="pricing__intro">
-                        <span className="pricing__figure">
-                          <Counter to={t.introFee} prefix="$" affixClassName="pricing__affix" />
+                        <span className="card__figure pricing__figure">
+                          <Counter to={t.introFee} prefix="$" affixClassName="card__affix pricing__affix" />
                         </span>
                         <span className="caption">/month for the first 3 months</span>
                       </p>
@@ -206,10 +206,10 @@ export default function Pricing() {
           <SectionHeader eyebrow="What's included" headline={['Included every month.']} />
           <RevealGroup className="incl__grid" stagger={80}>
             {included.map((b) => (
-              <Card as="div" className="incl__block interactive" key={b.group}>
+              <Card as="div" interactive className="incl__block" key={b.group}>
                 <h3 className="heading-s">{b.group}</h3>
                 <ul>{b.items.map((i) => (
-                  <li key={i}><span className="incl__tick" aria-hidden="true"><Check size={12} /></span>{i}</li>
+                  <li key={i}><span className="card__icon incl__tick" aria-hidden="true"><Check size={12} /></span>{i}</li>
                 ))}</ul>
               </Card>
             ))}

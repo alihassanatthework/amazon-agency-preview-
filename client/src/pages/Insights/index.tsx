@@ -31,7 +31,7 @@ export default function Insights() {
           <RevealGroup className="insights__grid" stagger={80}>
             {live.map((a) => (
               <Card as={Link} interactive className="insight" to={`/insights/${a.slug}`} key={a.slug}>
-                <p className="insight__meta">{a.readingMinutes} min read</p>
+                <p className="card__meta insight__meta">{a.readingMinutes} min read</p>
                 <h2 className="heading-s insight__title">{a.title}</h2>
                 <p className="body-s insight__excerpt">{a.excerpt}</p>
                 <span className="link insight__link">Read it<ArrowRight /></span>

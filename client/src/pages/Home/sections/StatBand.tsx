@@ -26,13 +26,13 @@ const STATS = [
 const FIGURE = /\d[\d,]*(?:[-–]\d+)?\+?/;
 function renderStat(text: string): ReactNode {
   const match = FIGURE.exec(text);
-  if (!match) return <span className="stat-card__figure">{text}</span>;
+  if (!match) return <span className="card__figure stat-card__figure">{text}</span>;
   const figure = match[0];
   const before = text.slice(0, match.index);
   const after = text.slice(match.index + figure.length);
   return (
     <>
-      {before}<span className="stat-card__figure">{figure}</span>{after}
+      {before}<span className="card__figure stat-card__figure">{figure}</span>{after}
     </>
   );
 }
@@ -49,7 +49,7 @@ export function StatBand() {
         <LineDraw className="stats__rule" />
         <RevealGroup className="stat-cards" stagger={60}>
           {STATS.map((s) => (
-            <Card as="div" className="stat-card interactive" key={s}>
+            <Card as="div" interactive className="stat-card" key={s}>
               <p className="body stat-card__text">{renderStat(s)}</p>
             </Card>
           ))}

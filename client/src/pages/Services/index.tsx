@@ -37,11 +37,11 @@ export default function Services() {
                 <ul className="svc__items">
                   {g.items.map((it) => (
                     <li key={it.name}>
-                      <span className="svc__tick" aria-hidden="true"><Check size={12} /></span>
+                      <span className="card__icon svc__tick" aria-hidden="true"><Check size={12} /></span>
                       <span>
                         <strong>{it.name}</strong>
-                        {it.additionalCost && <em className="svc__extra"> (additional cost)</em>}
-                        {it.description && <span className="svc__desc"> — {it.description}</span>}
+                        {it.additionalCost && <em className="card__eyebrow svc__extra"> (additional cost)</em>}
+                        {it.description && <span className="card__meta svc__desc"> — {it.description}</span>}
                       </span>
                     </li>
                   ))}
@@ -68,7 +68,7 @@ export default function Services() {
                 <h3 className="heading-s">{block.group}</h3>
                 <ul>
                   {block.items.map((i) => (
-                    <li key={i}><span className="incl__tick" aria-hidden="true"><Check size={12} /></span>{i}</li>
+                    <li key={i}><span className="card__icon incl__tick" aria-hidden="true"><Check size={12} /></span>{i}</li>
                   ))}
                 </ul>
               </Card>

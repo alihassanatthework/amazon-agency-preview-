@@ -73,10 +73,10 @@ export default function ServiceDetail() {
           <RevealGroup className="cap__grid" stagger={70}>
             {group.items.map((it) => (
               <Card as="article" interactive className="cap" key={it.name}>
-                <span className="cap__tick" aria-hidden="true"><Check size={13} /></span>
+                <span className="card__icon cap__tick" aria-hidden="true"><Check size={13} /></span>
                 <h3 className="cap__title">
                   {it.name}
-                  {it.additionalCost && <em className="svc__extra"> (additional cost)</em>}
+                  {it.additionalCost && <em className="card__eyebrow svc__extra"> (additional cost)</em>}
                 </h3>
                 {it.description && <p className="body-s">{it.description}</p>}
               </Card>

@@ -42,7 +42,7 @@ export function Services() {
             <Card as={Link} interactive className="lever" to={`/services/${g.slug}`} key={g.slug}>
               <h3 className="heading-s lever__title">{g.title}</h3>
               <p className="body-s lever__summary">{g.summary}</p>
-              <span className="lever__meta">
+              <span className="card__eyebrow lever__meta">
                 {g.count} services<ArrowRight />
               </span>
             </Card>

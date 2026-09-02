@@ -10,10 +10,27 @@ type CardProps<T extends ElementType> = {
 } & Omit<ComponentPropsWithRef<T>, 'as'>;
 
 /**
- * Universal Card component — the single source of truth for card styling across the website.
- * All cards (problems, services, pricing, testimonials, etc.) use this component.
- * Provides consistent: background, border, radius, padding, shadows, hover effects, transitions.
- * Automatically handles pointer-tilt interaction for interactive cards.
+ * Universal Card component — the single source of truth for card styling
+ * across the website. Every card (problems, services, pricing, testimonials,
+ * case studies, forms, stats) is this component.
+ *
+ * All visual treatment lives in the `.card` rules in styles/base.css, which
+ * read the `--card-*` tokens in styles/tokens.css. Those tokens are
+ * surface-independent, so a card looks identical on a light section and a
+ * dark one. Pages may pass `className` for LAYOUT only — grid position,
+ * width, gap, direction. A page that needs a different colour, border,
+ * shadow or hover is a bug in the token set, not a reason for a local
+ * override.
+ *
+ * Content roles for card children, so pages never restate a colour:
+ *   card__strong   heading-coloured inline text
+ *   card__meta     muted secondary text
+ *   card__eyebrow  accent label
+ *   card__accent   accent text
+ *   card__figure   accent numeral / figure
+ *   card__icon     accent icon
+ *   card__badge    accent badge
+ *   card__rule     hairline divider
  */
 export function Card<T extends ElementType = 'div'>({
   as,
@@ -28,12 +45,13 @@ export function Card<T extends ElementType = 'div'>({
   const Tag = (as ?? 'div') as ElementType;
   const tilt = useTilt<HTMLElement>();
 
-  const baseClasses = 'card';
-  const interactiveClasses = interactive ? 'card--interactive' : '';
-  const accentClasses = accent ? 'card--accent' : '';
-  const noteClasses = note ? 'case-card--note' : '';
-
-  const allClasses = [baseClasses, interactiveClasses, accentClasses, noteClasses, className]
+  const allClasses = [
+    'card',
+    interactive && 'card--interactive',
+    accent && 'card--accent',
+    note && 'card--note',
+    className,
+  ]
     .filter(Boolean)
     .join(' ');
 

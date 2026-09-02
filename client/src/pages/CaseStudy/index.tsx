@@ -71,7 +71,7 @@ function AlohaBayStudy() {
 
           <div ref={ref} className="cs__chart-wrap">
             <EmberWipe className="case__panel">
-              <div className="case__panel-inner">
+              <div className="card case__panel-inner">
                 <p className="caption case__chart-label">Ordered product sales — year on year</p>
                 <div className="case__chart">
                   <Suspense fallback={<div className="skeleton case__chart-skeleton" />}>
@@ -172,7 +172,7 @@ function GenericStudy({ study }: { study: CaseStudyData }) {
 
           <div ref={ref} className="cs__chart-wrap">
             <EmberWipe className="case__panel">
-              <div className="case__panel-inner">
+              <div className="card case__panel-inner">
                 <CaseStudyGraph graph={study.graph} animate={inView} />
               </div>
             </EmberWipe>

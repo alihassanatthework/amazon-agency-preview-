@@ -255,36 +255,80 @@ h1, h2, h3, h4 {
 .nav-link[aria-current='page'] { color: var(--bone); }
 .nav-link[aria-current='page']::after { transform: scaleX(1); }
 
-/* --- Card — §5.3: Universal card styling system
-   All cards across the website use identical base styling, typography, and interactions.
-   The Card component applies these classes; CSS defines all visual treatment. */
+/* --- Card — §5.3: THE universal card -------------------------------------
+   Every card on every page is this one component. `Card` (components/
+   common/Card.tsx) emits `.card`, and everything below is the whole of its
+   visual treatment: background, border, radius, shadow, typography, icons,
+   hover and transitions. Pages contribute layout only — grid position,
+   width, gap, direction — and never a colour, border, shadow or hover.
+
+   The mechanism that makes it universal is the contract re-point below.
+   A card redeclares --on-surface*, --hairline and --accent* for its own
+   subtree, so every shared primitive inside it (.caption, .eyebrow, .link,
+   .btn, .checklist, .divider) reads the CARD's palette rather than the
+   section's. That is why a card is identical on a bone section and an
+   obsidian one, with no light/dark variants anywhere. */
 
 .card {
-  background: var(--card);
-  border: 1px solid var(--hairline);
-  border-radius: var(--radius-card);
-  padding: var(--space-5);
-  color: var(--on-surface-2);           /* Default text color */
+  /* The contract, re-pointed to the card's own theme. */
+  --surface:      var(--card-bg);
+  --on-surface:   var(--card-heading);
+  --on-surface-2: var(--card-text);
+  --on-surface-3: var(--card-muted);
+  --hairline:     var(--card-border);
+  --accent:       var(--card-accent);
+  --accent-text:  var(--card-accent-text);
+  --control-bg:   var(--card-bg);
+
+  background: var(--card-bg);
+  border: 1px solid var(--card-border);
+  border-radius: var(--card-radius);
+  padding: var(--card-padding);
+  box-shadow: var(--card-shadow);
+  color: var(--card-text);
+  font-family: var(--font-body);
 }
 
-/* Dark surface cards: light text on dark background */
-.card h1, .card h2, .card h3, .card h4 { color: var(--bone); font-weight: 600; }
-.card p, .card li, .card span { color: var(--mist); }
+/* Typography — one scale for every card on the site. Element selectors are
+   wrapped in :where() so they carry no specificity of their own: the role
+   classes below, and any utility a page puts on the element, win cleanly
+   without needing !important anywhere. */
+.card :where(h1, h2, h3, h4, h5, h6) {
+  font-family: var(--font-display);
+  font-weight: 600;
+  color: var(--card-heading);
+}
+.card :where(p, li, dd, dt, span, blockquote, figcaption) { color: var(--card-text); }
+.card :where(strong, b) { color: var(--card-heading); font-weight: 600; }
+.card :where(em, i) { font-style: italic; }
 
-/* Light surface cards: dark text on light background */
-[data-surface='bone'] .card,
-[data-surface='linen'] .card {
-  box-shadow: var(--e1);
-  color: var(--on-surface-2);
+/* Content roles — the semantic slots a card body ever needs. Pages apply
+   these instead of writing their own colours. */
+.card .caption,
+.card .card__meta   { color: var(--card-muted); }
+.card .card__strong { color: var(--card-heading); font-weight: 600; }
+.card .card__eyebrow{ color: var(--card-accent-text); }
+.card .card__accent { color: var(--card-accent); }
+.card .card__icon   { color: var(--card-accent); flex: none; }
+.card .card__figure {
+  color: var(--card-accent);
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
 }
-[data-surface='bone'] .card h1, [data-surface='bone'] .card h2, [data-surface='bone'] .card h3, [data-surface='bone'] .card h4,
-[data-surface='linen'] .card h1, [data-surface='linen'] .card h2, [data-surface='linen'] .card h3, [data-surface='linen'] .card h4 {
-  color: var(--obsidian);
+.card .card__affix  { color: var(--card-accent-soft); }
+.card .card__rule   { border: 0; border-top: 1px solid var(--card-border); margin: 0; }
+.card .card__badge  { background: var(--card-accent); color: var(--obsidian); }
+
+/* Shared primitives keep their dark-card treatment even when the card sits
+   on a light section. These match the [data-surface] light variants above
+   on specificity and win on source order — no !important required. */
+.card .btn { background: var(--card-accent); color: var(--obsidian); }
+.card .btn--secondary { background: transparent; border-color: var(--card-accent); color: var(--card-accent-text); }
+.card .input, .card .select, .card .textarea {
+  background: var(--card-bg); border-color: var(--card-border); color: var(--card-text);
 }
-[data-surface='bone'] .card p, [data-surface='bone'] .card li, [data-surface='bone'] .card span,
-[data-surface='linen'] .card p, [data-surface='linen'] .card li, [data-surface='linen'] .card span {
-  color: var(--graphite);
-}
+.card :focus-visible { outline-color: var(--card-accent); }
 
 .card--interactive {
   transition:
@@ -296,24 +340,21 @@ h1, h2, h3, h4 {
 }
 @media (hover: hover) and (pointer: fine) {
   .card--interactive:hover {
-    transform: translateY(-6px);
-    border-color: rgba(138, 176, 75, .4);
-    background: #212819;              /* one step lighter than slate-moss */
+    transform: translateY(var(--card-lift));
+    border-color: var(--card-border-hover);
+    background: var(--card-bg-hover);
+    box-shadow: var(--card-shadow-hover);
   }
-  [data-surface='bone'] .card--interactive:hover,
-  [data-surface='linen'] .card--interactive:hover {
-    background: var(--paper);
-    border-color: rgba(97, 124, 54, .3);
-    box-shadow: var(--e2);
-    transform: translateY(-4px);
-  }
+  .card .btn:hover { background: var(--lime-300); color: var(--obsidian); }
+  .card .btn--secondary:hover { background: var(--card-accent); color: var(--obsidian); }
 }
-.card--accent { border-color: var(--lime-500); }
 
-/* Override any page-specific typography — cards always use universal styling */
-.card h1, .card h2, .card h3, .card h4,
-.card p, .card li, .card span,
-.card strong, .card em { font-family: inherit; }
+/* Variants — the only permitted deviations, and all of them derive from the
+   same tokens rather than introducing a second palette. */
+.card--accent { border-color: var(--card-accent); }
+.card--note   { border-style: dashed; background: transparent; box-shadow: none; }
+.card--note :where(p, li, span) { color: var(--card-muted); }
+.card--flush  { padding: 0; }
 
 /* Media inside a card — the frame never scales, only its contents */
 .media-frame {
@@ -424,7 +465,7 @@ h1, h2, h3, h4 {
   width: 20px; height: 20px;
   margin: 2px 0 0;
   border: 1px solid var(--hairline);
-  background: var(--card);
+  background: var(--control-bg);
   cursor: pointer;
   transition: border-color var(--t-instant) var(--e-instant),
               background   var(--t-instant) var(--e-instant);
@@ -432,7 +473,7 @@ h1, h2, h3, h4 {
 .choice input[type='radio'] { border-radius: var(--radius-pill); }
 .choice input[type='checkbox'] { border-radius: var(--radius-control); }
 .choice input:checked { border-color: var(--lime-500); background: var(--lime-500); }
-.choice input[type='radio']:checked { background: var(--card); box-shadow: inset 0 0 0 5px var(--lime-500); }
+.choice input[type='radio']:checked { background: var(--control-bg); box-shadow: inset 0 0 0 5px var(--lime-500); }
 .choice input[type='checkbox']:checked {
   background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='10' viewBox='0 0 12 10'%3E%3Cpath d='M1 5l3.5 3.5L11 1.5' stroke='%230B0D0A' stroke-width='2' fill='none' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
   background-repeat: no-repeat; background-position: center;

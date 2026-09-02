@@ -22,11 +22,11 @@ export function TestimonialWall({ initial = 5, all = false }: { initial?: number
       <RevealGroup className="wall" stagger={80}>
         {shown.map((t) => (
           <Card as="figure" interactive className="wall__card" key={t.author}>
-            <span className="wall__quote-mark" aria-hidden="true">”</span>
+            <span className="card__figure wall__quote-mark" aria-hidden="true">”</span>
             <blockquote><p className="body-s">{t.quote}</p></blockquote>
             <figcaption>
-              <span className="wall__author">{t.author}</span>
-              <span className="wall__company">{t.company}</span>
+              <span className="card__strong wall__author">{t.author}</span>
+              <span className="card__meta wall__company">{t.company}</span>
             </figcaption>
             {logoFor(t.slug) && (
               <img className="wall__logo" src={logoFor(t.slug)!} alt={`${t.company} logo`} height={24} loading="lazy" />

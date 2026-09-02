@@ -40,7 +40,7 @@ export function CaseStudyFeature() {
         <div className="case__grid">
           <div className="case__chart-col" ref={ref}>
             <EmberWipe className="case__panel">
-              <div className="case__panel-inner">
+              <div className="card case__panel-inner">
                 <p className="caption case__chart-label">Ordered product sales — year on year</p>
                 <div className="case__chart">
                   <Suspense fallback={<div className="skeleton case__chart-skeleton" />}>
