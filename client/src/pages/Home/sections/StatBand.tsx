@@ -10,14 +10,14 @@ import { TiltCard } from '../../../components/common/TiltCard';
  * renumbered, nothing added.
  */
 const STATS = [
-  '5+ Years in Business',
+  '8+ Years in Business',
   '30+ Years of Combined Amazon Experience',
   'Utah Based',
   '10+ Employees',
   '100+ Brands Currently Servicing',
   '250+ Brands Worked With',
-  'Clients stay 19 months on average',
-  '4–6 Month to Sales Lift',
+  'Clients stay 24 months on average',
+  '3–5 Month to Sales Lift',
 ];
 
 // Highlights the leading figure inline (e.g. "5+", "100+", "4–6") without

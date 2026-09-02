@@ -1,20 +1,16 @@
 import { useId } from 'react';
 
 /**
- * The flame mark, isolated from `assets/logo/logo-full.svg` (its first path —
- * a gradient-filled shape, bounding box roughly 152×204, distinct from the six
- * solid-black wordmark paths that follow it in that file). Kept as vector data
- * here rather than a separate asset so the same path can drive the visible
- * silhouette, the liquid-fill clip and the dim base layer from one source —
- * they are guaranteed to align because they are the same path.
+ * Authentic flame + B shape from Asset 3.svg (cls-9 path).
+ * This is the EXACT flame + B design from the Blazon logo reference.
+ * The B is surrounded by the flowing flame curves with gradient from yellow to green.
  */
 const FLAME_D =
-  'M88.3466 86.2467C101.55 93.1606 106.592 108.538 104.311 131.306C133.599 101.386 95.6685 79.2136 122.076 44.8825C121.836 93.0414 156.645 93.2798 151.964 141.439C148.243 167.545 134.799 187.094 110.072 198.896C151.244 158.724 138.4 118.194 124.476 93.0414C124.957 112.949 124.476 132.379 108.872 147.757C105.271 151.333 99.7497 151.81 95.5485 149.068C91.2273 146.207 89.5469 140.843 91.5874 136.075C95.5485 126.657 96.9889 117.955 95.9086 108.896C95.3085 110.922 94.7083 112.829 93.8681 114.618C87.7464 127.73 71.1819 132.379 58.8185 124.75C58.5785 124.631 58.4584 124.512 58.2184 124.392C50.5363 119.386 42.4941 108.896 51.3765 75.399C51.3765 75.399 15.2467 100.671 48.9759 163.492C51.8566 168.975 46.0951 174.935 40.5736 172.313L25.8096 165.041C29.6506 178.631 40.6936 191.743 54.8575 204.618C9.7252 191.863 -5.87904 161.108 1.92308 116.167C10.3254 128.922 19.4478 139.412 30.4908 144.538C-14.0413 83.3858 79.7042 58.8295 72.3822 0.538086C73.4625 1.25332 74.6628 2.08775 75.7431 2.80299C90.2671 12.8162 95.5485 31.7699 87.9865 47.7434L66.6207 93.7566C66.6207 93.7566 59.4187 109.611 74.9029 112.472C90.5072 115.452 93.3879 95.7831 88.3466 86.2467ZM76.1032 183.161C82.465 184.71 90.027 183.161 99.0295 178.631C93.508 186.618 85.9459 195.2 76.7034 204.26C105.991 192.935 124.957 172.79 124.836 136.075C115.594 158.128 99.2695 173.743 76.1032 183.161Z';
+  'm476.26,445.77c-8.24-1.92-16.54-3.48-27.31-5.71,15.75-6.78,29.79-11.23,41.32-20.39,36.29-28.84,45.44-67.54,36.68-110.6-3.62-17.81-11.64-34.7-24.38-47.79-7.59-7.8-16.87-13.85-26.75-18.36-12.03-5.49-24.96-8.78-37.98-11.15-10.31-1.88-20.73-3.19-31.19-3.73-10.31-.53-20.61.08-30.89.09-2.36,0-4.71,0-7.07,0h-203.34c-3.94,0-7.9.06-11.84.31-.24.03-.46.03-.67.09,1.65,3.69,3.39,7.32,5.28,10.93,1.77.27,3.54.55,5.31.89,34.21,6.68,50.02,22.1,53.93,56.37.43,3.81.79,7.6,1.1,11.42.64,7.6,1.04,15.23,1.28,22.83,1.1,33.91-.95,67.94-.15,101.87.15,6.87-3.11,7.23-8.94,6.87-2.14-.15-4.27-.27-6.44-.4,15.14,12.97,30.43,25.79,45.23,38.79.58.52,1.16,1.01,1.74,1.56-.24-27.28.82-54.48,3.78-81.58,1.22-.09,2.44-.18,3.66-.24,1.13,13.06,2.81,26.12,3.24,39.22.61,17.52.46,35.07.46,52.62,11.87,10.89,23.53,22.34,34.7,34.27,0-18.8-.12-37.6-.34-56.43-.09-9.64,2.65-13.49,12.7-13,12.27.61,24.57.4,36.84.31h1.71c2.23-.03,4.46-.03,6.68-.03,12.15.03,24.29.4,36.41,2.01,59.91,8,90.37,37.91,96.26,104.84,3.14,35.46-5.37,67.42-32.5,92.63-10.81,10.02-25.24,17.93-40.94,22.22-3.77,1.03-7.58,1.92-11.46,2.5,0,0-7.62,18.9-10.18,24.18.66-1.13,2.1-3.09,4.73-4.67.36-.22.73-.43,1.11-.62.01,0,.03-.01.04-.02.49-.24.98-.46,1.51-.65,2.69-.99,6.22-1.49,10.79-.91h.3c19.86,0,39.61-2.01,59.34-4.4,53.07-6.44,91.19-41.48,100.78-93.73,11.35-61.99-16.69-134.41-94.52-152.38Zm-113.75-7.08s-38.45,8.42-52.67,2.56c0,0,.76,0,2.03-.05-12.68-.36-15.01-8.6-15.01-31.07v-76.6c.03-26.64.27-53.26-.15-79.87-.15-9.09,2.44-12.6,12.06-12.42,24.45.52,48.95-.49,73.12,4.7,11.54,2.46,20.58,7.13,27.32,14.46l-.02-.03s9.38,6.49,19.21,21.51c-.01-.04-.02-.08-.03-.12,5.3,7.55,9.51,16.16,12.6,25.35.06.17.13.32.19.49l-.04-.06c17.48,52.75-2.82,124.82-78.61,131.15Z';
 
-// The path's own bounding box (computed once, offline) — the widest point
-// sits at the bottom of this range, which is where the fill begins.
-const FLAME_BOTTOM = 204.7;
-const FLAME_HEIGHT = 204.2;
+// Actual bounding box from Asset 3.svg: 573.2×813.52
+const FLAME_BOTTOM = 697;
+const FLAME_HEIGHT = 813;
 
 /**
  * The flame at its normal resting appearance — unchanged from what shipped
@@ -26,7 +22,7 @@ export function FlameBase({ className }: { className?: string }) {
   const uid = useId().replace(/:/g, '');
   const gradId = `flame-base-${uid}`;
   return (
-    <svg className={className} viewBox="0 0 153 205" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+    <svg className={className} viewBox="0 0 573 814" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
       <defs>
         <linearGradient id={gradId} x1="0" y1="0" x2="0" y2="1">
           <stop offset="0%" stopColor="#5C8A7E" />
@@ -61,7 +57,7 @@ export function FlameLiquidFill({ className }: { className?: string }) {
   const glowId = `flame-glow-${uid}`;
 
   return (
-    <svg className={className} viewBox="0 0 153 205" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+    <svg className={className} viewBox="0 0 573 814" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
       <defs>
         <filter id={glowId} x="-200%" y="-200%" width="500%" height="500%">
           <feGaussianBlur stdDeviation="1.6" />
@@ -76,21 +72,21 @@ export function FlameLiquidFill({ className }: { className?: string }) {
           bug: it read as a moving glow rather than a filled region. */}
       <g clipPath={`url(#${clipId})`}>
         <g className="flame-fill__runner">
-          <rect x="-20" y={FLAME_BOTTOM - 1} width="193" height={FLAME_HEIGHT + 40} fill="#8AB04B" />
+          <rect x="-50" y={FLAME_BOTTOM - 1} width="700" height={FLAME_HEIGHT + 120} fill="#8AB04B" />
 
           {/* A soft highlight band right at the surface, breathing gently on
               its own short cycle — the "very subtle organic wave" the liquid
               surface needs without an actual animated wave path. */}
           <rect
             className="flame-fill__surface"
-            x="-20" y={FLAME_BOTTOM - 6} width="193" height="10"
+            x="-50" y={FLAME_BOTTOM - 6} width="700" height="24"
             fill="#ABC482" opacity=".55"
           />
 
           {/* The leading-edge dot — small and secondary, marking the level
               rather than driving the effect. */}
-          <circle cx="76" cy={FLAME_BOTTOM} r="6" fill="#8AB04B" filter={`url(#${glowId})`} opacity=".7" />
-          <circle cx="76" cy={FLAME_BOTTOM} r="2.4" fill="#D4E3B4" />
+          <circle cx="286" cy={FLAME_BOTTOM} r="14" fill="#8AB04B" filter={`url(#${glowId})`} opacity=".7" />
+          <circle cx="286" cy={FLAME_BOTTOM} r="5.6" fill="#D4E3B4" />
         </g>
       </g>
     </svg>

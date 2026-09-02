@@ -190,3 +190,6 @@
     --blur: 7px;         /* 19.2 — blur halves on mobile                   */
   }
 }
+
+/* Override section background for bone surface to sage green while preserving text colors */
+[data-surface='bone'] { --surface: #D4E3B4; }

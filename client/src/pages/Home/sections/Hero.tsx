@@ -78,7 +78,7 @@ export function Hero() {
 
         {/* Verified figures only — §22 Q-01 forbids a revenue claim. */}
         <p className="caption hero__trust">
-          80+ brands managed · 4+ years · US-based team of 9 · avg. client 1 year 7 months
+          80+ brands managed · 8+ years · US-based team of 9 · avg. client 24 months
         </p>
       </Container>
 
