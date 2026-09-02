@@ -622,6 +622,35 @@ html:not(.motion-on) .process__marker { transform: none; }
 .checklist li span:last-child { color: var(--on-surface-2); }
 .checklist--wide { grid-template-columns: 1fr 1fr; gap: var(--space-4) var(--space-6); }
 
+/* --- Team ----------------------------------------------------------------
+   Layout only; the member cards take their colours, border, shadow and hover
+   from the universal Card. The portrait is a circle because that is what the
+   deck's own crops are — same brick backdrop, same lighting — so a circular
+   mask needs far fewer pixels than a full-bleed portrait card and survives
+   deck-extracted resolution. Swap to a 4:5 frame once original files land. */
+.team__grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: var(--gutter); }
+.team__member { display: flex; flex-direction: column; align-items: center; text-align: center; gap: var(--space-2); }
+.team__photo,
+.team__monogram {
+  width: 128px; height: 128px; flex: none;
+  border-radius: var(--radius-pill);
+  margin-bottom: var(--space-3);
+}
+.team__photo { object-fit: cover; }
+/* No portrait yet: initials, never a stock face. */
+.team__monogram {
+  display: grid; place-items: center;
+  background: rgba(138, 176, 75, .12);
+  border: 1px solid var(--card-border);
+  color: var(--card-accent);
+  font-family: var(--font-display); font-size: 34px; font-weight: 600;
+  letter-spacing: .02em;
+}
+.team__name { margin: 0; }
+.team__role { margin: 0; }
+.team__bio { margin-top: var(--space-2); }
+.team__note { margin-top: var(--space-6); text-align: center; }
+
 /* --- Insights ------------------------------------------------------------ */
 .insights__grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: var(--gutter); }
 .insight { display: flex; flex-direction: column; gap: var(--space-2); text-decoration: none; }
@@ -748,7 +777,7 @@ html:not(.motion-on) .faq__answer { opacity: 1; transform: none; }
 
 @media (max-width: 1279px) {
   .svc__groups, .cap__grid, .cadence, .incl__grid, .insights__grid,
-  .keys, .svc__related-grid { grid-template-columns: repeat(2, 1fr); }
+  .keys, .svc__related-grid, .team__grid { grid-template-columns: repeat(2, 1fr); }
   /* The three packages stay 3-up here: at two columns the row orphans a card
      and ADVANCED stops being the middle one. They go single-column at 767. */
   .cases__grid { grid-template-columns: 1fr; }
@@ -764,7 +793,8 @@ html:not(.motion-on) .faq__answer { opacity: 1; transform: none; }
   .form-card { padding: var(--space-4); }
   .form-grid { grid-template-columns: 1fr; }
   .svc__groups, .cap__grid, .cadence, .incl__grid, .insights__grid,
-  .pricing__grid, .keys, .checklist--wide, .svc__related-grid { grid-template-columns: 1fr; }
+  .pricing__grid, .keys, .checklist--wide, .svc__related-grid,
+  .team__grid { grid-template-columns: 1fr; }
   .cs__metrics { grid-template-columns: repeat(2, 1fr); }
   .cs__before-after { grid-template-columns: 1fr; gap: var(--space-5); }
   .pricing__tier.is-featured { margin-top: 0; margin-bottom: 0; order: -1; }
