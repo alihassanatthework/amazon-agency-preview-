@@ -66,7 +66,7 @@ export default function Results() {
       <PageHero
         eyebrow="Client results"
         headline={['The numbers, and', 'the people behind them.']}
-        lead="Twelve clients answered directly, and five full case studies are published, with more being written from account data we already hold."
+        lead="Twelve clients answered directly, and four full case studies are published, with more being written from account data we already hold."
       />
 
       <Section surface="carbon" size="compact">

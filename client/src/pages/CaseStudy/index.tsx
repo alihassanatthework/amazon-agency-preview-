@@ -111,7 +111,7 @@ function AlohaBayStudy() {
 }
 
 /**
- * GRINDS, VetRx, Apparel Brand, New to Amazon Business — same section order,
+ * GRINDS, VetRx, Apparel Brand — same section order,
  * same shell components (PageHero, cs__metrics, case__panel chart box,
  * cs__body narrative, back link, CtaSection) as Aloha Bay above, plus a
  * before/after comparison block where the brief supplied one. The graph

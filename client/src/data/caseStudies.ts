@@ -1,5 +1,5 @@
 /**
- * The four case studies added alongside the existing, hand-built Aloha Bay
+ * The three case studies added alongside the existing, hand-built Aloha Bay
  * page (which stays exactly as it was — see pages/CaseStudy/index.tsx).
  *
  * Every field here is sourced directly from the client-supplied brief. Where
@@ -167,35 +167,6 @@ export const caseStudies: CaseStudy[] = [
       caption: 'Indexed sales growth — 1× to 3×',
       yTickFormatter: (v) => `${v}×`,
       callout: '3,000+ new SKUs launched in 3 months',
-    },
-  },
-  {
-    slug: 'new-to-amazon-business',
-    client: 'New to Amazon Business',
-    categoryId: 'new-to-amazon',
-    categoryLabel: 'New to Amazon',
-    title: 'Long-term businesses rather than short-term wins',
-    mainResult: 'Launch → Brand Recognition → Rankings → Profitability → Sustainable Growth',
-    summary: 'Starting from square one with products completely new to the Amazon market, built for profitability through catalogue cleanup, a better shopping experience, and long-term, sustainable growth rather than a short-term win.',
-    before: [],
-    after: [],
-    story: [
-      { heading: 'Starting from square one', body: 'This business started from square one with products that were completely new to the Amazon market. Starting from scratch can be difficult, but it can be successful with the right strategy. The brand’s primary goal was profitability.' },
-      { heading: 'The approach', body: 'BLAZON focused on catalogue cleanup, improving the customer shopping experience, reducing ad spend, increasing conversion, building brand recognition, improving rankings, and creating sustainable, scalable Amazon growth.' },
-      { heading: 'The philosophy', body: 'Success does not happen overnight. Building brand recognition and strong rankings takes time. The core philosophy is long-term businesses rather than short-term wins.' },
-    ],
-    metrics: [],
-    graph: {
-      points: [
-        { label: 'Launch', value: 1 },
-        { label: 'Brand Recognition', value: 2 },
-        { label: 'Rankings', value: 3 },
-        { label: 'Profitability', value: 4 },
-        { label: 'Sustainable Growth', value: 5 },
-      ],
-      caption: 'The long-term path to sustainable growth',
-      showYAxis: false,
-      showTooltip: false,
     },
   },
 ];
