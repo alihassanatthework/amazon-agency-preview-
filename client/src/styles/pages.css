@@ -532,7 +532,18 @@ html:not(.motion-on) .process__marker { transform: none; }
 .svc__extra { font-style: normal; }
 .svc__tick { margin-top: 5px; }
 .svc__more { margin-top: auto; }
-.svc__related ul { display: flex; flex-wrap: wrap; gap: var(--space-3) var(--space-6); margin-top: var(--space-4); }
+.svc__related-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: var(--gutter); margin-top: var(--space-4); }
+.svc__related-card {
+  display: flex; align-items: center; justify-content: space-between; gap: var(--space-3);
+  text-decoration: none;
+}
+/* Layout only — the heading colour comes from .card__strong and the arrow
+   from .card__icon, so these cards track the universal Card like the rest. */
+.svc__related-card h3 { font-size: var(--body); margin: 0; }
+.svc__related-card svg { transition: transform var(--t-base) var(--e-base); }
+@media (hover: hover) and (pointer: fine) {
+  .svc__related-card:hover svg { transform: translateX(4px); }
+}
 .cap__grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: var(--gutter); }
 .cap { display: flex; flex-direction: column; gap: var(--space-2); }
 .cap__title { margin: 0; }
@@ -729,7 +740,7 @@ html:not(.motion-on) .faq__answer { opacity: 1; transform: none; }
 
 @media (max-width: 1279px) {
   .svc__groups, .cap__grid, .cadence, .incl__grid, .insights__grid,
-  .pricing__grid, .keys { grid-template-columns: repeat(2, 1fr); }
+  .pricing__grid, .keys, .svc__related-grid { grid-template-columns: repeat(2, 1fr); }
   .cases__grid { grid-template-columns: 1fr; }
   .cs__metrics { grid-template-columns: repeat(2, 1fr); }
   .expect__grid { grid-template-columns: 1fr; gap: var(--space-7); }
@@ -744,7 +755,7 @@ html:not(.motion-on) .faq__answer { opacity: 1; transform: none; }
   .form-card { padding: var(--space-4); }
   .form-grid, .calc__inputs, .calc__compare { grid-template-columns: 1fr; }
   .svc__groups, .cap__grid, .cadence, .incl__grid, .insights__grid,
-  .pricing__grid, .keys, .checklist--wide { grid-template-columns: 1fr; }
+  .pricing__grid, .keys, .checklist--wide, .svc__related-grid { grid-template-columns: 1fr; }
   .cs__metrics { grid-template-columns: repeat(2, 1fr); }
   .cs__before-after { grid-template-columns: 1fr; gap: var(--space-5); }
   .pricing__tier.is-featured { transform: none; order: -1; }
