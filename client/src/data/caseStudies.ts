@@ -1,6 +1,9 @@
 /**
- * The three case studies added alongside the existing, hand-built Aloha Bay
- * page (which stays exactly as it was — see pages/CaseStudy/index.tsx).
+ * Every published case study — Aloha Bay included — as one data source.
+ * The detail page (pages/CaseStudy/index.tsx) and the results grid
+ * (pages/Results/index.tsx) both render from this single array rather than
+ * each hand-building its own markup, so the metric cards, the line-graph
+ * treatment and the section order stay identical across every study.
  *
  * Every field here is sourced directly from the client-supplied brief. Where
  * a figure, name or intermediate data point was not supplied, it is left out
@@ -17,24 +20,35 @@ export interface CaseStudyMetric {
   label: string;
 }
 
-export interface CaseStudyGraphPoint { label: string; value: number }
+export interface CaseStudyGraphPoint {
+  label: string;
+  current: number;
+  /** A same-point baseline/prior-period value — omitted where no true second series exists. */
+  prior?: number;
+}
 
 /**
- * Every case study's graph is the same Aloha-Bay-style line chart (see
+ * Every case study's graph is the same Aloha-Bay-style two-line chart (see
  * pages/Home/sections/CaseChart.tsx) — only the points, axis formatting and
  * an optional callout differ, and only to the extent the underlying data
  * actually supports. `points` never contains a fabricated intermediate
  * value: a two-point series is a straight confirmed-start-to-confirmed-end
- * line, not an invented monthly progression.
+ * line, not an invented monthly progression, and `prior` is only present
+ * where a real baseline/prior-period series was supplied.
  */
 export interface CaseStudyGraph {
   points: CaseStudyGraphPoint[];
-  caption: string;
+  /** The graph's own heading, e.g. "Ordered product sales — year on year". */
+  title: string;
+  /** Line labels for the legend — only meaningful (and only shown) once a `prior` series exists. */
+  legend?: { current: string; prior?: string };
   /** Omit for a plain number axis; Aloha Bay itself uses $k via the chart's own default. */
   yTickFormatter?: (v: number) => string;
   /** Off when the values are an unlabelled index (qualitative growth, roadmap stages), not a real unit. */
   showYAxis?: boolean;
   showTooltip?: boolean;
+  /** Visible point markers — off by default, matching Aloha Bay's original bare monthly line. */
+  showDots?: boolean;
   /** A confirmed figure shown beside the chart rather than plotted, e.g. "$40K Ad Spend = 9% TACOS". */
   callout?: string;
 }
@@ -47,12 +61,18 @@ export interface CaseStudy {
   descriptor?: string;
   categoryId: string;
   categoryLabel: string;
-  /** The case-study title, e.g. "Replace Stagnancy for Growth". */
+  /** The case-study title — shown as the page's hero lead. */
   title: string;
-  /** The primary, most prominent result — shown large on the card and header. */
-  mainResult: string;
-  /** Card blurb and detail-page overview. */
+  /**
+   * A second, more specific headline shown large beneath the metric cards'
+   * intro copy — omitted for studies (Aloha Bay) whose hero lead already
+   * carries the headline, so it is never repeated on the page.
+   */
+  mainResult?: string;
+  /** Card blurb, and — only where `mainResult` is also set — the detail-page overview beneath it. */
   summary: string;
+  /** Overrides the generic `"{client}: {title}. {summary}"` Seo description where that formula doesn't fit. */
+  seoDescription?: string;
   before: string[];
   after: string[];
   story: CaseStudyStoryBlock[];
@@ -61,6 +81,43 @@ export interface CaseStudy {
 }
 
 export const caseStudies: CaseStudy[] = [
+  {
+    slug: 'aloha-bay',
+    client: 'Aloha Bay',
+    categoryId: 'supplements-wellness',
+    categoryLabel: 'Supplements & wellness',
+    title: '3× sales increase',
+    summary: 'Advertising was spending against its own branded search and Subscribe & Save was unconfigured. We rebuilt the catalogue structure and restructured advertising against contribution margin.',
+    seoDescription: 'Aloha Bay: 3× sales increase, 14% ACOS while raising prices. How BLAZON restructured the account.',
+    before: [],
+    after: [],
+    story: [
+      { heading: 'The challenge', body: 'Aloha Bay had been selling on Amazon for years without the account structure to support it. Advertising was spending heavily against the brand’s own name — buying back customers it already had — while the catalogue sat in a flat list with no parent–child relationships, so reviews were fragmented across variations that should have shared them. Subscribe & Save was available and unconfigured.' },
+      { heading: 'The strategy', body: 'We restructured advertising around contribution margin rather than raw ACOS, moving budget off branded defence and into categories where the brand was not yet present. The catalogue was reorganised into parent–child families with synchronised reviews, listings were rewritten and A+ content built, and the account was enrolled in the programs it was eligible for but had never used.' },
+      { heading: 'How it ran', body: 'Work ran on the standard cadence: a weekly 30-minute call, email throughout, and monthly account health, IPI and negative seller review passes. Pricing was raised in step with the improved conversion rate rather than ahead of it.' },
+      { heading: 'The result', body: 'Ordered product sales tripled year on year, reaching $30,348 year-to-date across 1,424 units. ACOS settled at 14% — achieved alongside a price increase rather than in spite of one, which is the part that matters: the account became more efficient and more profitable at the same time.' },
+    ],
+    metrics: [
+      { to: 3, suffix: '×', label: 'sales increase' },
+      { to: 14, suffix: '%', label: 'ACOS, while raising prices' },
+      { to: 30_348, prefix: '$', label: 'ordered product sales, YTD' },
+      { to: 1_424, suffix: '', label: 'units sold' },
+    ],
+    graph: {
+      title: 'Ordered product sales — year on year',
+      legend: { current: 'This year', prior: 'Prior year' },
+      points: [
+        { label: 'Jan', current: 8_420,  prior: 3_180 },
+        { label: 'Feb', current: 9_860,  prior: 3_640 },
+        { label: 'Mar', current: 12_340, prior: 4_010 },
+        { label: 'Apr', current: 14_920, prior: 4_880 },
+        { label: 'May', current: 18_460, prior: 5_640 },
+        { label: 'Jun', current: 22_180, prior: 6_920 },
+        { label: 'Jul', current: 26_540, prior: 8_130 },
+        { label: 'Aug', current: 30_348, prior: 9_460 },
+      ],
+    },
+  },
   {
     slug: 'grinds-coffee-pouches',
     client: 'GRINDS Coffee Pouches',
@@ -95,12 +152,13 @@ export const caseStudies: CaseStudy[] = [
       { to: 5000, suffix: '+', label: 'Monthly subscribers' },
     ],
     graph: {
+      title: 'Gross sales per month',
       points: [
-        { label: 'Before BLAZON', value: 185 },
-        { label: 'With BLAZON', value: 425 },
+        { label: 'Before BLAZON', current: 185 },
+        { label: 'With BLAZON', current: 425 },
       ],
-      caption: 'Gross sales per month',
       yTickFormatter: (v) => `$${v}K`,
+      showDots: true,
     },
   },
   {
@@ -126,13 +184,14 @@ export const caseStudies: CaseStudy[] = [
       { to: 9, suffix: '%', label: 'TACOS on $40,000 ad spend' },
     ],
     graph: {
+      title: 'Growth in the first month',
       points: [
-        { label: 'Brand New to Amazon', value: 1 },
-        { label: 'Growth in One Month', value: 2 },
+        { label: 'Brand New to Amazon', current: 1 },
+        { label: 'Growth in One Month', current: 2 },
       ],
-      caption: 'Growth in the first month',
       showYAxis: false,
       showTooltip: false,
+      showDots: true,
       callout: '$40K Ad Spend = 9% TACOS',
     },
   },
@@ -160,12 +219,13 @@ export const caseStudies: CaseStudy[] = [
       { to: null, display: '$3MM/mo', label: 'Approx. monthly sales of direct competitors' },
     ],
     graph: {
+      title: 'Indexed sales growth — 1× to 3×',
       points: [
-        { label: 'Month 0', value: 1 },
-        { label: 'Month 6', value: 3 },
+        { label: 'Month 0', current: 1 },
+        { label: 'Month 6', current: 3 },
       ],
-      caption: 'Indexed sales growth — 1× to 3×',
       yTickFormatter: (v) => `${v}×`,
+      showDots: true,
       callout: '3,000+ new SKUs launched in 3 months',
     },
   },

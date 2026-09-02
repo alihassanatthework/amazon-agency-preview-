@@ -590,7 +590,7 @@ html:not(.motion-on) .process__marker { transform: none; }
 .case-card__category { font-size: var(--eyebrow); font-weight: 600; letter-spacing: .12em; text-transform: uppercase; margin: 0; }
 .case-card__headline { margin: var(--space-2) 0; }
 .case-card__link { margin-top: auto; padding-top: var(--space-4); }
-.cs__metrics { display: grid; grid-template-columns: repeat(4, 1fr); gap: var(--space-5); margin-bottom: var(--space-7); }
+.cs__metrics { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: var(--space-5); margin-bottom: var(--space-7); }
 .cs__metric-value { font-family: var(--font-display); font-size: 48px; font-weight: 600; color: var(--lime-500); font-variant-numeric: tabular-nums; margin: 0 0 var(--space-1); letter-spacing: -.02em; }
 .cs__body { max-width: 68ch; }
 .cs__block { margin-bottom: var(--space-6); }
