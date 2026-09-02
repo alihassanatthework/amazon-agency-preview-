@@ -40,8 +40,6 @@ const CASES = [
 const CATEGORIES = [
   { id: 'all', label: 'All' },
   { id: 'supplements-wellness', label: 'Supplements & wellness' },
-  { id: 'outdoor-recreation', label: 'Outdoor & recreation' },
-  { id: 'automotive', label: 'Automotive' },
   { id: 'coffee', label: 'Coffee' },
   { id: 'veterinary', label: 'Veterinary' },
   { id: 'apparel', label: 'Apparel' },

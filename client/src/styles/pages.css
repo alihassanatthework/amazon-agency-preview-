@@ -324,8 +324,8 @@ html:not(.motion-on) .compare__cell::before { transform: scaleX(1); }
 }
 
 /* --- H9 Testimonial wall ------------------------------------------------- */
-.wall { columns: 3; column-gap: var(--gutter); }
-.wall__card { break-inside: avoid; margin-bottom: var(--gutter); position: relative; padding: var(--space-5); }
+.wall { display: grid; grid-template-columns: repeat(3, 1fr); gap: var(--gutter); align-items: start; }
+.wall__card { position: relative; padding: var(--space-5); }
 .wall__quote-mark {
   position: absolute; top: 8px; left: var(--space-4);
   font-size: 64px; line-height: 1;
@@ -413,7 +413,7 @@ html:not(.motion-on) .process__marker { transform: none; }
   .case__chart-col, .case__body { grid-column: 1 / -1; }
   .case__body { padding-top: var(--space-6); }
   .case__chart { height: 240px; }
-  .wall { columns: 2; }
+  .wall { grid-template-columns: repeat(2, 1fr); }
   .process__list { grid-template-columns: repeat(2, 1fr); row-gap: var(--space-7); }
   .process__rail { display: none; }
   .compare__grid { display: block; }
@@ -457,7 +457,7 @@ html:not(.motion-on) .process__marker { transform: none; }
 
   .problem__grid, .levers__grid { grid-template-columns: 1fr; }
   .stat-cards { grid-template-columns: 1fr; }
-  .wall { columns: 1; }
+  .wall { grid-template-columns: 1fr; }
   .case__metrics { grid-template-columns: repeat(2, 1fr); }
 
   .compare__row { display: block; margin: 0 0 var(--space-4); padding: 0; border: 1px solid var(--line-light); border-radius: var(--radius-card); overflow: hidden; background: var(--paper); }
