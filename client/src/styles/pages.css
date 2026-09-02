@@ -557,31 +557,32 @@ html:not(.motion-on) .process__marker { transform: none; }
 .incl__tick { margin-top: 5px; }
 .incl__note { margin-top: var(--space-6); }
 
-/* --- Pricing ------------------------------------------------------------- */
-.pricing__blurb { color: var(--on-surface-2); margin: var(--space-4) 0 var(--space-7); }
+/* --- Pricing -------------------------------------------------------------
+   Three packages. ADVANCED is the middle card and is permanently featured:
+   the lime border comes from the Card's own `accent` variant and the 8px
+   lift from .is-featured, so nothing here restates a card colour. */
 .pricing__grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: var(--gutter); }
 .pricing__tier { position: relative; display: flex; flex-direction: column; gap: var(--space-2); }
-.pricing__tier.is-featured { transform: translateY(-8px); }
+/* The 8px lift is margin, not transform, and deliberately so: three separate
+   systems already own this element's transform — the reveal group resets it
+   to none at higher specificity when it finishes animating, the pointer tilt
+   writes it inline, and .card--interactive:hover replaces it. A translate
+   here loses to all three. Paired margins keep the card the same height as
+   its siblings and simply shift the box up. */
+.pricing__tier.is-featured { margin-top: -8px; margin-bottom: 8px; }
 .pricing__flag {
   position: absolute; top: -12px; left: var(--space-5);
   padding: 2px var(--space-3); border-radius: var(--radius-pill);
   font-size: var(--caption); font-weight: 600;
 }
+.pricing__summary { margin: 0; }
 .pricing__intro { margin: var(--space-4) 0 var(--space-3); display: flex; flex-direction: column; gap: 2px; }
-.pricing__figure { font-size: 34px; }
-.pricing__choice { padding-top: var(--space-3); border-top: 1px solid var(--hairline); }
-.pricing__or { margin: var(--space-2) 0; }
-.pricing__quote { font-size: 22px; margin: var(--space-4) 0; }
+.pricing__figure { font-size: 30px; }
+.pricing__features { display: grid; gap: var(--space-2); margin-bottom: var(--space-5); }
+.pricing__features li { display: flex; gap: var(--space-2); font-size: var(--body-s); }
+.pricing__tick { margin-top: 5px; }
 .pricing__cta { margin-top: auto; }
-
-.calc { display: grid; gap: var(--space-6); }
-.calc__inputs { display: grid; grid-template-columns: 1fr 1fr; gap: var(--space-4); }
-.calc__out { border-top: 1px solid var(--char-line); padding-top: var(--space-5); }
-.calc__hint { color: var(--ash); }
-.calc__tier { font-family: var(--font-display); font-size: 28px; font-weight: 600; color: var(--bone); margin: var(--space-1) 0 var(--space-4); }
-.calc__compare { display: grid; grid-template-columns: 1fr 1fr; gap: var(--space-5); }
-.calc__figure { font-family: var(--font-display); font-size: 30px; font-weight: 600; color: var(--lime-500); font-variant-numeric: tabular-nums; margin: var(--space-1) 0; }
-.calc__plus { color: var(--sage); }
+.pricing__note { margin-top: var(--space-6); text-align: center; }
 
 /* --- Results ------------------------------------------------------------- */
 .cases__grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: var(--gutter); }
@@ -740,7 +741,9 @@ html:not(.motion-on) .faq__answer { opacity: 1; transform: none; }
 
 @media (max-width: 1279px) {
   .svc__groups, .cap__grid, .cadence, .incl__grid, .insights__grid,
-  .pricing__grid, .keys, .svc__related-grid { grid-template-columns: repeat(2, 1fr); }
+  .keys, .svc__related-grid { grid-template-columns: repeat(2, 1fr); }
+  /* The three packages stay 3-up here: at two columns the row orphans a card
+     and ADVANCED stops being the middle one. They go single-column at 767. */
   .cases__grid { grid-template-columns: 1fr; }
   .cs__metrics { grid-template-columns: repeat(2, 1fr); }
   .expect__grid { grid-template-columns: 1fr; gap: var(--space-7); }
@@ -753,12 +756,12 @@ html:not(.motion-on) .faq__answer { opacity: 1; transform: none; }
   /* Tighter padding only — the card keeps its border, radius and shadow at
      every breakpoint, exactly like every other card. */
   .form-card { padding: var(--space-4); }
-  .form-grid, .calc__inputs, .calc__compare { grid-template-columns: 1fr; }
+  .form-grid { grid-template-columns: 1fr; }
   .svc__groups, .cap__grid, .cadence, .incl__grid, .insights__grid,
   .pricing__grid, .keys, .checklist--wide, .svc__related-grid { grid-template-columns: 1fr; }
   .cs__metrics { grid-template-columns: repeat(2, 1fr); }
   .cs__before-after { grid-template-columns: 1fr; gap: var(--space-5); }
-  .pricing__tier.is-featured { transform: none; order: -1; }
+  .pricing__tier.is-featured { margin-top: 0; margin-bottom: 0; order: -1; }
   .newsletter { flex-direction: column; align-items: stretch; }
   .tabs { width: 100%; }
   .tabs__tab { flex: 1; text-align: center; }
