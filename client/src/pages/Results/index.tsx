@@ -15,27 +15,19 @@ import { caseStudies } from '../../data/caseStudies';
 /**
  * §10.3 — case study index plus the full testimonial wall.
  *
- * Aloha Bay is the original, hand-written entry. The other four case studies
- * are added from the shared caseStudies data file (see data/caseStudies.ts
- * and pages/CaseStudy/index.tsx) rather than duplicated here — this card
- * summary is derived from the same source the detail page reads.
+ * Every card is derived from the shared caseStudies data file (see
+ * data/caseStudies.ts and pages/CaseStudy/index.tsx) rather than duplicated
+ * here. Aloha Bay has no distinct `mainResult` — its title already is the
+ * headline — so the card falls back to `title` for that one case.
  */
-const CASES = [
-  {
-    slug: 'aloha-bay', client: 'Aloha Bay', category: 'supplements-wellness',
-    categoryLabel: 'Supplements & wellness',
-    headline: '3× sales increase',
-    summary: 'Advertising was spending against its own branded search and Subscribe & Save was unconfigured. We rebuilt the catalogue structure and restructured advertising against contribution margin.',
-  },
-  ...caseStudies.map((s) => ({
-    slug: s.slug,
-    client: s.descriptor ? `${s.client} — ${s.descriptor}` : s.client,
-    category: s.categoryId,
-    categoryLabel: s.categoryLabel,
-    headline: s.mainResult,
-    summary: s.summary,
-  })),
-];
+const CASES = caseStudies.map((s) => ({
+  slug: s.slug,
+  client: s.descriptor ? `${s.client} — ${s.descriptor}` : s.client,
+  category: s.categoryId,
+  categoryLabel: s.categoryLabel,
+  headline: s.mainResult ?? s.title,
+  summary: s.summary,
+}));
 
 const CATEGORIES = [
   { id: 'all', label: 'All' },
