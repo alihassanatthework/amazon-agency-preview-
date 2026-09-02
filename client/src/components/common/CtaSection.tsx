@@ -65,7 +65,7 @@ export function CtaSection({ magnetic = false }: { magnetic?: boolean }) {
         </Reveal>
         <Reveal delay={340}>
           <p className="caption cta__trust">
-            No commitment · 3-month minimum only if you proceed · US-based team
+            No commitment · Cancel any time with written notice · US-based team
           </p>
         </Reveal>
       </Container>

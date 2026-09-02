@@ -147,7 +147,19 @@ export default function Pricing() {
         <Container>
           <SectionHeader eyebrow="Terms" headline={['The commitment, plainly.']} />
           <FaqAccordion items={[
-            { q: 'Is there a minimum term?', a: 'Three calendar months, because significant work is fronted to produce faster results. After that the agreement automatically becomes month-to-month and you can cancel at any time by emailing your account manager.' },
+            { q: 'How does cancellation work?', a: (
+              <>
+                <p className="body">
+                  Cancel any time with written notice. Your engagement runs to the end of the
+                  following calendar month — 30 to 60 days depending on when you give notice.
+                </p>
+                <p className="caption faq__clause">
+                  The clause itself: “After written notice, the relationship will continue until
+                  the last day of the calendar month subsequent to the calendar month in which the
+                  Cancellation Notice was issued. (30–60 Days)”
+                </p>
+              </>
+            ) },
             { q: 'What does the growth percentage apply to?', a: 'Gross sales above your average monthly sales — so it is a share of the growth, not a share of the business you already had. It is charged once the calendar month is complete.' },
             { q: 'What is the difference between ADVANCED and BASIC?', a: 'Advertising. ADVANCED includes PPC ad management and a 150 point checklist; BASIC covers the same full management without advertising, on a 130 point checklist. Everything else — your dedicated contact, strategies, recommendations and case management — is in both.' },
             { q: 'Is advertising management included?', a: 'In Management ADVANCED, yes, up to $3,000/month in ad spend. Above that we hand off to a specialist partner rather than pretend otherwise. We also recommend an ad budget of 5–10% of monthly gross sales.' },
