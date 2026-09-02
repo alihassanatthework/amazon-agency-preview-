@@ -13,8 +13,6 @@ const CaseStudy      = lazy(() => import('./pages/CaseStudy'));
 const Pricing        = lazy(() => import('./pages/Pricing'));
 const About          = lazy(() => import('./pages/About'));
 const Team           = lazy(() => import('./pages/Team'));
-const Insights       = lazy(() => import('./pages/Insights'));
-const Article        = lazy(() => import('./pages/Article'));
 const Contact        = lazy(() => import('./pages/Contact'));
 const GetStarted     = lazy(() => import('./pages/GetStarted'));
 const Legal          = lazy(() => import('./pages/Legal'));
@@ -42,8 +40,6 @@ export default function App() {
         <Route path="pricing" element={<Suspense fallback={<RouteFallback />}><Pricing /></Suspense>} />
         <Route path="about" element={<Suspense fallback={<RouteFallback />}><About /></Suspense>} />
         <Route path="team" element={<Suspense fallback={<RouteFallback />}><Team /></Suspense>} />
-        <Route path="insights" element={<Suspense fallback={<RouteFallback />}><Insights /></Suspense>} />
-        <Route path="insights/:slug" element={<Suspense fallback={<RouteFallback />}><Article /></Suspense>} />
         <Route path="contact" element={<Suspense fallback={<RouteFallback />}><Contact /></Suspense>} />
         <Route path="get-started" element={<Suspense fallback={<RouteFallback />}><GetStarted /></Suspense>} />
         <Route path="privacy" element={<Suspense fallback={<RouteFallback />}><Legal /></Suspense>} />

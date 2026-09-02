@@ -157,7 +157,7 @@ export default function GetStarted() {
               </p>
               <div className="wizard__confirm-links">
                 <Link className="link" to="/results">See client results<ArrowRight /></Link>
-                <Link className="link" to="/insights">Read the insights<ArrowRight /></Link>
+                <Link className="link" to="/pricing">See pricing<ArrowRight /></Link>
               </div>
             </div>
           </Container>

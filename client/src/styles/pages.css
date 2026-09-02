@@ -651,26 +651,7 @@ html:not(.motion-on) .process__marker { transform: none; }
 .team__bio { margin-top: var(--space-2); }
 .team__note { margin-top: var(--space-6); text-align: center; }
 
-/* --- Insights ------------------------------------------------------------ */
-.insights__grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: var(--gutter); }
-.insight { display: flex; flex-direction: column; gap: var(--space-2); text-decoration: none; }
-.insight__meta { font-size: var(--caption); margin: 0; }
-.insight__link { margin-top: auto; padding-top: var(--space-4); }
-.insights__pending { margin-top: var(--space-7); padding-top: var(--space-5); border-top: 1px solid var(--char-line); }
-.insights__pending p { color: var(--on-surface-3); max-width: 68ch; }
-.newsletter { display: flex; gap: var(--space-3); align-items: flex-end; max-width: 520px; }
-.newsletter .field { flex: 1; }
-
-.reading-progress {
-  position: fixed; top: 0; left: 0; right: 0; height: 2px; z-index: 200;
-  background: var(--lime-500); transform-origin: left center; transform: scaleX(0);
-}
-.article__head { max-width: 68ch; margin-bottom: var(--space-7); }
-.article__meta { margin-top: var(--space-4); }
-.article__body { max-width: 68ch; }
-.article__body p { color: var(--mist); margin-bottom: var(--space-5); }
-.article__h2 { color: var(--bone); margin: var(--space-7) 0 var(--space-4); }
-.article__back { margin-top: var(--space-7); }
+/* --- Legal ---------------------------------------------------------------- */
 .legal { max-width: 68ch; }
 .legal p { color: var(--mist); }
 
@@ -776,7 +757,7 @@ html:not(.motion-on) .faq__answer { opacity: 1; transform: none; }
 .notfound__links { display: flex; flex-wrap: wrap; justify-content: center; gap: var(--space-3) var(--space-6); margin: var(--space-6) 0; }
 
 @media (max-width: 1279px) {
-  .svc__groups, .cap__grid, .cadence, .incl__grid, .insights__grid,
+  .svc__groups, .cap__grid, .cadence, .incl__grid,
   .keys, .svc__related-grid, .team__grid { grid-template-columns: repeat(2, 1fr); }
   /* The three packages stay 3-up here: at two columns the row orphans a card
      and ADVANCED stops being the middle one. They go single-column at 767. */
@@ -792,13 +773,12 @@ html:not(.motion-on) .faq__answer { opacity: 1; transform: none; }
      every breakpoint, exactly like every other card. */
   .form-card { padding: var(--space-4); }
   .form-grid { grid-template-columns: 1fr; }
-  .svc__groups, .cap__grid, .cadence, .incl__grid, .insights__grid,
+  .svc__groups, .cap__grid, .cadence, .incl__grid,
   .pricing__grid, .keys, .checklist--wide, .svc__related-grid,
   .team__grid { grid-template-columns: 1fr; }
   .cs__metrics { grid-template-columns: repeat(2, 1fr); }
   .cs__before-after { grid-template-columns: 1fr; gap: var(--space-5); }
   .pricing__tier.is-featured { margin-top: 0; margin-bottom: 0; order: -1; }
-  .newsletter { flex-direction: column; align-items: stretch; }
   .tabs { width: 100%; }
   .tabs__tab { flex: 1; text-align: center; }
   .wizard__nav { flex-direction: column-reverse; }

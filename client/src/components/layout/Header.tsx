@@ -103,7 +103,6 @@ export function Header() {
                 About <span aria-hidden="true">▾</span>
               </button>
             </div>
-            <NavLink className="nav-link" to="/insights">Insights</NavLink>
           </nav>
 
           <div className="header__actions">
@@ -166,7 +165,7 @@ export function Header() {
         <nav className="drawer__links" aria-label="Mobile">
           {[{ to: '/services', label: 'Services' }, { to: '/results', label: 'Results' },
             { to: '/pricing', label: 'Pricing' }, { to: '/about', label: 'About' },
-            { to: '/team', label: 'Team' }, { to: '/insights', label: 'Insights' },
+            { to: '/team', label: 'Team' },
             { to: '/contact', label: 'Contact' }].map((l, i) => (
             <Link key={l.to} to={l.to} onClick={close} style={{ transitionDelay: `${i * 50}ms` }}>{l.label}</Link>
           ))}

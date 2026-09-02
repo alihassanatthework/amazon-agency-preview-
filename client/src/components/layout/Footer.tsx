@@ -8,7 +8,7 @@ import { serviceNav, site } from '../../data/site';
 const COMPANY = [
   { to: '/about', label: 'About' }, { to: '/team', label: 'Team' },
   { to: '/results', label: 'Results' }, { to: '/pricing', label: 'Pricing' },
-  { to: '/insights', label: 'Insights' }, { to: '/contact', label: 'Contact' },
+  { to: '/contact', label: 'Contact' },
 ];
 
 /** H12 / §9.14 — the page comes to rest here; nothing moves after entry. */
