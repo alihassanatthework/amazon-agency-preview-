@@ -117,14 +117,6 @@ export default function Results() {
                   <span className="link case-card__link">Read the case study<ArrowRight /></span>
                 </TiltCard>
               ))}
-              <TiltCard as="article" className="case-card case-card--note">
-                <p className="eyebrow">In progress</p>
-                <p className="body-s">
-                  Two further studies — Rick Young and Phone Skope — have verified account
-                  data but are not published until the write-up is complete. We would rather
-                  show one finished study than three thin ones.
-                </p>
-              </TiltCard>
             </RevealGroup>
           )}
         </Container>

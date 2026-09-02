@@ -137,11 +137,17 @@ export default function ServiceDetail() {
         <Container>
           <div className="svc__related">
             <p className="eyebrow">The other disciplines</p>
-            <ul>
+            <RevealGroup className="svc__related-grid" stagger={70}>
               {services.filter((s) => s.slug !== group.slug).map((s) => (
-                <li key={s.slug}><Link className="link" to={`/services/${s.slug}`}>{s.short}<ArrowRight /></Link></li>
+                <TiltCard
+                  as={Link} className="svc__related-card card card--interactive"
+                  to={`/services/${s.slug}`} key={s.slug}
+                >
+                  <h3>{s.short}</h3>
+                  <ArrowRight />
+                </TiltCard>
               ))}
-            </ul>
+            </RevealGroup>
           </div>
         </Container>
       </Section>
