@@ -4,7 +4,6 @@ import { SectionHeader } from '../../components/layout/SectionHeader';
 import { PageHero } from '../../components/layout/PageHero';
 import { CtaSection } from '../../components/common/CtaSection';
 import { Seo } from '../../components/common/Seo';
-import { Check } from '../../components/ui/Icon';
 import { site } from '../../data/site';
 
 // Matches the hero stat line on the landing page. The 4+ below is per-employee
@@ -14,26 +13,6 @@ const STATS = [
   { to: 8, suffix: '+', label: 'years in business' },
   { to: 9, suffix: '', label: 'employees, all 4+ years on Amazon' },
   { to: 24, suffix: '', label: 'months, average client relationship' },
-];
-
-/** From sales deck slide 7 — kept candid. */
-const EXPECT = [
-  'Results typically arrive around months four to six.',
-  'If you don’t have an Amazon seller account, we can have you live with active listings in about a month.',
-  'Each account has a dedicated account manager with a task support team, plus a supervisor overseeing all accounts.',
-  'Expect Amazon to be extremely difficult to navigate, understand and manage. It’s not like changing an image on your website.',
-  'Ad budget should be 5–10% of monthly gross sales.',
-];
-
-/** From slide 6 — the first is the one BLAZON marks VITAL. */
-const NEEDED = [
-  'A dedicated point of contact who can respond to email and join weekly calls.',
-  'Customer service ownership for your Amazon channel.',
-  'Inventory and shipping plans we can plan against.',
-  'Creative assets — logos, imagery, brand guidelines.',
-  'Product documentation, certificates and compliance paperwork.',
-  'Engagement with notifications and green lights for projects.',
-  'Third-party tools, where you already use them.',
 ];
 
 export default function About() {
@@ -88,34 +67,6 @@ export default function About() {
               </div>
             ))}
           </RevealGroup>
-        </Container>
-      </Section>
-
-      <Section surface="bone">
-        <Container>
-          <div className="expect__grid">
-            <div>
-              <SectionHeader eyebrow="What to expect" headline={['Plainly, up front.']} />
-              <RevealGroup as="ul" className="checklist" stagger={70}>
-                {EXPECT.map((e) => (
-                  <li key={e}><span className="checklist__tick" aria-hidden="true"><Check size={12} /></span><span className="body-s">{e}</span></li>
-                ))}
-              </RevealGroup>
-            </div>
-            <div>
-              <SectionHeader eyebrow="What we need from you" headline={['A partnership, not a handoff.']} />
-              <RevealGroup as="ul" className="checklist" stagger={70}>
-                {NEEDED.map((e, i) => (
-                  <li key={e}>
-                    <span className="checklist__tick" aria-hidden="true"><Check size={12} /></span>
-                    <span className="body-s">
-                      {e}{i === 0 && <strong className="checklist__vital"> Vital.</strong>}
-                    </span>
-                  </li>
-                ))}
-              </RevealGroup>
-            </div>
-          </div>
         </Container>
       </Section>
 

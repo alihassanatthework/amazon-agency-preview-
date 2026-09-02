@@ -614,12 +614,12 @@ html:not(.motion-on) .process__marker { transform: none; }
 .mission__ember { left: 50%; top: -40%; width: 90vw; height: 100%; transform: translateX(-50%); opacity: .45; }
 .mission .container { position: relative; z-index: 1; }
 .mission__text { color: var(--bone); max-width: 22ch; max-width: none; }
-.expect__grid { display: grid; grid-template-columns: 1fr 1fr; gap: var(--space-8); }
+/* .checklist stays — still used by the case study before/after, the wizard
+   value panel and the getting-started list. */
 .checklist { display: grid; gap: var(--space-3); }
 .checklist li { display: flex; gap: var(--space-3); }
 .checklist__tick { flex: none; margin-top: 5px; color: var(--accent); }
 .checklist li span:last-child { color: var(--on-surface-2); }
-.checklist__vital { color: var(--green-800); }
 .checklist--wide { grid-template-columns: 1fr 1fr; gap: var(--space-4) var(--space-6); }
 
 /* --- Insights ------------------------------------------------------------ */
@@ -753,7 +753,6 @@ html:not(.motion-on) .faq__answer { opacity: 1; transform: none; }
      and ADVANCED stops being the middle one. They go single-column at 767. */
   .cases__grid { grid-template-columns: 1fr; }
   .cs__metrics { grid-template-columns: repeat(2, 1fr); }
-  .expect__grid { grid-template-columns: 1fr; gap: var(--space-7); }
   .contact__grid, .wizard__grid { grid-template-columns: 1fr; gap: var(--space-7); }
   .contact__form-col, .contact__side { grid-column: 1 / -1; }
   .contact__side-inner, .wizard__value-inner { position: static; }
