@@ -238,7 +238,7 @@ export default function Contact() {
         <Container>
           <RevealGroup className="stats__row" stagger={90}>
             {[{ to: 80, suffix: '+', label: 'brands managed' },
-              { to: 4, suffix: '+', label: 'years in business' },
+              { to: 8, suffix: '+', label: 'years in business' },
               { to: 9, suffix: '', label: 'specialists' }].map((m) => (
               <div className="stats__cell" key={m.label}>
                 <p className="numeral stats__value"><Counter to={m.to} suffix={m.suffix} affixClassName="stats__unit" /></p>

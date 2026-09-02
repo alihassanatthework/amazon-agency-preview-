@@ -38,11 +38,13 @@ const CATEGORIES = [
   { id: 'new-to-amazon', label: 'New to Amazon' },
 ];
 
+// Matches the hero stat line on the landing page. The 4+ below is per-specialist
+// Amazon experience, not the company's age — it is not the same figure.
 const STATS = [
   { to: 80, suffix: '+', label: 'brands currently managed' },
-  { to: 4, suffix: '+', label: 'years managing Amazon accounts' },
+  { to: 8, suffix: '+', label: 'years managing Amazon accounts' },
   { to: 9, suffix: '', label: 'specialists, all 4+ years experience' },
-  { to: null, display: '1 yr 7 mo', label: 'average client relationship' },
+  { to: 24, suffix: '', label: 'months, average client relationship' },
 ];
 
 export default function Results() {

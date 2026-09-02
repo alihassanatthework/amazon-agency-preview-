@@ -7,11 +7,13 @@ import { Seo } from '../../components/common/Seo';
 import { Check } from '../../components/ui/Icon';
 import { site } from '../../data/site';
 
+// Matches the hero stat line on the landing page. The 4+ below is per-employee
+// Amazon experience, not the company's age — it is not the same figure.
 const STATS = [
   { to: 80, suffix: '+', label: 'brands currently managed' },
-  { to: 4, suffix: '+', label: 'years in business' },
+  { to: 8, suffix: '+', label: 'years in business' },
   { to: 9, suffix: '', label: 'employees, all 4+ years on Amazon' },
-  { to: null, display: '1 yr 7 mo', label: 'average client relationship' },
+  { to: 24, suffix: '', label: 'months, average client relationship' },
 ];
 
 /** From sales deck slide 7 — kept candid. */
@@ -73,7 +75,7 @@ export default function About() {
         <Container>
           <SectionHeader
             eyebrow="By the numbers"
-            headline={['Four years. Eighty brands.']}
+            headline={['Eight years. Eighty brands.']}
             lead="Verified from our own client reporting. We don’t publish an aggregate revenue figure we can’t substantiate."
           />
           <RevealGroup className="stats__row" stagger={90}>
