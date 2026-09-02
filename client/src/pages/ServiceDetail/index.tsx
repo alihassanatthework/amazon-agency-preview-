@@ -31,6 +31,9 @@ export default function ServiceDetail() {
 
   // Match the proof to the discipline — a generic testimonial here wastes it.
   const proof = testimonials.filter((t) => t.service === group.slug);
+  // Account Setup only: no tick icons, arrows or quote marks on its cards —
+  // every other discipline's page keeps them.
+  const isAccountSetup = group.slug === 'account-setup';
 
   return (
     <>
@@ -73,7 +76,9 @@ export default function ServiceDetail() {
           <RevealGroup className="cap__grid" stagger={70}>
             {group.items.map((it) => (
               <Card as="article" interactive className="cap" key={it.name}>
-                <span className="card__icon cap__tick" aria-hidden="true"><Check size={13} /></span>
+                {!isAccountSetup && (
+                  <span className="card__icon cap__tick" aria-hidden="true"><Check size={13} /></span>
+                )}
                 <h3 className="cap__title">
                   {it.name}
                   {it.additionalCost && <em className="card__eyebrow svc__extra"> (additional cost)</em>}
@@ -107,7 +112,7 @@ export default function ServiceDetail() {
             <RevealGroup className="wall wall--inline" stagger={80}>
               {proof.map((t) => (
                 <Card as="figure" interactive className="wall__card" key={t.author}>
-                  <span className="wall__quote-mark" aria-hidden="true">”</span>
+                  {!isAccountSetup && <span className="wall__quote-mark" aria-hidden="true">”</span>}
                   <blockquote><p className="body-s">{t.quote}</p></blockquote>
                   <figcaption>
                     <span className="wall__author">{t.author}</span>
@@ -144,7 +149,7 @@ export default function ServiceDetail() {
                   to={`/services/${s.slug}`} key={s.slug}
                 >
                   <h3 className="card__strong">{s.short}</h3>
-                  <span className="card__icon"><ArrowRight /></span>
+                  {!isAccountSetup && <span className="card__icon"><ArrowRight /></span>}
                 </Card>
               ))}
             </RevealGroup>

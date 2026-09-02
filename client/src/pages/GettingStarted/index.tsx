@@ -1,10 +1,9 @@
 import { Link } from 'react-router-dom';
-import { Reveal, RevealGroup } from '../../motion';
+import { Reveal, RevealGroup, useInView } from '../../motion';
 import { Section, Container } from '../../components/layout/Section';
 import { SectionHeader } from '../../components/layout/SectionHeader';
 import { PageHero } from '../../components/layout/PageHero';
 import { CtaSection } from '../../components/common/CtaSection';
-import { Card } from '../../components/common/Card';
 import { Seo } from '../../components/common/Seo';
 import { ArrowRight, Check } from '../../components/ui/Icon';
 
@@ -12,6 +11,8 @@ import { ArrowRight, Check } from '../../components/ui/Icon';
 const APPROACH_STEPS = ['Listing Cleanup/Optimization', 'Organic Growth', 'Paid Ads'];
 
 export default function GettingStarted() {
+  const { ref: approachRef, inView: approachInView } = useInView<HTMLDivElement>();
+
   return (
     <>
       <Seo
@@ -31,22 +32,19 @@ export default function GettingStarted() {
       <Section surface="bone">
         <Container>
           <SectionHeader eyebrow="Our approach" headline={['Our Organic Approach that Works']} />
-          <RevealGroup className="approach-flow" stagger={100}>
-            {APPROACH_STEPS.flatMap((step, i) => {
-              const nodes = [
-                <Card as="article" interactive className="approach-flow__step" key={step}>
-                  <span className="card__eyebrow approach-flow__num">{String(i + 1).padStart(2, '0')}</span>
-                  <h3 className="heading-s">{step}</h3>
-                </Card>,
-              ];
-              if (i < APPROACH_STEPS.length - 1) {
-                nodes.push(
-                  <span className="approach-flow__arrow" aria-hidden="true" key={`${step}-arrow`}><ArrowRight /></span>,
-                );
-              }
-              return nodes;
-            })}
-          </RevealGroup>
+          <div className={`approach-timeline${approachInView ? ' is-in' : ''}`} ref={approachRef}>
+            <span className="approach-timeline__rail" aria-hidden="true"><span className="approach-timeline__rail-fill" /></span>
+            <ol className="approach-timeline__list">
+              {APPROACH_STEPS.map((step, i) => (
+                <li className="approach-timeline__step" key={step} style={{ ['--sd' as string]: `${i * 130}ms` }}>
+                  <span className="approach-timeline__marker" aria-hidden="true">{String(i + 1).padStart(2, '0')}</span>
+                  <div className="approach-flow__step">
+                    <h3 className="heading-s approach-timeline__title">{step}</h3>
+                  </div>
+                </li>
+              ))}
+            </ol>
+          </div>
         </Container>
       </Section>
 

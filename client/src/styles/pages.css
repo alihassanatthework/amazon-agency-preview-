@@ -702,20 +702,50 @@ html:not(.motion-on) .process__marker { transform: none; }
 .keys__num { font-size: 28px; }
 .keys__item h3 { margin: var(--space-2) 0; }
 
-/* --- Our approach — three-step flow -------------------------------------- */
-.approach-flow { display: flex; align-items: center; gap: var(--space-4); margin-top: calc(var(--space-6) * var(--section-scale)); }
+/* --- Our approach — timeline layout, matching the homepage Process
+   section's numbered-circle-and-rail treatment (see .process__* above).
+   Kept as its own class set (rather than reusing .process__*) since the
+   rail's math is column-count-specific and this section has 3 steps, not
+   4. Each step's card keeps its own existing padding/typography. */
 .approach-flow__step {
-  flex: 1; display: flex; flex-direction: column; align-items: center; gap: var(--space-2);
+  display: flex; flex-direction: column; align-items: center; gap: var(--space-2);
   text-align: center; padding: var(--space-6) var(--space-5);
 }
-.approach-flow__num {
-  font-size: var(--caption); font-weight: 700; letter-spacing: .08em;
-}
 .approach-flow__step h3 { margin: 0; }
-.approach-flow__arrow { flex: none; color: var(--on-surface-3); display: flex; align-items: center; }
+.approach-timeline__title { color: var(--obsidian); transition: color var(--t-base) var(--e-base); }
+.approach-timeline { position: relative; margin-top: calc(var(--space-6) * var(--section-scale)); }
+.approach-timeline__rail {
+  /* The marker is centered within its column (not left-anchored like
+     .process__marker), so the rail's endpoints sit at half a column's
+     width in from each edge — the actual center of the first/last marker. */
+  position: absolute; left: calc((100% - 2 * var(--gutter)) / 6); right: calc((100% - 2 * var(--gutter)) / 6);
+  top: 32px; height: 1px; background: var(--line-light); overflow: hidden;
+}
+.approach-timeline__rail-fill { position: absolute; inset: 0; background: var(--green-700); transform: scaleX(0); transform-origin: left center; }
+.approach-timeline.is-in .approach-timeline__rail-fill { transform: scaleX(1); transition: transform 1100ms var(--e-mask); }
+html:not(.motion-on) .approach-timeline__rail-fill { transform: scaleX(1); }
+.approach-timeline__list { position: relative; display: grid; grid-template-columns: repeat(3, 1fr); gap: var(--gutter); }
+.approach-timeline__step { display: flex; flex-direction: column; align-items: center; }
+.approach-timeline__marker {
+  display: grid; place-items: center; width: 64px; height: 64px; margin-bottom: var(--space-4);
+  border-radius: var(--radius-pill); border: 1px solid var(--green-700);
+  background: var(--bone); color: var(--green-700);
+  font-family: var(--font-display); font-size: 22px; font-weight: 600;
+  font-variant-numeric: tabular-nums; transform: scale(0);
+  transition: background var(--t-base) var(--e-base), color var(--t-base) var(--e-base);
+}
+.motion-on .approach-timeline.is-in .approach-timeline__marker { animation: markerIn var(--t-base) var(--e-base) var(--sd, 0ms) both; }
+html:not(.motion-on) .approach-timeline__marker { transform: none; }
+.approach-timeline__step .approach-flow__step { width: 100%; }
+@media (hover: hover) and (pointer: fine) {
+  .approach-timeline__step:hover .approach-timeline__marker { background: var(--green-700); color: var(--bone); }
+  .approach-timeline__step:hover .approach-timeline__title { color: var(--green-800); }
+}
+@media (max-width: 1279px) {
+  .approach-timeline__rail { display: none; }
+}
 @media (max-width: 767px) {
-  .approach-flow { flex-direction: column; }
-  .approach-flow__arrow { transform: rotate(90deg); }
+  .approach-timeline__list { grid-template-columns: 1fr; row-gap: var(--space-5); }
 }
 
 /* --- FAQ ----------------------------------------------------------------- */
