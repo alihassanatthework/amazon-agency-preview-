@@ -69,7 +69,7 @@ export default function Results() {
             {STATS.map((m) => (
               <div className="stats__cell" key={m.label}>
                 <p className="numeral stats__value">
-                  <Counter to={m.to} displayValue={m.display} suffix={m.suffix} affixClassName="stats__unit" />
+                  <Counter to={m.to} suffix={m.suffix} affixClassName="stats__unit" />
                 </p>
                 <p className="caption stats__label">{m.label}</p>
               </div>
