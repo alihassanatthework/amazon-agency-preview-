@@ -4,7 +4,7 @@ import { Section, Container } from '../../components/layout/Section';
 import { SectionHeader } from '../../components/layout/SectionHeader';
 import { PageHero } from '../../components/layout/PageHero';
 import { CtaSection } from '../../components/common/CtaSection';
-import { TiltCard } from '../../components/common/TiltCard';
+import { Card } from '../../components/common/Card';
 import { Seo } from '../../components/common/Seo';
 import { ArrowRight, Check } from '../../components/ui/Icon';
 
@@ -34,10 +34,10 @@ export default function GettingStarted() {
           <RevealGroup className="approach-flow" stagger={100}>
             {APPROACH_STEPS.flatMap((step, i) => {
               const nodes = [
-                <TiltCard as="article" className="approach-flow__step card" key={step}>
+                <Card as="article" interactive className="approach-flow__step" key={step}>
                   <span className="approach-flow__num">{String(i + 1).padStart(2, '0')}</span>
                   <h3 className="heading-s">{step}</h3>
-                </TiltCard>,
+                </Card>,
               ];
               if (i < APPROACH_STEPS.length - 1) {
                 nodes.push(

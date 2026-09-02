@@ -2,7 +2,7 @@ import { Link } from 'react-router-dom';
 import { RevealGroup } from '../../../motion';
 import { Section, Container } from '../../../components/layout/Section';
 import { SectionHeader } from '../../../components/layout/SectionHeader';
-import { TiltCard } from '../../../components/common/TiltCard';
+import { Card } from '../../../components/common/Card';
 import { ArrowRight } from '../../../components/ui/Icon';
 
 /**
@@ -39,13 +39,13 @@ export function Services() {
         />
         <RevealGroup className="levers__grid" stagger={80}>
           {GROUPS.map((g) => (
-            <TiltCard as={Link} className="lever card card--interactive" to={`/services/${g.slug}`} key={g.slug}>
+            <Card as={Link} interactive className="lever" to={`/services/${g.slug}`} key={g.slug}>
               <h3 className="heading-s lever__title">{g.title}</h3>
               <p className="body-s lever__summary">{g.summary}</p>
               <span className="lever__meta">
                 {g.count} services<ArrowRight />
               </span>
-            </TiltCard>
+            </Card>
           ))}
         </RevealGroup>
       </Container>

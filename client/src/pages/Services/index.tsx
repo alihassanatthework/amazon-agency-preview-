@@ -6,7 +6,7 @@ import { PageHero } from '../../components/layout/PageHero';
 import { CtaSection } from '../../components/common/CtaSection';
 import { TestimonialWall } from '../../components/common/TestimonialWall';
 import { Seo } from '../../components/common/Seo';
-import { TiltCard } from '../../components/common/TiltCard';
+import { Card } from '../../components/common/Card';
 import { ArrowRight, Check } from '../../components/ui/Icon';
 import { services, totalServices, included } from '../../data/services';
 
@@ -28,7 +28,7 @@ export default function Services() {
         <Container>
           <RevealGroup className="svc__groups" stagger={80}>
             {services.map((g) => (
-              <TiltCard as="article" className="svc__group card" key={g.slug}>
+              <Card as="article" interactive className="svc__group" key={g.slug}>
                 <header className="svc__group-head">
                   <h2 className="heading-s">{g.title}</h2>
                   {g.additionalCost && <span className="badge">Additional cost</span>}
@@ -49,7 +49,7 @@ export default function Services() {
                 <Link className="link svc__more" to={`/services/${g.slug}`}>
                   More on {g.short}<ArrowRight />
                 </Link>
-              </TiltCard>
+              </Card>
             ))}
           </RevealGroup>
         </Container>
@@ -64,14 +64,14 @@ export default function Services() {
           />
           <RevealGroup className="incl__grid" stagger={80}>
             {included.map((block) => (
-              <TiltCard as="div" className="incl__block card" key={block.group}>
+              <Card as="div" interactive className="incl__block" key={block.group}>
                 <h3 className="heading-s">{block.group}</h3>
                 <ul>
                   {block.items.map((i) => (
                     <li key={i}><span className="incl__tick" aria-hidden="true"><Check size={12} /></span>{i}</li>
                   ))}
                 </ul>
-              </TiltCard>
+              </Card>
             ))}
           </RevealGroup>
           <Reveal className="incl__note">

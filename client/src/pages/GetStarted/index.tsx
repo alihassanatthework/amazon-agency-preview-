@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import { Reveal } from '../../motion';
 import { Section, Container } from '../../components/layout/Section';
 import { Seo } from '../../components/common/Seo';
-import { TiltCard } from '../../components/common/TiltCard';
+import { Card } from '../../components/common/Card';
 import { AlertIcon, ArrowRight, Check } from '../../components/ui/Icon';
 import { site } from '../../data/site';
 import { postLead } from '../../services/api';
@@ -143,7 +143,7 @@ export default function GetStarted() {
         <Section surface="obsidian" size="emphasis" className="wizard">
           <div className="ember-gradient wizard__ember" aria-hidden="true" />
           <Container>
-            <div className="wizard__confirm form-card" ref={liveRef} tabIndex={-1} role="status" aria-live="polite">
+            <div className="wizard__confirm form-card"  ref={liveRef} tabIndex={-1} role="status" aria-live="polite">
               <span className="confirm__check" aria-hidden="true"><Check size={26} /></span>
               <h1 className="display-m">You’re booked in.</h1>
               <p className="body">
@@ -197,7 +197,7 @@ export default function GetStarted() {
                 Step {step + 1} of {total} · {steps[step]}
               </p>
 
-              <div className="wizard__panel form-card" key={step}>
+              <div className="wizard__panel form-card"  key={step}>
                 {steps[step] === 'Selling status' && (
                   <fieldset className={cls('sellingStatus')}>
                     <legend className="field__label">Are you already selling on Amazon?</legend>
@@ -390,7 +390,7 @@ export default function GetStarted() {
             </div>
 
             <aside className="wizard__value">
-              <TiltCard as="div" className="wizard__value-inner card">
+              <Card as="div" interactive className="wizard__value-inner">
                 <p className="eyebrow">
                   {values.sellingStatus === 'not_yet_selling' ? 'Your free session covers' : 'Your free audit covers'}
                 </p>
@@ -405,7 +405,7 @@ export default function GetStarted() {
                 <p className="caption">
                   Prefer to talk? <a className="link link--inline" href={site.phoneHref}>{site.phone}</a>
                 </p>
-              </TiltCard>
+              </Card>
             </aside>
           </div>
         </Container>

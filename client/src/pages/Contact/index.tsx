@@ -115,7 +115,7 @@ export default function Contact() {
           <div className="contact__grid">
             <div className="contact__form-col">
               {status === 'sent' ? (
-                <div className="form-card form-card--confirm" ref={confirmRef} tabIndex={-1} role="status" aria-live="polite">
+                <div className="form-card form-card--confirm card" ref={confirmRef} tabIndex={-1} role="status" aria-live="polite">
                   <span className="confirm__check" aria-hidden="true"><Check size={26} /></span>
                   <h2 className="display-m">Message received.</h2>
                   <p className="body">
@@ -125,7 +125,7 @@ export default function Contact() {
                   </p>
                 </div>
               ) : (
-                <Reveal className="form-card">
+                <Reveal className="form-card card">
                   <form ref={formRef} onSubmit={onSubmit} noValidate>
                     <div className="visually-hidden" role="alert" aria-live="assertive">
                       {status === 'error' ? banner : ''}

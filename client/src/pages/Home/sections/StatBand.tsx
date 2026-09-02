@@ -2,7 +2,7 @@ import type { ReactNode } from 'react';
 import { LineDraw, Reveal, RevealGroup } from '../../../motion';
 import { Section, Container } from '../../../components/layout/Section';
 import { SectionHeader } from '../../../components/layout/SectionHeader';
-import { TiltCard } from '../../../components/common/TiltCard';
+import { Card } from '../../../components/common/Card';
 
 /**
  * H3 / §9.5 — the proof, now eight cards instead of a four-metric instrument
@@ -49,9 +49,9 @@ export function StatBand() {
         <LineDraw className="stats__rule" />
         <RevealGroup className="stat-cards" stagger={60}>
           {STATS.map((s) => (
-            <TiltCard as="div" className="stat-card card card--interactive" key={s}>
+            <Card as="div" className="stat-card interactive" key={s}>
               <p className="body stat-card__text">{renderStat(s)}</p>
-            </TiltCard>
+            </Card>
           ))}
         </RevealGroup>
         <Reveal>

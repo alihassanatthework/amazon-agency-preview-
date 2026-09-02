@@ -255,23 +255,44 @@ h1, h2, h3, h4 {
 .nav-link[aria-current='page'] { color: var(--bone); }
 .nav-link[aria-current='page']::after { transform: scaleX(1); }
 
-/* --- Card — §5.3: on dark, elevation is surface lightness plus a hairline */
+/* --- Card — §5.3: Universal card styling system
+   All cards across the website use identical base styling, typography, and interactions.
+   The Card component applies these classes; CSS defines all visual treatment. */
 
 .card {
   background: var(--card);
   border: 1px solid var(--hairline);
   border-radius: var(--radius-card);
   padding: var(--space-5);
+  color: var(--on-surface-2);           /* Default text color */
 }
+
+/* Dark surface cards: light text on dark background */
+.card h1, .card h2, .card h3, .card h4 { color: var(--bone); font-weight: 600; }
+.card p, .card li, .card span { color: var(--mist); }
+
+/* Light surface cards: dark text on light background */
 [data-surface='bone'] .card,
-[data-surface='linen'] .card { box-shadow: var(--e1); }
+[data-surface='linen'] .card {
+  box-shadow: var(--e1);
+  color: var(--on-surface-2);
+}
+[data-surface='bone'] .card h1, [data-surface='bone'] .card h2, [data-surface='bone'] .card h3, [data-surface='bone'] .card h4,
+[data-surface='linen'] .card h1, [data-surface='linen'] .card h2, [data-surface='linen'] .card h3, [data-surface='linen'] .card h4 {
+  color: var(--obsidian);
+}
+[data-surface='bone'] .card p, [data-surface='bone'] .card li, [data-surface='bone'] .card span,
+[data-surface='linen'] .card p, [data-surface='linen'] .card li, [data-surface='linen'] .card span {
+  color: var(--graphite);
+}
 
 .card--interactive {
   transition:
     transform    var(--t-base) var(--e-base),
     border-color var(--t-base) var(--e-base),
     background   var(--t-base) var(--e-base),
-    box-shadow   var(--t-base) var(--e-base);
+    box-shadow   var(--t-base) var(--e-base),
+    color        var(--t-base) var(--e-base);
 }
 @media (hover: hover) and (pointer: fine) {
   .card--interactive:hover {
@@ -288,6 +309,11 @@ h1, h2, h3, h4 {
   }
 }
 .card--accent { border-color: var(--lime-500); }
+
+/* Override any page-specific typography — cards always use universal styling */
+.card h1, .card h2, .card h3, .card h4,
+.card p, .card li, .card span,
+.card strong, .card em { font-family: inherit; }
 
 /* Media inside a card — the frame never scales, only its contents */
 .media-frame {

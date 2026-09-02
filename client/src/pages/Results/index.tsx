@@ -8,7 +8,7 @@ import { CtaSection } from '../../components/common/CtaSection';
 import { TestimonialWall } from '../../components/common/TestimonialWall';
 import { EmptyState } from '../../components/common/EmptyState';
 import { Seo } from '../../components/common/Seo';
-import { TiltCard } from '../../components/common/TiltCard';
+import { Card } from '../../components/common/Card';
 import { ArrowRight } from '../../components/ui/Icon';
 import { caseStudies } from '../../data/caseStudies';
 
@@ -109,22 +109,22 @@ export default function Results() {
           ) : (
             <RevealGroup className="cases__grid" stagger={80}>
               {shown.map((c) => (
-                <TiltCard as={Link} className="case-card card card--interactive" to={`/results/${c.slug}`} key={c.slug}>
+                <Card as={Link} interactive className="case-card" to={`/results/${c.slug}`} key={c.slug}>
                   <p className="case-card__category">{c.categoryLabel}</p>
                   <h3 className="display-m case-card__headline">{c.headline}</h3>
                   <p className="heading-s case-card__client">{c.client}</p>
                   <p className="body-s case-card__summary">{c.summary}</p>
                   <span className="link case-card__link">Read the case study<ArrowRight /></span>
-                </TiltCard>
+                </Card>
               ))}
-              <TiltCard as="article" className="case-card case-card--note">
+              <Card as="article" note className="case-card">
                 <p className="eyebrow">In progress</p>
                 <p className="body-s">
                   Two further studies — Rick Young and Phone Skope — have verified account
                   data but are not published until the write-up is complete. We would rather
                   show one finished study than three thin ones.
                 </p>
-              </TiltCard>
+              </Card>
             </RevealGroup>
           )}
         </Container>

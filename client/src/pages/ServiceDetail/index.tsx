@@ -6,7 +6,7 @@ import { PageHero } from '../../components/layout/PageHero';
 import { CtaSection } from '../../components/common/CtaSection';
 import { FaqAccordion } from '../../components/common/FaqAccordion';
 import { Seo } from '../../components/common/Seo';
-import { TiltCard } from '../../components/common/TiltCard';
+import { Card } from '../../components/common/Card';
 import { ArrowRight, Check } from '../../components/ui/Icon';
 import { services } from '../../data/services';
 import { testimonials } from '../../data/testimonials';
@@ -54,10 +54,10 @@ export default function ServiceDetail() {
           <SectionHeader eyebrow="The problem this solves" headline={['What this fixes.']} />
           <RevealGroup className="problem__grid problem__grid--two" stagger={80}>
             {group.problem.map((p) => (
-              <TiltCard as="article" className="problem__card card" key={p}>
+              <Card as="article" interactive className="problem__card" key={p}>
                 <h3 className="problem__title">{p}</h3>
                 <p className="body-s">{PROBLEM_COPY[p]}</p>
-              </TiltCard>
+              </Card>
             ))}
           </RevealGroup>
         </Container>
@@ -72,14 +72,14 @@ export default function ServiceDetail() {
           />
           <RevealGroup className="cap__grid" stagger={70}>
             {group.items.map((it) => (
-              <TiltCard as="article" className="cap card" key={it.name}>
+              <Card as="article" interactive className="cap" key={it.name}>
                 <span className="cap__tick" aria-hidden="true"><Check size={13} /></span>
                 <h3 className="cap__title">
                   {it.name}
                   {it.additionalCost && <em className="svc__extra"> (additional cost)</em>}
                 </h3>
                 {it.description && <p className="body-s">{it.description}</p>}
-              </TiltCard>
+              </Card>
             ))}
           </RevealGroup>
         </Container>
@@ -93,9 +93,9 @@ export default function ServiceDetail() {
             lead="A dedicated account manager, a task support team and a supervisor on every account."
           />
           <RevealGroup className="cadence" stagger={80}>
-            <TiltCard as="div" className="cadence__item card"><h3 className="heading-s">Weekly</h3><p className="body-s">A 30-minute call with your account manager, plus email throughout the week.</p></TiltCard>
-            <TiltCard as="div" className="cadence__item card"><h3 className="heading-s">Monthly</h3><p className="body-s">Account health review, IPI check, negative seller review removal and a written summary.</p></TiltCard>
-            <TiltCard as="div" className="cadence__item card"><h3 className="heading-s">Ongoing</h3><p className="body-s">Optimisation against a live plan. Most clients see meaningful movement around months four to six.</p></TiltCard>
+            <Card as="div" interactive className="cadence__item"><h3 className="heading-s">Weekly</h3><p className="body-s">A 30-minute call with your account manager, plus email throughout the week.</p></Card>
+            <Card as="div" interactive className="cadence__item"><h3 className="heading-s">Monthly</h3><p className="body-s">Account health review, IPI check, negative seller review removal and a written summary.</p></Card>
+            <Card as="div" interactive className="cadence__item"><h3 className="heading-s">Ongoing</h3><p className="body-s">Optimisation against a live plan. Most clients see meaningful movement around months four to six.</p></Card>
           </RevealGroup>
         </Container>
       </Section>
@@ -106,14 +106,14 @@ export default function ServiceDetail() {
             <SectionHeader eyebrow="Proof" headline={['From clients on this exact problem.']} />
             <RevealGroup className="wall wall--inline" stagger={80}>
               {proof.map((t) => (
-                <TiltCard as="figure" className="wall__card card" key={t.author}>
+                <Card as="figure" interactive className="wall__card" key={t.author}>
                   <span className="wall__quote-mark" aria-hidden="true">”</span>
                   <blockquote><p className="body-s">{t.quote}</p></blockquote>
                   <figcaption>
                     <span className="wall__author">{t.author}</span>
                     <span className="wall__company">{t.company}</span>
                   </figcaption>
-                </TiltCard>
+                </Card>
               ))}
             </RevealGroup>
           </Container>

@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { RevealGroup } from '../../motion';
-import { TiltCard } from './TiltCard';
+import { Card } from '../../components/common/Card';
 import { testimonials as ALL } from '../../data/testimonials';
 
 const LOGOS = import.meta.glob('../../assets/clients/*.png', { eager: true, import: 'default' }) as Record<string, string>;
@@ -21,7 +21,7 @@ export function TestimonialWall({ initial = 5, all = false }: { initial?: number
     <>
       <RevealGroup className="wall" stagger={80}>
         {shown.map((t) => (
-          <TiltCard as="figure" className="wall__card card card--interactive" key={t.author}>
+          <Card as="figure" interactive className="wall__card" key={t.author}>
             <span className="wall__quote-mark" aria-hidden="true">”</span>
             <blockquote><p className="body-s">{t.quote}</p></blockquote>
             <figcaption>
@@ -31,7 +31,7 @@ export function TestimonialWall({ initial = 5, all = false }: { initial?: number
             {logoFor(t.slug) && (
               <img className="wall__logo" src={logoFor(t.slug)!} alt={`${t.company} logo`} height={24} loading="lazy" />
             )}
-          </TiltCard>
+          </Card>
         ))}
       </RevealGroup>
 

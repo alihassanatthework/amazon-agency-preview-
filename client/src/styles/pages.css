@@ -194,8 +194,7 @@ html:not(.motion-on) .logos__viewport::before, html:not(.motion-on) .logos__view
 
 /* --- H4 Problem (light) -------------------------------------------------- */
 .problem__grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: var(--gutter); }
-.problem__title { font-family: var(--font-display); font-size: var(--body); font-weight: 600; color: var(--obsidian); margin: 0 0 var(--space-2); }
-.problem__card p { color: var(--graphite); }
+.problem__title { margin: 0 0 var(--space-2); }
 
 /* --- H5 Levers ----------------------------------------------------------- */
 .levers__grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: var(--gutter); }
@@ -203,8 +202,6 @@ html:not(.motion-on) .logos__viewport::before, html:not(.motion-on) .logos__view
   display: flex; flex-direction: column; gap: var(--space-3);
   text-decoration: none; color: inherit; position: relative; overflow: hidden;
 }
-.lever__title { color: var(--bone); }
-.lever__summary { color: var(--mist); }
 .lever__meta {
   margin-top: auto; display: inline-flex; align-items: center; gap: var(--space-2);
   font-size: var(--caption); font-weight: 600; color: var(--lime-200);
@@ -340,10 +337,9 @@ html:not(.motion-on) .compare__cell::before { transform: scaleX(1); }
 }
 @media (hover: hover) and (pointer: fine) { .wall__card:hover .wall__quote-mark { opacity: .25; } }
 .wall__card blockquote { margin: 0; position: relative; }
-.wall__card p { color: var(--mist); }
 .wall__card figcaption { margin-top: var(--space-4); display: flex; flex-direction: column; gap: 2px; }
-.wall__author { color: var(--bone); font-weight: 600; font-size: var(--body-s); }
-.wall__company { color: var(--ash); font-size: var(--caption); }
+.wall__author { font-weight: 600; font-size: var(--body-s); }
+.wall__company { font-size: var(--caption); }
 .wall__logo { margin-top: var(--space-4); height: 24px; width: auto; opacity: .8; }
 .wall__more { display: flex; justify-content: center; margin-top: var(--space-6); }
 
@@ -535,7 +531,7 @@ html:not(.motion-on) .process__marker { transform: none; }
 /* --- Services page ------------------------------------------------------- */
 .svc__groups { display: grid; grid-template-columns: 1fr 1fr; gap: var(--gutter); }
 .svc__group-head { display: flex; align-items: center; justify-content: space-between; gap: var(--space-3); margin-bottom: var(--space-3); }
-.svc__group-summary { color: var(--mist); margin-bottom: var(--space-4); }
+.svc__group-summary { margin-bottom: var(--space-4); }
 .svc__items { display: grid; gap: var(--space-3); margin-bottom: var(--space-5); }
 .svc__items li { display: flex; gap: var(--space-3); font-size: var(--body-s); color: var(--mist); }
 .svc__items strong { color: var(--bone); font-weight: 600; }
@@ -547,16 +543,15 @@ html:not(.motion-on) .process__marker { transform: none; }
 .cap__grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: var(--gutter); }
 .cap { display: flex; flex-direction: column; gap: var(--space-2); }
 .cap__tick { color: var(--lime-500); }
-.cap__title { font-family: var(--font-display); font-size: var(--body); font-weight: 600; color: var(--bone); margin: 0; }
-.cap p { color: var(--mist); }
+.cap__title { margin: 0; }
 .cadence { display: grid; grid-template-columns: repeat(3, 1fr); gap: var(--gutter); }
-.cadence__item h3 { color: var(--bone); margin-bottom: var(--space-2); }
-.cadence__item p { color: var(--mist); }
+.cadence__item h3 { margin-bottom: var(--space-2); }
+.cadence__item p { }
 
 .incl__grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: var(--gutter); }
-.incl__block h3 { color: var(--obsidian); margin-bottom: var(--space-3); }
+.incl__block h3 { margin-bottom: var(--space-3); }
 .incl__block ul { display: grid; gap: var(--space-2); }
-.incl__block li { display: flex; gap: var(--space-2); font-size: var(--body-s); color: var(--graphite); }
+.incl__block li { display: flex; gap: var(--space-2); font-size: var(--body-s); }
 .incl__tick { flex: none; margin-top: 5px; color: var(--green-700); }
 .incl__note { margin-top: var(--space-6); }
 
@@ -570,7 +565,6 @@ html:not(.motion-on) .process__marker { transform: none; }
   padding: 2px var(--space-3); border-radius: var(--radius-pill);
   background: var(--lime-500); color: var(--obsidian); font-size: var(--caption); font-weight: 600;
 }
-.pricing__tier h3 { color: var(--bone); }
 .pricing__skus { color: var(--ash); }
 .pricing__intro { margin: var(--space-4) 0 var(--space-3); display: flex; flex-direction: column; gap: 2px; }
 .pricing__figure { font-family: var(--font-display); font-size: 34px; font-weight: 600; color: var(--lime-500); font-variant-numeric: tabular-nums; }
@@ -595,8 +589,8 @@ html:not(.motion-on) .process__marker { transform: none; }
 .case-card { display: flex; flex-direction: column; gap: var(--space-2); text-decoration: none; color: inherit; }
 .case-card__category { font-size: var(--eyebrow); font-weight: 600; letter-spacing: .12em; text-transform: uppercase; color: var(--lime-200); margin: 0; }
 .case-card__headline { color: var(--lime-500); margin: var(--space-2) 0; }
-.case-card__client { color: var(--bone); }
-.case-card__summary { color: var(--mist); }
+.case-card__client { }
+.case-card__summary { }
 .case-card__link { margin-top: auto; padding-top: var(--space-4); }
 .case-card--note { border-style: dashed; background: transparent; }
 .case-card--note p { color: var(--ash); }
@@ -636,8 +630,8 @@ html:not(.motion-on) .process__marker { transform: none; }
 .insights__grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: var(--gutter); }
 .insight { display: flex; flex-direction: column; gap: var(--space-2); text-decoration: none; color: inherit; }
 .insight__meta { font-size: var(--caption); color: var(--ash); margin: 0; }
-.insight__title { color: var(--bone); }
-.insight__excerpt { color: var(--mist); }
+.insight__title { }
+.insight__excerpt { }
 .insight__link { margin-top: auto; padding-top: var(--space-4); }
 .insights__pending { margin-top: var(--space-7); padding-top: var(--space-5); border-top: 1px solid var(--char-line); }
 .insights__pending p { color: var(--ash); max-width: 68ch; }
