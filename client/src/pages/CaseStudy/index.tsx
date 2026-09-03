@@ -12,12 +12,12 @@ import NotFound from '../NotFound';
 /**
  * §10.3 — one template for every case study, Aloha Bay included, all reading
  * from the same data source (data/caseStudies.ts). Every study follows the
- * same results-first hierarchy: metric cards, then the two-line performance
- * graph, then the narrative. `mainResult` is the only optional piece of that
- * intro — Aloha Bay's hero lead already carries its headline, so showing a
- * second, identical "3× sales increase" line beneath it would just repeat
- * itself; studies with a distinct headline (e.g. "$185K/month → $425K/month")
- * show it as written.
+ * same results-first hierarchy: metric cards, then the same two-line
+ * performance graph treatment as Aloha Bay, then the narrative. `mainResult`
+ * is the only optional piece of the intro — Aloha Bay's hero lead already
+ * carries its headline, so showing a second, identical line beneath it
+ * would just repeat itself; studies with a distinct headline (e.g.
+ * "$400,000+/month in gross sales") show it as written.
  */
 function CaseStudyPage({ study }: { study: CaseStudyData }) {
   const { ref, inView } = useInView<HTMLDivElement>();

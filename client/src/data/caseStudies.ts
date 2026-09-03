@@ -51,6 +51,13 @@ export interface CaseStudyGraph {
   showDots?: boolean;
   /** A confirmed figure shown beside the chart rather than plotted, e.g. "$40K Ad Spend = 9% TACOS". */
   callout?: string;
+  /**
+   * True when this two-point line is standing in for a full monthly series
+   * because only aggregate before/after figures exist (no history). Purely
+   * a code-visible marker for whoever adds real historical data later — it
+   * changes nothing about how the chart renders today.
+   */
+  isPlaceholder?: boolean;
 }
 
 export interface CaseStudyStoryBlock { heading: string; body: string }
@@ -123,8 +130,15 @@ export const caseStudies: CaseStudy[] = [
     client: 'GRINDS Coffee Pouches',
     categoryId: 'coffee',
     categoryLabel: 'Coffee',
-    title: 'Replace Stagnancy for Growth',
-    mainResult: '$185K/month → $425K/month',
+    /*
+     * FLAGGED, NOT SILENTLY RESOLVED: the source deck's headline banner says
+     * "185k/mo → 425k/mo", but the body bullet for the same slide says
+     * "Growing $400,000+/month". Both figures are genuinely in the source
+     * and they conflict. $400,000+ (the more explicit, detailed figure) is
+     * used below as the default per instruction — swap every "$400,000+" in
+     * this record for the deck's "$425,000" if that's confirmed instead.
+     */
+    title: '$400,000+/month in gross sales',
     summary: 'A stagnant $185,000/month catalogue, rebuilt into a clean, subscription-driving line now growing past $400,000+/month.',
     before: [
       'Stagnant $185,000/month gross sales',
@@ -144,21 +158,39 @@ export const caseStudies: CaseStudy[] = [
       'Lower FBA fees',
       '5,000 monthly subscribers & growing',
     ],
-    story: [],
+    story: [
+      { heading: 'The challenge', body: 'GRINDS Coffee Pouches had plateaued at $185,000 in monthly gross sales, spending $40,000 a month in advertising for a 20% TACOS — an inefficient return that wasn’t translating into growth. A 15% Amazon referral fee and high FBA fees ate further into margin, while the catalogue itself had become what the account team called a "catalogue nightmare." With only 4 variety packs on offer and no subscriber base to speak of, the brand had little organic momentum to build on.' },
+      // Composed — not sourced from the pitch deck. Flag for client/brand
+      // review before this goes live; every number in it is already
+      // established above, nothing new is invented.
+      { heading: 'The strategy', body: 'We rebuilt advertising around efficiency rather than raw spend, restructuring campaigns and keyword targeting to bring TACOS down without touching the existing $40,000 budget. In parallel, we tackled the catalogue directly — cleaning up listings, fixing the structural issues behind the "nightmare," and expanding the product line from 4 to 10 variety packs to capture more search real estate. We also moved the account onto more favorable referral-fee and FBA cost structures it was eligible for but hadn’t used, and stood up a Subscribe & Save program to start building recurring revenue from a standing start of zero subscribers.' },
+      // Composed — not sourced from the pitch deck. Same review flag as above.
+      { heading: 'How it ran', body: 'Work followed a weekly cadence of PPC and listing optimization, with monthly reviews of TACOS, referral fees, and FBA costs to keep efficiency gains on track. New variety packs were launched in stages — each with its own keyword and positioning plan — only once the core catalogue was clean, rather than expanding the line all at once. Subscribe & Save was introduced alongside the ad-efficiency work so subscriber growth compounded the falling TACOS rather than competing with it for budget.' },
+      { heading: 'The result', body: 'Gross sales grew from a stagnant $185,000 to more than $400,000 a month, on the same $40,000 ad budget, with TACOS falling from 20% to 9%. The Amazon referral fee dropped from 15% to 8%, FBA fees came down, the catalogue expanded from 4 to 10 variety packs, and the brand went from zero subscribers to more than 5,000 and growing.' },
+    ],
     metrics: [
-      { to: null, display: '$185K → $425K', label: 'Gross sales per month' },
-      { to: 9, suffix: '%', label: 'TACOS, down from 20%' },
-      { to: 10, label: 'Variety packs, up from 4' },
-      { to: 5000, suffix: '+', label: 'Monthly subscribers' },
+      { to: 400_000, prefix: '$', suffix: '+', label: 'gross sales/month, up from a stagnant $185,000' },
+      { to: 9, suffix: '%', label: 'TACOS, down from 20% — on the same $40,000 monthly ad spend' },
+      { to: 10, label: 'variety packs, up from 4' },
+      { to: 5000, suffix: '+', label: 'monthly subscribers, up from zero' },
     ],
     graph: {
-      title: 'Gross sales per month',
+      title: 'Gross Sales — Before vs. With BLAZON',
+      legend: { current: 'Gross sales', prior: 'Stagnant baseline' },
       points: [
-        { label: 'Before BLAZON', current: 185 },
-        { label: 'With BLAZON', current: 425 },
+        // `prior` is a flat line at the real, confirmed "before" figure
+        // ($185K), not an invented second series — it's the same one known
+        // number restated at both points to show the stagnant baseline the
+        // `current` line pulled away from. No intermediate value is invented.
+        { label: 'Before BLAZON', current: 185, prior: 185 },
+        { label: 'With BLAZON', current: 400, prior: 185 },
       ],
       yTickFormatter: (v) => `$${v}K`,
       showDots: true,
+      // PLACEHOLDER: only two aggregate before/after values exist for GRINDS,
+      // no monthly history. Swap for a full "This year vs. Prior year" series
+      // (matching Aloha Bay exactly) the moment real monthly data exists.
+      isPlaceholder: true,
     },
   },
   {
@@ -167,8 +199,7 @@ export const caseStudies: CaseStudy[] = [
     descriptor: 'Veterinary Aid',
     categoryId: 'veterinary',
     categoryLabel: 'Veterinary',
-    title: 'Replace Stagnancy for Growth',
-    mainResult: 'Brand New to Amazon → Growth in One Month',
+    title: '9% TACOS from a standing start',
     summary: 'Brand new to Amazon and competing against dozens of resellers, VetRx grew within its first month while holding ad spend to a 9% TACOS.',
     before: [
       'Brand New to Amazon',
@@ -178,21 +209,51 @@ export const caseStudies: CaseStudy[] = [
       'In one month grew',
       '$40,000 ad spend = 9% TACOS',
     ],
-    story: [],
+    story: [
+      { heading: 'The challenge', body: 'VetRx (Veterinary Aid) came to BLAZON brand new to Amazon, entering a marketplace where dozens of unauthorized resellers were already listing its products — undercutting pricing and diluting brand control before VetRx had an official presence of its own.' },
+      // Composed — not sourced from the pitch deck. Flag for client/brand
+      // review before this goes live; every number in it is already
+      // established above, nothing new is invented.
+      { heading: 'The strategy', body: 'We prioritized establishing VetRx’s authorized presence on Amazon and reining in the reseller problem, pairing brand registry protections with compliant, fully optimized listings built from scratch. Advertising was launched deliberately against a $40,000 monthly budget calibrated for a brand new to the platform, with campaigns structured to reach an efficient TACOS quickly rather than spending broadly to chase early volume.' },
+      // Composed — not sourced from the pitch deck. Same review flag as above.
+      { heading: 'How it ran', body: 'As with any new account, work began with account setup, brand registry enrollment, and listing creation, followed by a weekly cadence of PPC optimization and account health checks. Ad spend and TACOS were tracked closely from day one to make sure early growth didn’t come at the expense of profitability.' },
+      /*
+       * The source only confirms two "after" numbers ($40,000 ad spend, 9%
+       * TACOS) — no growth magnitude or revenue figure for the "In one month
+       * grew" line was ever supplied, and none is invented here. Per
+       * instruction, this leads with the confirmed TACOS efficiency instead
+       * of stating an unknown growth number. FLAG FOR FOLLOW-UP: get the
+       * real first-month growth figure from the client, or confirm this
+       * phrasing is fine to publish as-is.
+       */
+      { heading: 'The result', body: 'VetRx achieved measurable growth in its first month on Amazon, holding a 9% TACOS on a $40,000 monthly ad budget — a strong efficiency benchmark for a brand new to the platform and competing from day one against dozens of established resellers.' },
+    ],
     metrics: [
-      { to: null, display: '1 Month', label: 'Time to first growth' },
-      { to: 9, suffix: '%', label: 'TACOS on $40,000 ad spend' },
+      { to: 40_000, prefix: '$', label: 'monthly ad spend' },
+      { to: 9, suffix: '%', label: 'TACOS achieved' },
     ],
     graph: {
-      title: 'Growth in the first month',
+      title: 'TACOS — before vs. after launch',
+      legend: { current: 'TACOS', prior: 'Before launch (assumed 0%)' },
       points: [
-        { label: 'Brand New to Amazon', current: 1 },
-        { label: 'Growth in One Month', current: 2 },
+        /*
+         * FLAGGED, EXPLICIT EXCEPTION: unlike every other `prior` value in
+         * this file, the 0% here is not a confirmed source figure — VetRx
+         * has no "before" TACOS or ad-spend number at all, because it
+         * wasn't advertising on Amazon before this launch. Building a
+         * two-line chart at all therefore requires assuming a 0% starting
+         * point. This was flagged to the client/reviewer as the one
+         * invented data point in the system, and building it in anyway
+         * (rather than the no-chart, single-confirmed-figure treatment)
+         * was their explicit choice.
+         */
+        { label: 'Brand New to Amazon', current: 0, prior: 0 },
+        { label: 'Growth in One Month', current: 9, prior: 0 },
       ],
-      showYAxis: false,
-      showTooltip: false,
+      yTickFormatter: (v) => `${v}%`,
       showDots: true,
-      callout: '$40K Ad Spend = 9% TACOS',
+      callout: '$40,000 monthly ad spend',
+      isPlaceholder: true,
     },
   },
   {
@@ -220,13 +281,20 @@ export const caseStudies: CaseStudy[] = [
     ],
     graph: {
       title: 'Indexed sales growth — 1× to 3×',
+      legend: { current: 'Sales index', prior: 'Pre-BLAZON baseline' },
       points: [
-        { label: 'Month 0', current: 1 },
-        { label: 'Month 6', current: 3 },
+        // `prior` restates the real, confirmed starting index (1×) at both
+        // points as a flat baseline — not an invented series — so the chart
+        // shows the actual 1×→3× line pulling away from where it started.
+        { label: 'Month 0', current: 1, prior: 1 },
+        { label: 'Month 6', current: 3, prior: 1 },
       ],
       yTickFormatter: (v) => `${v}×`,
       showDots: true,
       callout: '3,000+ new SKUs launched in 3 months',
+      // PLACEHOLDER: only the start/end index values exist for this study,
+      // no monthly history. Swap for a full monthly series if it exists.
+      isPlaceholder: true,
     },
   },
 ];
