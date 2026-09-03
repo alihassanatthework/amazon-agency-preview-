@@ -289,8 +289,6 @@ html:not(.motion-on) .compare__ours { opacity: 1; }
 html:not(.motion-on) .compare__label::before { transform: scaleX(1); }
 .compare__row:first-of-type .compare__label::before { display: none; }
 
-.compare__mark { flex: none; margin-top: 5px; color: var(--card-muted); }
-.compare__mark--us { color: var(--card-accent); }
 .motion-on .compare__label, .motion-on .compare__cell { opacity: 0; transform: translateY(28px); }
 .motion-on .compare__table.is-in .compare__label,
 .motion-on .compare__table.is-in .compare__cell {
@@ -549,10 +547,9 @@ html:not(.motion-on) .process__marker { transform: none; }
 .svc__group-head { display: flex; align-items: center; justify-content: space-between; gap: var(--space-3); margin-bottom: var(--space-3); }
 .svc__group-summary { margin-bottom: var(--space-4); }
 .svc__items { display: grid; gap: var(--space-3); margin-bottom: var(--space-5); }
-.svc__items li { display: flex; gap: var(--space-3); font-size: var(--body-s); }
+.svc__items li { font-size: var(--body-s); }
 .svc__items strong { font-weight: 600; }
 .svc__extra { font-style: normal; }
-.svc__tick { margin-top: 5px; }
 .svc__more { margin-top: auto; }
 .svc__related-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: var(--gutter); margin-top: var(--space-4); }
 .svc__related-card {
@@ -575,8 +572,7 @@ html:not(.motion-on) .process__marker { transform: none; }
 .incl__grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: var(--gutter); }
 .incl__block h3 { margin-bottom: var(--space-3); }
 .incl__block ul { display: grid; gap: var(--space-2); }
-.incl__block li { display: flex; gap: var(--space-2); font-size: var(--body-s); }
-.incl__tick { margin-top: 5px; }
+.incl__block li { font-size: var(--body-s); }
 .incl__note { margin-top: var(--space-6); }
 
 /* --- Pricing -------------------------------------------------------------
@@ -601,8 +597,7 @@ html:not(.motion-on) .process__marker { transform: none; }
 .pricing__intro { margin: var(--space-4) 0 var(--space-3); display: flex; flex-direction: column; gap: 2px; }
 .pricing__figure { font-size: 30px; }
 .pricing__features { display: grid; gap: var(--space-2); margin-bottom: var(--space-5); }
-.pricing__features li { display: flex; gap: var(--space-2); font-size: var(--body-s); }
-.pricing__tick { margin-top: 5px; }
+.pricing__features li { font-size: var(--body-s); }
 .pricing__cta { margin-top: auto; }
 .pricing__note { margin-top: var(--space-6); text-align: center; }
 
@@ -628,8 +623,6 @@ html:not(.motion-on) .process__marker { transform: none; }
    reads as the emphasised side without a second card/table treatment. */
 .cs__before-after { display: grid; grid-template-columns: 1fr 1fr; gap: var(--space-7); margin: var(--space-7) 0; }
 .cs__ba-col > .eyebrow { margin-bottom: var(--space-4); }
-.checklist--muted .checklist__tick { color: var(--slate); }
-.checklist--muted li span:last-child { color: var(--ash); }
 
 /* --- About --------------------------------------------------------------- */
 .mission { overflow: hidden; }
@@ -639,9 +632,12 @@ html:not(.motion-on) .process__marker { transform: none; }
 /* .checklist stays — still used by the case study before/after, the wizard
    value panel and the getting-started list. */
 .checklist { display: grid; gap: var(--space-3); }
-.checklist li { display: flex; gap: var(--space-3); }
-.checklist__tick { flex: none; margin-top: 5px; color: var(--accent); }
 .checklist li span:last-child { color: var(--on-surface-2); }
+/* Must follow the rule above, not precede it: both are (0,2,2), so declaring
+   the muted variant first meant it lost on source order and "before" read
+   identically to "with BLAZON". With the tick and dash gone this muting is
+   the only thing separating the two columns. */
+.checklist--muted li span:last-child { color: var(--on-surface-3); }
 .checklist--wide { grid-template-columns: 1fr 1fr; gap: var(--space-4) var(--space-6); }
 
 /* --- Team ----------------------------------------------------------------

@@ -7,7 +7,7 @@ import { CtaSection } from '../../components/common/CtaSection';
 import { TestimonialWall } from '../../components/common/TestimonialWall';
 import { Seo } from '../../components/common/Seo';
 import { Card } from '../../components/common/Card';
-import { ArrowRight, Check } from '../../components/ui/Icon';
+import { ArrowRight } from '../../components/ui/Icon';
 import { services, totalServices, included } from '../../data/services';
 
 /** §10.1 — the six groups as one integrated system. */
@@ -37,7 +37,6 @@ export default function Services() {
                 <ul className="svc__items">
                   {g.items.map((it) => (
                     <li key={it.name}>
-                      <span className="card__icon svc__tick" aria-hidden="true"><Check size={12} /></span>
                       <span>
                         <strong>{it.name}</strong>
                         {it.additionalCost && <em className="card__eyebrow svc__extra"> (additional cost)</em>}
@@ -68,7 +67,7 @@ export default function Services() {
                 <h3 className="heading-s">{block.group}</h3>
                 <ul>
                   {block.items.map((i) => (
-                    <li key={i}><span className="card__icon incl__tick" aria-hidden="true"><Check size={12} /></span>{i}</li>
+                    <li key={i}>{i}</li>
                   ))}
                 </ul>
               </Card>

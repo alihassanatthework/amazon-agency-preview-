@@ -396,7 +396,7 @@ export default function GetStarted() {
                 </p>
                 <ul className="checklist">
                   {(values.sellingStatus === 'not_yet_selling' ? TRAINING_VALUE : AUDIT_VALUE).map((v) => (
-                    <li key={v}><span className="checklist__tick" aria-hidden="true"><Check size={12} /></span><span className="body-s">{v}</span></li>
+                    <li key={v}><span className="body-s">{v}</span></li>
                   ))}
                 </ul>
                 <p className="caption wizard__value-note">

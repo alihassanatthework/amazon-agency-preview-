@@ -5,7 +5,7 @@ import { PageHero } from '../../components/layout/PageHero';
 import { CtaSection } from '../../components/common/CtaSection';
 import { Seo } from '../../components/common/Seo';
 import { CaseStudyGraph } from '../../components/common/CaseStudyGraph';
-import { ArrowRight, Check, Dash } from '../../components/ui/Icon';
+import { ArrowRight } from '../../components/ui/Icon';
 import { caseStudyBySlug, type CaseStudy as CaseStudyData } from '../../data/caseStudies';
 import NotFound from '../NotFound';
 
@@ -73,7 +73,7 @@ function CaseStudyPage({ study }: { study: CaseStudyData }) {
                   <p className="eyebrow">Before BLAZON</p>
                   <ul className="checklist checklist--muted">
                     {study.before.map((b) => (
-                      <li key={b}><span className="checklist__tick" aria-hidden="true"><Dash /></span><span className="body-s">{b}</span></li>
+                      <li key={b}><span className="body-s">{b}</span></li>
                     ))}
                   </ul>
                 </Reveal>
@@ -81,7 +81,7 @@ function CaseStudyPage({ study }: { study: CaseStudyData }) {
                   <p className="eyebrow">With BLAZON</p>
                   <ul className="checklist">
                     {study.after.map((a) => (
-                      <li key={a}><span className="checklist__tick" aria-hidden="true"><Check size={12} /></span><span className="body-s">{a}</span></li>
+                      <li key={a}><span className="body-s">{a}</span></li>
                     ))}
                   </ul>
                 </Reveal>

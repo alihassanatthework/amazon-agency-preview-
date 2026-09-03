@@ -6,7 +6,7 @@ import { PageHero } from '../../components/layout/PageHero';
 import { CtaSection } from '../../components/common/CtaSection';
 import { Card } from '../../components/common/Card';
 import { Seo } from '../../components/common/Seo';
-import { ArrowRight, Check } from '../../components/ui/Icon';
+import { ArrowRight } from '../../components/ui/Icon';
 
 /** The three-step process from the pitch deck, in order. */
 const APPROACH_STEPS = ['Listing Cleanup/Optimization', 'Organic Growth', 'Paid Ads'];
@@ -64,7 +64,7 @@ export default function GettingStarted() {
               'Prime badge and fulfilment configuration',
               'Advertising structure built before launch, not after',
               'Account health monitoring from day one'].map((i) => (
-              <li key={i}><span className="checklist__tick" aria-hidden="true"><Check size={12} /></span><span className="body-s">{i}</span></li>
+              <li key={i}><span className="body-s">{i}</span></li>
             ))}
           </RevealGroup>
         </Container>

@@ -7,7 +7,6 @@ import { CtaSection } from '../../components/common/CtaSection';
 import { FaqAccordion } from '../../components/common/FaqAccordion';
 import { Seo } from '../../components/common/Seo';
 import { Card } from '../../components/common/Card';
-import { Check } from '../../components/ui/Icon';
 import { included } from '../../data/services';
 import { site } from '../../data/site';
 
@@ -108,7 +107,6 @@ export default function Pricing() {
                 <ul className="pricing__features">
                   {p.items.map((i) => (
                     <li key={i}>
-                      <span className="card__icon pricing__tick" aria-hidden="true"><Check size={12} /></span>
                       {i}
                     </li>
                   ))}
@@ -135,7 +133,7 @@ export default function Pricing() {
               <Card as="div" interactive className="incl__block" key={b.group}>
                 <h3 className="heading-s">{b.group}</h3>
                 <ul>{b.items.map((i) => (
-                  <li key={i}><span className="card__icon incl__tick" aria-hidden="true"><Check size={12} /></span>{i}</li>
+                  <li key={i}>{i}</li>
                 ))}</ul>
               </Card>
             ))}

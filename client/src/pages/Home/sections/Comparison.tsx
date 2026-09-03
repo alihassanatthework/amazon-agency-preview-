@@ -4,7 +4,7 @@ import { LineDraw, Reveal, useInView } from '../../../motion';
 import { Section, Container } from '../../../components/layout/Section';
 import { SectionHeader } from '../../../components/layout/SectionHeader';
 import { Card } from '../../../components/common/Card';
-import { ArrowRight, Check, Dash } from '../../../components/ui/Icon';
+import { ArrowRight } from '../../../components/ui/Icon';
 
 /**
  * H7 / §9.9 — a light section carrying one dark card, exactly like every other
@@ -63,11 +63,9 @@ export function Comparison() {
                 >
                   <span className="compare__label">{label}</span>
                   <span className="compare__cell compare__cell--us">
-                    <span className="compare__mark compare__mark--us" aria-hidden="true"><Check /></span>
                     <span className="body-s">{ours}</span>
                   </span>
                   <span className="compare__cell compare__cell--them">
-                    <span className="compare__mark" aria-hidden="true"><Dash /></span>
                     <span className="body-s">{theirs}</span>
                   </span>
                 </div>

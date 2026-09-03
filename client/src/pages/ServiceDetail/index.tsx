@@ -7,7 +7,7 @@ import { CtaSection } from '../../components/common/CtaSection';
 import { FaqAccordion } from '../../components/common/FaqAccordion';
 import { Seo } from '../../components/common/Seo';
 import { Card } from '../../components/common/Card';
-import { ArrowRight, Check } from '../../components/ui/Icon';
+import { ArrowRight } from '../../components/ui/Icon';
 import { services } from '../../data/services';
 import { testimonials } from '../../data/testimonials';
 import NotFound from '../NotFound';
@@ -73,7 +73,6 @@ export default function ServiceDetail() {
           <RevealGroup className="cap__grid" stagger={70}>
             {group.items.map((it) => (
               <Card as="article" interactive className="cap" key={it.name}>
-                <span className="card__icon cap__tick" aria-hidden="true"><Check size={13} /></span>
                 <h3 className="cap__title">
                   {it.name}
                   {it.additionalCost && <em className="card__eyebrow svc__extra"> (additional cost)</em>}
