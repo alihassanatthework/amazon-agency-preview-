@@ -139,12 +139,12 @@
      per surface: a card looks identical on an obsidian section and on a
      bone one. That is the whole mechanism — change a value here and every
      card on every page changes with it. */
-  --card-bg:           var(--slate-moss);
-  --card-bg-hover:     #212819;             /* one step lighter than slate-moss */
-  --card-border:       var(--char-line);
+  --card-bg:           #1A1E18;             /* card fill                       */
+  --card-bg-hover:     #212619;             /* one step lighter than the fill   */
+  --card-border:       #252B22;             /* 1px card border                  */
   --card-border-hover: rgba(138, 176, 75, .40);
-  --card-heading:      var(--bone);
-  --card-text:         var(--mist);
+  --card-heading:      #F6F6F3;             /* 15.61 AAA on the fill            */
+  --card-text:         #C0C2BA;             /*  9.39 AAA on the fill            */
   --card-muted:        var(--ash);
   --card-accent:       var(--lime-500);
   --card-accent-text:  var(--lime-200);
