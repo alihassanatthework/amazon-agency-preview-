@@ -11,13 +11,18 @@ import { MARK_PATHS, MARK_SCALE } from './logoMark';
  * this animation already worked in, so every constant below and every
  * keyframe in pages.css is untouched.
  */
+/**
+ * The mark's paths, flat and untransformed. They are emitted WITHOUT a <g>
+ * wrapper on purpose: a <g> is not a permitted child of <clipPath>, and a
+ * browser silently drops it, leaving an empty clip that hides everything it
+ * is applied to. The scale therefore goes on whatever encloses these — the
+ * <g> in the watermark, the <clipPath> element itself in the fill.
+ */
 function MarkPaths() {
-  return (
-    <g transform={`scale(${MARK_SCALE})`}>
-      {MARK_PATHS.map((d, i) => <path key={i} d={d} />)}
-    </g>
-  );
+  return <>{MARK_PATHS.map((d, i) => <path key={i} d={d} />)}</>;
 }
+
+const MARK_TRANSFORM = `scale(${MARK_SCALE})`;
 
 // Unchanged: the fill's rest position and travel, in the same 573×814 space.
 const FLAME_BOTTOM = 697;
@@ -42,7 +47,7 @@ export function FlameBase({ className }: { className?: string }) {
           <stop offset="100%" stopColor="#26574B" />
         </linearGradient>
       </defs>
-      <g fill={`url(#${gradId})`}><MarkPaths /></g>
+      <g fill={`url(#${gradId})`} transform={MARK_TRANSFORM}><MarkPaths /></g>
     </svg>
   );
 }
@@ -73,7 +78,7 @@ export function FlameLiquidFill({ className }: { className?: string }) {
         <filter id={glowId} x="-200%" y="-200%" width="500%" height="500%">
           <feGaussianBlur stdDeviation="1.6" />
         </filter>
-        <clipPath id={clipId} clipPathUnits="userSpaceOnUse">
+        <clipPath id={clipId} clipPathUnits="userSpaceOnUse" transform={MARK_TRANSFORM}>
           <MarkPaths />
         </clipPath>
       </defs>
