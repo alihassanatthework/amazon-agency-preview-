@@ -17,7 +17,7 @@ const STATS = [
   '100+ Brands Currently Servicing',
   '250+ Brands Worked With',
   'Clients stay 24 months on average',
-  '3–5 Month to Sales Lift',
+  '4–6 Month to Sales Lift',
 ];
 
 // Highlights the leading figure inline (e.g. "5+", "100+", "4–6") without
