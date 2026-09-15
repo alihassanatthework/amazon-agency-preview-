@@ -303,25 +303,14 @@ html:not(.motion-on) .compare__label::before { transform: scaleX(1); }
 }
 .compare__cta { margin-top: var(--space-7); }
 
-/* --- H8 Case study ------------------------------------------------------- */
-.case__grid { display: grid; grid-template-columns: repeat(12, 1fr); gap: var(--gutter); }
-.case__chart-col { grid-column: 1 / span 6; }
+/* --- Case study chart panel — used by the case study pages -------------- */
 .case__panel { border-radius: var(--radius-card); }
 .case__chart { width: 100%; height: 300px; margin-top: var(--space-4); }
 .case__chart-label { color: var(--ash); }
 .case__legend { display: flex; gap: var(--space-5); margin-top: var(--space-4); font-size: var(--caption); color: var(--ash); }
 .case__legend span { display: inline-flex; align-items: center; gap: var(--space-2); }
 .case__legend i { width: 10px; height: 2px; border-radius: 2px; }
-.case__body { grid-column: 8 / span 5; padding-top: 64px; }
-.case__narrative { color: var(--mist); margin-top: var(--space-4); }
-.case__metrics { display: grid; grid-template-columns: repeat(2, 1fr); gap: var(--space-5); margin-top: var(--space-6); }
-.case__metric-value {
-  font-family: var(--font-display); font-size: 40px; line-height: 1.1; font-weight: 600;
-  letter-spacing: -.02em; color: var(--lime-500); margin: 0 0 var(--space-1);
-  font-variant-numeric: tabular-nums;
-}
 .case__metric-affix { color: var(--sage); font-size: 60%; }
-.case__link { margin-top: var(--space-6); }
 
 /* --- Case study graph — every case study uses the same Aloha-Bay-style
    recharts line chart (pages/Home/sections/CaseChart.tsx); this wrapper just
@@ -333,45 +322,76 @@ html:not(.motion-on) .compare__label::before { transform: scaleX(1); }
   font-weight: 600; color: var(--lime-500); font-size: var(--body);
 }
 
-/* --- H8b Case study marquee ----------------------------------------------
-   Rides the shared .marquee engine in motion.css. Layout only; the cards are
-   universal Cards and take every colour, border and hover from there. */
-/* Continues straight on from the featured study above it — same surface, so
-   the top padding would only open a dead band between the two. */
-.cases-marquee { padding-top: 0; }
+/* --- H8 Case study marquee ----------------------------------------------
+   Rides the shared .marquee engine in motion.css. Layout and motion only: the
+   cards are universal Cards and take every colour, border and hover lift from
+   there, and the section keeps its obsidian surface. */
+.cases-marquee__head { display: flex; align-items: flex-end; justify-content: space-between; gap: var(--space-5); }
+/* The header's own "+ *" spacing is meant for content below it, not a link
+   sitting beside it on the same row. */
+.cases-marquee__head .cases-marquee__more { flex: none; margin: 0 0 var(--space-3); }
+
 .cases-marquee__viewport {
-  margin-top: calc(var(--space-6) * var(--section-scale));
+  margin-top: calc(var(--space-7) * var(--section-scale));
   /* Room for the hover lift and its shadow, which overflow would clip. */
-  padding-block: var(--space-4);
+  padding-block: var(--space-5);
   /* clip, not hidden: a hidden box still scrolls to reveal a focused card,
      which would knock the band out of step with its own transform. */
   overflow: hidden; overflow: clip;
-  -webkit-mask-image: linear-gradient(to right, transparent, #000 7%, #000 93%, transparent);
-          mask-image: linear-gradient(to right, transparent, #000 7%, #000 93%, transparent);
+  -webkit-mask-image: linear-gradient(to right, transparent, #000 8%, #000 92%, transparent);
+          mask-image: linear-gradient(to right, transparent, #000 8%, #000 92%, transparent);
 }
+/* Scroll drift lives on its own layer because the track's transform belongs
+   to the loop animation. */
+.cases-marquee__drift { transform: translate3d(var(--drift, 0px), 0, 0); will-change: transform; }
 .cases-marquee__track { align-items: stretch; }
 /* Spacing is margin on each item, never gap on the track: the loop lands on
    translate(-50%), which is only an identical frame when every card carries
    its own spacing. A track gap leaves the halves half a gutter out. */
 .cases-marquee__item {
-  display: flex; flex: none; width: 380px; margin-right: var(--gutter);
+  display: flex; flex: none; width: 392px; margin-right: var(--gutter);
   transition: opacity var(--t-base) var(--e-base);
 }
-.cases-marquee__card { width: 100%; }
-.cases-marquee__headline { font-size: 26px; line-height: 1.2; letter-spacing: -.01em; margin: var(--space-2) 0; }
+
+.cases-marquee__card { position: relative; overflow: hidden; width: 100%; }
+.cases-marquee__top { display: flex; align-items: center; justify-content: space-between; gap: var(--space-3); }
+.cases-marquee__index {
+  font-family: var(--font-display); font-size: var(--caption); font-weight: 600;
+  letter-spacing: .08em; font-variant-numeric: tabular-nums;
+}
+.cases-marquee__headline { font-size: 28px; line-height: 1.15; letter-spacing: -.015em; margin: var(--space-3) 0 0; }
+.cases-marquee__rule { display: block; height: 1px; background: var(--card-border); margin: var(--space-4) 0 var(--space-2); }
 .cases-marquee__summary {
   display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden;
 }
+/* An accent rule draws across the top edge of the card being read. */
+.cases-marquee__card::after {
+  content: ''; position: absolute; left: 0; right: 0; top: 0; height: 2px;
+  background: var(--card-accent); transform: scaleX(0); transform-origin: left center;
+  transition: transform var(--t-base) var(--e-base);
+}
 /* The card under the cursor comes forward; the rest step back. */
 @media (hover: hover) and (pointer: fine) {
-  .cases-marquee__track:hover .cases-marquee__item { opacity: .5; }
+  .cases-marquee__track:hover .cases-marquee__item { opacity: .45; }
   .cases-marquee__track .cases-marquee__item:hover { opacity: 1; }
+  .cases-marquee__card:hover::after { transform: scaleX(1); }
+  .cases-marquee__card:hover .arrow { transform: translateX(4px); }
 }
-.cases-marquee__track:focus-within .cases-marquee__item { opacity: .5; }
+.cases-marquee__track:focus-within .cases-marquee__item { opacity: .45; }
 .cases-marquee__track .cases-marquee__item:focus-within { opacity: 1; }
-.cases-marquee__more { margin-top: var(--space-5); }
+.cases-marquee__card:focus-visible::after { transform: scaleX(1); }
 
-/* Reduced motion: no loop, one copy of each study in a swipeable row. */
+/* Entrance, once: the cards sweep in from the right, the way the band then
+   carries on. `backwards` fill, not `both` — a filled end state would pin
+   opacity at 1 and override the hover dimming for good. */
+.motion-on .cases-marquee__viewport:not(.is-entered) .cases-marquee__item { opacity: 0; }
+.motion-on .cases-marquee__viewport.is-entered .cases-marquee__item {
+  animation: caseIn var(--t-reveal) var(--e-reveal) backwards;
+  animation-delay: calc(var(--i, 0) * 90ms);
+}
+@keyframes caseIn { from { opacity: 0; transform: translate3d(56px, 20px, 0); } }
+
+/* Reduced motion: no loop, no sweep, one copy of each study in a swipeable row. */
 html:not(.motion-on) .cases-marquee__viewport {
   overflow-x: auto; -webkit-mask-image: none; mask-image: none;
   scroll-snap-type: x mandatory;
@@ -468,9 +488,6 @@ html:not(.motion-on) .process__marker { transform: none; }
   .problem__grid { grid-template-columns: repeat(2, 1fr); }
   .levers__grid { grid-template-columns: repeat(2, 1fr); }
   .thesis__points { grid-template-columns: 1fr; gap: var(--space-5); }
-  .case__grid { grid-template-columns: 1fr; }
-  .case__chart-col, .case__body { grid-column: 1 / -1; }
-  .case__body { padding-top: var(--space-6); }
   .case__chart { height: 240px; }
   .wall { grid-template-columns: repeat(2, 1fr); }
   .process__list { grid-template-columns: repeat(2, 1fr); row-gap: var(--space-7); }
@@ -498,8 +515,9 @@ html:not(.motion-on) .process__marker { transform: none; }
   .compare__cell--them { grid-column: 2; }
 }
 @media (max-width: 767px) {
+  .cases-marquee__head { flex-direction: column; align-items: flex-start; }
   .cases-marquee__item { width: 300px; }
-  .cases-marquee__headline { font-size: 22px; }
+  .cases-marquee__headline { font-size: 23px; }
   .hero { min-height: 0; text-align: left; }
   .hero__inner { text-align: left; }
   .hero .eyebrow--center { justify-content: flex-start; }
@@ -525,8 +543,7 @@ html:not(.motion-on) .process__marker { transform: none; }
   .problem__grid, .levers__grid { grid-template-columns: 1fr; }
   .stat-cards { grid-template-columns: 1fr; }
   .wall { grid-template-columns: 1fr; }
-  .case__metrics { grid-template-columns: repeat(2, 1fr); }
-
+  
   /* One stacked block per row: label, ours, theirs. */
   .compare__row {
     display: block; margin: 0 0 var(--space-4); padding: 0;

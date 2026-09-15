@@ -5,7 +5,6 @@ import { Problem } from './sections/Problem';
 import { Services } from './sections/Services';
 import { Differentiator } from './sections/Differentiator';
 import { Comparison } from './sections/Comparison';
-import { CaseStudyFeature } from './sections/CaseStudy';
 import { CaseStudyMarquee } from './sections/CaseStudyMarquee';
 import { Testimonials } from './sections/Testimonials';
 import { Process } from './sections/Process';
@@ -39,7 +38,6 @@ export default function Home() {
       <Services />
       <Differentiator />
       <Comparison />
-      <CaseStudyFeature />
       <CaseStudyMarquee />
       <Testimonials />
       <Process />
