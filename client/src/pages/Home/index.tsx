@@ -6,6 +6,7 @@ import { Services } from './sections/Services';
 import { Differentiator } from './sections/Differentiator';
 import { Comparison } from './sections/Comparison';
 import { CaseStudyFeature } from './sections/CaseStudy';
+import { CaseStudyMarquee } from './sections/CaseStudyMarquee';
 import { Testimonials } from './sections/Testimonials';
 import { Process } from './sections/Process';
 import { CtaSection } from '../../components/common/CtaSection';
@@ -39,6 +40,7 @@ export default function Home() {
       <Differentiator />
       <Comparison />
       <CaseStudyFeature />
+      <CaseStudyMarquee />
       <Testimonials />
       <Process />
       <CtaSection magnetic />
