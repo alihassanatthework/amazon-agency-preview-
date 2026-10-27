@@ -9,7 +9,7 @@
     "dev:server": "npm --prefix server run dev",
     "build": "npm --prefix client run build",
     "lint": "npm --prefix client run lint",
-    "typecheck": "npm --prefix client exec tsc -b && npm --prefix server exec tsc --noEmit",
+    "typecheck": "npm --prefix client run typecheck",
     "install:all": "npm install && npm --prefix client install && npm --prefix server install"
   },
   "devDependencies": {

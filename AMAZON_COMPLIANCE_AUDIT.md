@@ -213,9 +213,10 @@ Also fixed: `Contact/index.tsx:192` and `GetStarted/index.tsx:363` linked the pr
 with a raw `<a href>` instead of a router `Link`, forcing a full page reload **mid-form** and
 discarding what the user had typed.
 
-**Not fixed — `/getting-started` is unreachable on mobile.** It appears only in the desktop
-Services dropdown, not in the mobile drawer or the footer. Not a broken link; a page with no
-route to it on phones.
+**Fixed — `/getting-started` was unreachable on mobile.** It appeared only in the desktop
+Services dropdown, not in the mobile drawer or the footer, so on a phone there was no route
+to the page at all. Not a broken link, but a page a reviewer on mobile could not reach. Now
+in the drawer, labelled as the desktop dropdown labels it.
 
 ## 1.4 "Include high-resolution images optimized for quick loading times"
 
@@ -371,11 +372,30 @@ untracked and deletion would be unrecoverable. Your call. The command is in the 
 
 ### D. Minor
 
-- `npm run typecheck` at the repo root prints the `tsc` help text rather than typechecking.
-  `npm run build` does run `tsc -b` correctly, so types *are* checked on build.
-- `client/dist/` is a stale committed build artifact.
+- **`npm run typecheck` could never fail. FIXED.** Both halves were written as
+  `npm --prefix <pkg> exec tsc -b` / `--noEmit`. npm consumed the flags itself
+  (`npm warn Unknown cli config "--noEmit"`), ran bare `tsc`, printed the help text and
+  **exited 0** — so the command reported success against any code, including code that does
+  not compile. `npm run build` does run `tsc -b` properly, so types were still checked on
+  build; the dedicated command was the one that lied. Now a real script in
+  `client/package.json`, called by the root. Verified both ways: it reports `error TS2322`
+  on deliberately broken code and exits clean on the real tree. The `server` half was
+  dropped — that package is 21 `.js` files and 0 `.ts` files, so there was nothing to check.
+- **`/getting-started` was unreachable on mobile. FIXED.** It appeared only in the desktop
+  Services dropdown, so on a phone no route to the page existed. Added to the mobile drawer.
 - `additionalCost` badges render from a field no data ever sets — dead branches.
 - `icon` fields in `site.ts` and `services.ts` name files in the unreferenced icons directory.
+
+### Corrections to earlier drafts of this document
+
+Two claims made during the audit were wrong and are retracted here, since this file is the
+record:
+
+- **`client/dist/` is not a committed build artifact.** `dist/` is in `.gitignore` and
+  `git ls-files client/dist` returns nothing. It is untracked local build output.
+- **The logo was never visually squashed.** The wrong `height` attribute was real, but
+  `.logo img { height: auto }` overrode it. The symptom was a layout shift, not distortion.
+  Recorded correctly in §1.4.
 
 ---
 

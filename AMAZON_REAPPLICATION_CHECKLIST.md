@@ -134,7 +134,7 @@ The email links these directly.
       *"Composed — not sourced from the pitch deck"*, and one VetRx data point as
       *"the one invented data point in the system"*. Amazon did not raise it; it is still a
       claims-accuracy risk. See audit §A
-- [ ] **`/getting-started` is unreachable on mobile** — desktop dropdown only
+- [x] ~~**`/getting-started` is unreachable on mobile**~~ — fixed; it is in the drawer now
 - [ ] **Add a business address and a company profile link** (LinkedIn or similar). The site
       has no verifiable external presence, which reviewers commonly look for
 - [ ] **Submit the sitemap** at `https://blazonpros.com/sitemap.xml` to Search Console
@@ -186,3 +186,5 @@ Keep `logo-black-green.png` (the master the optimized version is exported from) 
 | `client/public/site.webmanifest` | Empty name; contradictory theme colour |
 | `client/src/styles/pages.css`, `layout.css` | Styles for the new sections |
 | `client/src/assets/logo/logo-mark-440.{png,webp}` | The optimized mark |
+| `client/src/components/layout/Header.tsx` | `/getting-started` added to the mobile drawer |
+| `package.json`, `client/package.json` | `npm run typecheck` could never fail; now it can |

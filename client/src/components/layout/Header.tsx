@@ -163,7 +163,12 @@ export function Header() {
         role="dialog" aria-modal="true" aria-label="Menu" {...(open ? {} : { inert: '' as unknown as boolean })}
       >
         <nav className="drawer__links" aria-label="Mobile">
-          {[{ to: '/services', label: 'Services' }, { to: '/results', label: 'Results' },
+          {/* /getting-started is in here as well as the desktop Services
+              dropdown. It used to appear only there, which left the page with
+              no route to it at all on a phone. */}
+          {[{ to: '/services', label: 'Services' },
+            { to: '/getting-started', label: 'Not selling on Amazon yet?' },
+            { to: '/results', label: 'Results' },
             { to: '/pricing', label: 'Pricing' }, { to: '/about', label: 'About' },
             { to: '/team', label: 'Team' },
             { to: '/contact', label: 'Contact' }].map((l, i) => (
