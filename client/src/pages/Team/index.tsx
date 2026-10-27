@@ -86,14 +86,6 @@ export default function Team() {
               );
             })}
           </RevealGroup>
-
-          {team.length < TEAM_SIZE && (
-            <p className="caption team__note">
-              {team.length} of {TEAM_SIZE} named so far. The rest go up as their roles and
-              photographs are confirmed — we would rather name the people we can evidence
-              than pad the page out.
-            </p>
-          )}
         </Container>
       </Section>
 

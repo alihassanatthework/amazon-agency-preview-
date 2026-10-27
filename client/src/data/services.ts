@@ -7,10 +7,23 @@
  * names below are the exact, complete source of truth for each service.
  */
 export interface ServiceItem { name: string; description?: string; additionalCost?: boolean }
+/** A named stage of how a discipline is actually run, shown on its page. */
+export interface ServiceApproach { heading: string; body: string }
+/** Per-discipline override of the Weekly/Monthly/Ongoing cards. */
+export interface ServiceCadence { label: string; body: string }
 export interface ServiceGroup {
   slug: string; title: string; short: string; icon: string;
   summary: string; problem: string[]; additionalCost?: boolean;
   items: ServiceItem[];
+  /**
+   * Optional, and only Advertising & Marketing carries them today. Both were
+   * added so the advertising page could describe its own work in the detail
+   * Amazon's Solution Provider review asks for, instead of inheriting the
+   * generic account-health cadence every discipline shared. The other five
+   * fall back to the shared copy in pages/ServiceDetail until written.
+   */
+  approach?: ServiceApproach[];
+  cadence?: ServiceCadence[];
 }
 
 export const services: ServiceGroup[] = [
@@ -62,15 +75,53 @@ export const services: ServiceGroup[] = [
   {
     slug: 'advertising-marketing', icon: 'marketing',
     title: 'Advertising & Marketing', short: 'Advertising & Marketing',
-    summary: 'Campaigns optimised against BLAZON’s organic growth strategy, plus the promotions, posts and influencer work most sellers never run.',
+    summary: 'Advertising optimisation measured against profit, not impressions — campaign structure, keyword targeting, bids and budget rebuilt around contribution margin, then run on a weekly cadence against your targets.',
     problem: ['Fees keep climbing', 'Opportunities stay invisible'],
+    /**
+     * Descriptions and the approach/cadence below describe how BLAZON already
+     * ran the published case studies — every claim traces to one of them:
+     * Aloha Bay (branded-search waste, contribution margin over raw ACOS, 14%
+     * ACOS while raising prices), GRINDS (campaign and keyword restructuring
+     * taking TACOS 20%→9% on an unchanged $40,000 budget, weekly PPC cadence,
+     * monthly TACOS review, per-launch keyword plans), VetRx (campaigns
+     * structured to reach an efficient TACOS rather than spending broadly),
+     * plus the published $3,000/month managed ceiling and 5–10%-of-gross
+     * budget guidance. Nothing here asserts a service the site cannot already
+     * evidence. AWAITING CLIENT SIGN-OFF before this is treated as final.
+     */
     items: [
-      { name: 'Optimize ad campaigns' },
-      { name: 'Implement BLAZONs Organic Growth Strategy using ads' },
-      { name: 'Create Promotions for Event Days (Prime Day)' },
-      { name: 'B2B Pricing discounts, Brand Tailored Promotions, & Coupons' },
-      { name: 'Create Amazon Posts' },
-      { name: 'Manage Amazon Influencers' },
+      { name: 'Optimize ad campaigns',
+        description: 'We audit the account first — where spend is going, which campaigns earn it and which are defending search terms you already own. Then we rebuild the structure: campaigns and ad groups organised so budget can be steered, keyword and product targeting set deliberately, wasteful search terms excluded, and bids and budgets managed against the targets we agree. Performance is judged on contribution margin rather than raw ACOS, because a low ACOS on a product that does not pay for itself is not a result.' },
+      { name: 'Implement BLAZON’s Organic Growth Strategy using ads',
+        description: 'Paid is the third step, not the first. Listings are cleaned and optimised, organic position is built, and only then is advertising pointed at the places where it compounds that work rather than substituting for it. New products and variations launch with their own keyword and positioning plan instead of being added to an existing campaign.' },
+      { name: 'Create Promotions for Event Days (Prime Day)',
+        description: 'Prime Day, Black Friday and the other event days are planned ahead — deals submitted to deadline, inventory and budget set for the traffic, and pricing checked so a discount does not land on a product that cannot carry it.' },
+      { name: 'B2B Pricing discounts, Brand Tailored Promotions, & Coupons',
+        description: 'The promotional mechanics most accounts leave switched off: business pricing and quantity discounts for Amazon Business buyers, Brand Tailored Promotions aimed at your own audiences, and coupons — each used where it moves volume or rank, not run continuously until it only discounts sales you would have made anyway.' },
+      { name: 'Create Amazon Posts',
+        description: 'Posts are free placement on your own and competitors’ listings. We publish them on a schedule against your brand imagery so the surface is working rather than sitting empty.' },
+      { name: 'Manage Amazon Influencers',
+        description: 'Finding and briefing Amazon influencers for your catalogue, and running the relationship — so the content lands on your listings and in the Inspire feed rather than being a one-off post that disappears.' },
+    ],
+    approach: [
+      { heading: 'Audit before spend',
+        body: 'We start by reading the account as it is: where the budget actually goes, which search terms you are paying to defend, what the current ACOS and TACOS are, and which products can carry ad spend at all once fees are counted. That assessment is part of the free audit, and you keep it whether or not you work with us.' },
+      { heading: 'Rebuild the structure',
+        body: 'Campaigns and ad groups are reorganised so that budget can be moved deliberately rather than spread evenly. Keyword and product targeting is set per campaign, search-term reports drive what gets excluded, and spend is moved off branded defence and into categories where the brand is not yet present — which is exactly what took Aloha Bay to a 14% ACOS while prices went up.' },
+      { heading: 'Manage to a target, weekly',
+        body: 'Bids and budgets are reviewed weekly against the target we agree with you, not adjusted reactively. On GRINDS that cadence took TACOS from 20% to 9% without changing the $40,000 monthly budget — the same spend, structured better.' },
+      { heading: 'Report in numbers you can check',
+        body: 'You get the figures that decide whether advertising is working: spend, ACOS and TACOS against target, what changed in the account and why, and what is planned next. Monthly reviews also cover referral and FBA costs, because ad efficiency gained and then lost to fees is not efficiency.' },
+      { heading: 'Know the ceiling, and say so',
+        body: 'Ad management is included up to $3,000 per month in spend. Above that we hand off to a specialist partner rather than pretend we are one, and we will tell you when you are approaching it. We generally recommend an ad budget of 5–10% of monthly gross sales.' },
+    ],
+    cadence: [
+      { label: 'Weekly',
+        body: 'PPC optimisation — bid and budget review against target, search-term review and negative targeting, plus a 30-minute call with your account manager and email throughout the week.' },
+      { label: 'Monthly',
+        body: 'A written review of spend, ACOS and TACOS against the agreed target, what changed and why, and what is planned next — alongside referral-fee and FBA-cost checks so efficiency is not quietly given back.' },
+      { label: 'Ongoing',
+        body: 'Event-day and promotional planning, launch plans for new products and variations, and Posts and influencer work running against the same calendar. Most clients see meaningful movement around months four to six.' },
     ],
   },
   {

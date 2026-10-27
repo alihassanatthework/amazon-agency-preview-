@@ -29,13 +29,18 @@ const CASES = caseStudies.map((s) => ({
   summary: s.summary,
 }));
 
+/**
+ * Derived from the published studies rather than hand-listed, so a filter can
+ * never be offered for a category with nothing behind it. The hand-written
+ * list previously carried a "New to Amazon" pill that matched no study — one
+ * click from here to an empty page.
+ */
 const CATEGORIES = [
   { id: 'all', label: 'All' },
-  { id: 'supplements-wellness', label: 'Supplements & wellness' },
-  { id: 'coffee', label: 'Coffee' },
-  { id: 'veterinary', label: 'Veterinary' },
-  { id: 'apparel', label: 'Apparel' },
-  { id: 'new-to-amazon', label: 'New to Amazon' },
+  ...Array.from(
+    new Map(CASES.map((c) => [c.category, c.categoryLabel])).entries(),
+    ([id, label]) => ({ id, label }),
+  ),
 ];
 
 // Matches the hero stat line on the landing page. The 4+ below is per-specialist
@@ -60,7 +65,7 @@ export default function Results() {
       <PageHero
         eyebrow="Client results"
         headline={['The numbers, and', 'the people behind them.']}
-        lead="Twelve clients answered directly, and four full case studies are published, with more being written from account data we already hold."
+        lead="Twelve clients answered directly, and four accounts are written up in full — the numbers, what we changed, and what it produced."
       />
 
       <Section surface="carbon" size="compact">

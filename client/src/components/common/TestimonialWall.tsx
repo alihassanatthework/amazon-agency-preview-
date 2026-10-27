@@ -3,9 +3,15 @@ import { RevealGroup } from '../../motion';
 import { Card } from '../../components/common/Card';
 import { testimonials as ALL } from '../../data/testimonials';
 
+/* The directory also holds a `-mono` variant of each logo for the homepage
+   marquee. Only the full-colour files are wanted here, so they are filtered
+   out rather than pulled into this module's eager import. */
 const LOGOS = import.meta.glob('../../assets/clients/*.png', { eager: true, import: 'default' }) as Record<string, string>;
+const FULL_COLOUR = Object.fromEntries(
+  Object.entries(LOGOS).filter(([path]) => !path.endsWith('-mono.png')),
+);
 const logoFor = (slug: string | null) =>
-  slug ? LOGOS[`../../assets/clients/${slug}.png`] ?? null : null;
+  slug ? (FULL_COLOUR[`../../assets/clients/${slug}.png`] as string | undefined) ?? null : null;
 
 /**
  * §9.11 — the featured five lead because each carries a distinct, concrete
@@ -29,7 +35,7 @@ export function TestimonialWall({ initial = 5, all = false }: { initial?: number
               <span className="card__meta wall__company">{t.company}</span>
             </figcaption>
             {logoFor(t.slug) && (
-              <img className="wall__logo" src={logoFor(t.slug)!} alt={`${t.company} logo`} height={24} loading="lazy" />
+              <img className="wall__logo" src={logoFor(t.slug)!} alt={`${t.company} logo`} height={24} loading="lazy" decoding="async" />
             )}
           </Card>
         ))}

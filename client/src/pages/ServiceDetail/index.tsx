@@ -22,6 +22,16 @@ const PROBLEM_COPY: Record<string, string> = {
 };
 
 /** §10.2 — one template, six records. 404 when the slug does not resolve. */
+/**
+ * The cadence every discipline shared before any of them described their own.
+ * A discipline that sets `cadence` in data/services.ts overrides this.
+ */
+const DEFAULT_CADENCE = [
+  { label: 'Weekly', body: 'A 30-minute call with your account manager, plus email throughout the week.' },
+  { label: 'Monthly', body: 'Account health review, IPI check, negative seller review removal and a written summary.' },
+  { label: 'Ongoing', body: 'Optimisation against a live plan. Most clients see meaningful movement around months four to six.' },
+];
+
 export default function ServiceDetail() {
   const { slug } = useParams();
   const group = services.find((g) => g.slug === slug);
@@ -87,6 +97,31 @@ export default function ServiceDetail() {
         </Container>
       </Section>
 
+      {/* Only disciplines that have written their own approach show this.
+          Advertising & Marketing is the first; see data/services.ts. */}
+      {group.approach && group.approach.length > 0 && (
+        <Section surface="bone">
+          <Container>
+            <SectionHeader
+              eyebrow="How we do it"
+              headline={['The method,', 'step by step.']}
+              lead={`What ${group.title.toLowerCase()} actually involves on your account, in the order it happens.`}
+            />
+            <RevealGroup as="ol" className="method" stagger={80}>
+              {group.approach.map((step, i) => (
+                <li className="method__step" key={step.heading}>
+                  <span className="method__num" aria-hidden="true">{String(i + 1).padStart(2, '0')}</span>
+                  <div>
+                    <h3 className="heading-s method__title">{step.heading}</h3>
+                    <p className="body-s method__body">{step.body}</p>
+                  </div>
+                </li>
+              ))}
+            </RevealGroup>
+          </Container>
+        </Section>
+      )}
+
       <Section surface="carbon">
         <Container>
           <SectionHeader
@@ -95,9 +130,12 @@ export default function ServiceDetail() {
             lead="A dedicated account manager, a task support team and a supervisor on every account."
           />
           <RevealGroup className="cadence" stagger={80}>
-            <Card as="div" interactive className="cadence__item"><h3 className="heading-s">Weekly</h3><p className="body-s">A 30-minute call with your account manager, plus email throughout the week.</p></Card>
-            <Card as="div" interactive className="cadence__item"><h3 className="heading-s">Monthly</h3><p className="body-s">Account health review, IPI check, negative seller review removal and a written summary.</p></Card>
-            <Card as="div" interactive className="cadence__item"><h3 className="heading-s">Ongoing</h3><p className="body-s">Optimisation against a live plan. Most clients see meaningful movement around months four to six.</p></Card>
+            {(group.cadence ?? DEFAULT_CADENCE).map((c) => (
+              <Card as="div" interactive className="cadence__item" key={c.label}>
+                <h3 className="heading-s">{c.label}</h3>
+                <p className="body-s">{c.body}</p>
+              </Card>
+            ))}
           </RevealGroup>
         </Container>
       </Section>
@@ -127,7 +165,7 @@ export default function ServiceDetail() {
           <SectionHeader eyebrow="Questions" headline={['Before you ask.']} />
           <FaqAccordion
             items={[
-              { q: 'Is this sold separately?', a: 'No. Every discipline is part of one monthly engagement priced by catalogue size — there is no à la carte menu, because the levers only compound when they are pulled together.' },
+              { q: 'Is this sold separately?', a: 'Monthly management is one engagement with every discipline included, because the levers only compound when they are pulled together. If you need a specific thing fixed rather than ongoing management, One-Time Projects cover that on their own — the pricing page sets out both.' },
               { q: 'How quickly will we see movement?', a: 'Most clients see an incremental increase in sales around months four to six. We would rather tell you that now than promise you a month.' },
               { q: 'What do you need from us?', a: 'One dedicated point of contact who can respond to email and join the weekly call. That is the one thing we mark as vital.' },
             ]}

@@ -360,7 +360,7 @@ export default function GetStarted() {
                         <input type="checkbox" name="consent" checked={values.consent}
                                onChange={(e) => set('consent', e.target.checked)} />
                         <span>I agree to BLAZON storing my details to respond to this request, as described in the{' '}
-                          <a className="link link--inline" href="/privacy">privacy policy</a>.</span>
+                          <Link className="link link--inline" to="/privacy">privacy policy</Link>.</span>
                       </label>
                       {err('consent')}
                     </div>

@@ -1,4 +1,5 @@
 import { useRef, useState } from 'react';
+import { Link } from 'react-router-dom';
 import { Counter, Reveal, RevealGroup } from '../../motion';
 import { Section, Container } from '../../components/layout/Section';
 import { SectionHeader } from '../../components/layout/SectionHeader';
@@ -189,7 +190,7 @@ export default function Contact() {
                           <input type="checkbox" name="consent" checked={values.consent}
                                  onChange={(e) => set('consent', e.target.checked)} onBlur={() => blur('consent')} />
                           <span>I agree to BLAZON storing my details to respond to this enquiry, as described in the{' '}
-                            <a className="link link--inline" href="/privacy">privacy policy</a>.</span>
+                            <Link className="link link--inline" to="/privacy">privacy policy</Link>.</span>
                         </label>
                         {errors.consent && <p className="field__error"><AlertIcon />{errors.consent}</p>}
                       </div>
@@ -256,7 +257,7 @@ export default function Contact() {
             { q: 'Is the audit really free?', a: 'Yes, and there is no obligation attached to it. It takes about 60 minutes of our time and you get the findings either way.' },
             { q: 'How fast do you reply?', a: 'Within one business day, usually the same day. If you call during Mountain Time business hours somebody answers.' },
             { q: 'What access do you need?', a: 'Nothing to start. The first pass runs on public data plus what you tell us. If you want figures verified against your own reporting we will ask for read-only Seller Central access at that point.' },
-            { q: 'What does it cost if we proceed?', a: 'Between $750 and $3,500 a month depending on catalogue size, plus 5% of growth above your baseline. Full detail is on the pricing page.' },
+            { q: 'What does it cost if we proceed?', a: 'One-time projects run $750–$2,500. Full monthly management is $750–$5,000 without advertising, or $2,250–$6,500 with it, in both cases plus a share of the growth above your baseline. Full detail is on the pricing page.' },
           ]} />
         </Container>
       </Section>

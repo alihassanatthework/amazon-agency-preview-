@@ -83,9 +83,11 @@ export function Footer() {
             <Link to="/privacy">Privacy policy</Link>
             <Link to="/terms">Terms</Link>
             <Link to="/cookies">Cookie policy</Link>
-            <button type="button" className="footer__consent" onClick={() => window.dispatchEvent(new Event('blazon:consent-open'))}>
-              Manage consent
-            </button>
+            {/* No "Manage consent" control here on purpose: this site sets no
+                analytics, advertising or tracking cookies, so there is nothing
+                to manage. The button that used to sit here dispatched a
+                'blazon:consent-open' event that nothing listened for — a dead
+                control on every page. See pages/Legal (cookie policy). */}
           </nav>
           {/* §22 Q-08 — this disclaimer is required. */}
           <p className="footer__copy">

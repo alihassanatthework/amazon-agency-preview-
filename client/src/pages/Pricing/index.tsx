@@ -40,7 +40,7 @@ const PACKAGES: Package[] = [
       'Consulting',
       'Amazon Account fixes',
       'Case management & Appeals',
-      'Etc.',
+      'Ad account audits and one-off campaign rebuilds',
     ],
   },
   {

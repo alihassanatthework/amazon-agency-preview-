@@ -1,0 +1,7 @@
+User-agent: *
+Allow: /
+
+# No crawlable content behind these; they are POST-only API endpoints.
+Disallow: /api/
+
+Sitemap: https://blazonpros.com/sitemap.xml

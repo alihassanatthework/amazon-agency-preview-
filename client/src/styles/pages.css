@@ -634,6 +634,21 @@ html:not(.motion-on) .process__marker { transform: none; }
 .cap__grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: var(--gutter); }
 .cap { display: flex; flex-direction: column; gap: var(--space-2); }
 .cap__title { margin: 0; }
+/* --- Service method — the numbered "How we do it" list. Layout only; the
+   step cards are plain blocks on the light surface, matching the Process and
+   Our Approach treatments rather than introducing a third pattern. */
+.method { display: grid; gap: var(--space-5); counter-reset: method; margin: 0; padding: 0; }
+.method__step { display: grid; grid-template-columns: 64px minmax(0, 1fr); gap: var(--space-4); align-items: start; }
+.method__num {
+  font-family: var(--font-display); font-size: 28px; font-weight: 600;
+  color: var(--green-700); font-variant-numeric: tabular-nums; line-height: 1.1;
+}
+.method__title { color: var(--obsidian); margin: 0 0 var(--space-2); }
+.method__body { color: var(--graphite); max-width: 68ch; }
+@media (max-width: 767px) {
+  .method__step { grid-template-columns: 1fr; gap: var(--space-2); }
+}
+
 .cadence { display: grid; grid-template-columns: repeat(3, 1fr); gap: var(--gutter); }
 .cadence__item h3 { margin-bottom: var(--space-2); }
 
@@ -740,6 +755,17 @@ html:not(.motion-on) .process__marker { transform: none; }
 /* --- Legal ---------------------------------------------------------------- */
 .legal { max-width: 68ch; }
 .legal p { color: var(--mist); }
+.legal__block { margin-top: var(--space-7); }
+.legal__heading { color: var(--bone); margin-bottom: var(--space-3); }
+.legal__block p + p { margin-top: var(--space-3); }
+.legal__list { display: grid; gap: var(--space-2); margin: var(--space-3) 0 0; }
+.legal__list li { color: var(--mist); font-size: var(--body-s); padding-left: var(--space-4); position: relative; }
+.legal__list li::before {
+  content: ''; position: absolute; left: 0; top: .65em;
+  width: 6px; height: 1px; background: var(--lime-500);
+}
+.legal__list strong { color: var(--bone); }
+.legal__updated { margin-top: var(--space-7); padding-top: var(--space-4); border-top: 1px solid var(--char-line); }
 
 /* --- Contact ------------------------------------------------------------- */
 .contact__grid { display: grid; grid-template-columns: repeat(12, 1fr); gap: 64px; }

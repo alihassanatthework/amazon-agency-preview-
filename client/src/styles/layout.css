@@ -22,6 +22,9 @@
 
 .header__bar { display: flex; align-items: center; height: var(--header-h); gap: var(--space-5); }
 .logo { display: inline-flex; align-items: center; flex: none; }
+/* Keeps the <img> a direct flex child of .logo now that it is wrapped in a
+   <picture> for the WebP source, so the layout is unchanged. */
+.logo picture { display: contents; }
 .logo img { height: auto; }
 
 .header__nav { display: flex; gap: var(--space-5); margin-left: var(--space-7); }
@@ -161,11 +164,11 @@ html:not(.motion-on) .drawer__links a { opacity: 1; transform: none; }
 .footer__legal { display: flex; flex-wrap: wrap; align-items: center; gap: var(--space-3) var(--space-5);
   font-size: var(--caption); color: var(--ash); }
 .footer__legal nav { display: flex; flex-wrap: wrap; gap: var(--space-3) var(--space-5); }
-.footer__legal a, .footer__consent {
+.footer__legal a {
   color: var(--ash); text-decoration: none; background: none; border: 0; cursor: pointer;
   font-size: var(--caption); padding: 0;
 }
-@media (hover: hover) and (pointer: fine) { .footer__legal a:hover, .footer__consent:hover { color: var(--bone); } }
+@media (hover: hover) and (pointer: fine) { .footer__legal a:hover { color: var(--bone); } }
 .footer__copy { margin: 0 0 0 auto; }
 
 @media (max-width: 1279px) {
@@ -190,5 +193,5 @@ html:not(.motion-on) .drawer__links a { opacity: 1; transform: none; }
   .footer__col ul { padding-bottom: var(--space-4); }
   .footer__legal { flex-direction: column; text-align: center; }
   .footer__legal nav { justify-content: center; }
-  .footer__col ul a, .footer__legal a, .footer__consent { min-height: 44px; display: inline-flex; align-items: center; }
+  .footer__col ul a, .footer__legal a { min-height: 44px; display: inline-flex; align-items: center; }
 }
