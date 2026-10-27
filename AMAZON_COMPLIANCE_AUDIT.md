@@ -178,14 +178,27 @@ reconciled.
 where the site says the company is 8+ years old. You directed the 8+ change earlier, so this
 one was safe to apply.
 
-**NOT fixed — headcount and brand counts.** These are on the **same homepage, in adjacent
-sections**, and I will not guess which is true:
+**Fixed — headcount and brand counts reconciled.** These were on the **same homepage, in
+adjacent sections**, and I would not guess which was true. You designated the **stat band as
+authoritative**, and the figures were then applied sitewide:
 
-| Claim | Says | Also says |
+| Claim | Was | Now (from the stat band) |
 |---|---|---|
-| Team size | "US-based team of 9" (hero) | **"10+ Employees"** (stat band) |
-| Brands | "80+ brands managed" (hero) | **"100+ Brands Currently Servicing"** (stat band) |
-| Team page | — | "team of 10", `numberOfEmployees: 10` in structured data |
+| Team size | "US-based team of 9" (hero) | **10** — matching "10+ Employees" and the Team page's `numberOfEmployees: 10` |
+| Brands | "80+ brands managed" (hero) | **100+** — matching "100+ Brands Currently Servicing" |
+
+The same stale pair had been copied into the About, Results and Contact stat rows, the
+client-marquee caption and two meta descriptions; all were corrected in the same pass.
+
+**Root cause addressed.** Four stat rows each hand-maintained their own copy of these
+numbers, which is how they drifted apart. They now derive from a single module,
+`client/src/data/figures.ts`, which the stat band itself also consumes — so the
+authoritative display and the pages quoting it can no longer disagree. The band's
+client-approved wording is unchanged, character for character.
+
+**Still your call, not changed:** ten employees at "4+ years each" implies 40+ combined
+years, while the band says "30+ Years of Combined Amazon Experience". `30+` is a floor, so
+nothing published is false — but if the true figure is higher, the band understates it.
 
 ### 1.2g Security warnings
 

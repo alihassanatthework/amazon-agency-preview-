@@ -4,6 +4,8 @@ import { WordRise, useDrift, useReducedMotion } from '../../../motion';
 import { Container } from '../../../components/layout/Section';
 import { ArrowRight } from '../../../components/ui/Icon';
 import { FlameBase, FlameLiquidFill } from '../../../components/common/FlameEnergy';
+import { AVG_MONTHS, BRANDS_CURRENT, YEARS } from '../../../data/figures';
+import { TEAM_SIZE } from '../../../data/team';
 
 /**
  * H1 / §9.3 — the claim. Centred across columns 3–10, one of the three
@@ -76,9 +78,12 @@ export function Hero() {
           <Link className="link hero__secondary" to="/results">See client results<ArrowRight /></Link>
         </div>
 
-        {/* Verified figures only — §22 Q-01 forbids a revenue claim. */}
+        {/* Verified figures only — §22 Q-01 forbids a revenue claim. Figures
+            come from data/figures.ts so this line cannot drift from the stat
+            band directly below it, which it once contradicted. */}
         <p className="caption hero__trust">
-          80+ brands managed · 8+ years · US-based team of 9 · avg. client 24 months
+          {BRANDS_CURRENT}+ brands managed · {YEARS}+ years · US-based team of {TEAM_SIZE} ·{' '}
+          avg. client {AVG_MONTHS} months
         </p>
       </Container>
 

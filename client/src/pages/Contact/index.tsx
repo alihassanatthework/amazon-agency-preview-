@@ -8,6 +8,8 @@ import { FaqAccordion } from '../../components/common/FaqAccordion';
 import { Seo } from '../../components/common/Seo';
 import { AlertIcon, ArrowRight, Check, Phone } from '../../components/ui/Icon';
 import { site } from '../../data/site';
+import { BRANDS_CURRENT, YEARS } from '../../data/figures';
+import { TEAM_SIZE } from '../../data/team';
 import { postContact } from '../../services/api';
 
 const INQUIRY = [
@@ -238,9 +240,9 @@ export default function Contact() {
       <Section surface="carbon" size="compact">
         <Container>
           <RevealGroup className="stats__row" stagger={90}>
-            {[{ to: 80, suffix: '+', label: 'brands managed' },
-              { to: 8, suffix: '+', label: 'years in business' },
-              { to: 9, suffix: '', label: 'specialists' }].map((m) => (
+            {[{ to: BRANDS_CURRENT, suffix: '+', label: 'brands managed' },
+              { to: YEARS, suffix: '+', label: 'years in business' },
+              { to: TEAM_SIZE, suffix: '', label: 'specialists' }].map((m) => (
               <div className="stats__cell" key={m.label}>
                 <p className="numeral stats__value"><Counter to={m.to} suffix={m.suffix} affixClassName="stats__unit" /></p>
                 <p className="caption stats__label">{m.label}</p>

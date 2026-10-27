@@ -11,6 +11,8 @@ import { Seo } from '../../components/common/Seo';
 import { Card } from '../../components/common/Card';
 import { ArrowRight } from '../../components/ui/Icon';
 import { caseStudies } from '../../data/caseStudies';
+import { AVG_MONTHS, BRANDS_CURRENT, SPECIALIST_YEARS, YEARS } from '../../data/figures';
+import { TEAM_SIZE } from '../../data/team';
 
 /**
  * §10.3 — case study index plus the full testimonial wall.
@@ -46,10 +48,10 @@ const CATEGORIES = [
 // Matches the hero stat line on the landing page. The 4+ below is per-specialist
 // Amazon experience, not the company's age — it is not the same figure.
 const STATS = [
-  { to: 80, suffix: '+', label: 'brands currently managed' },
-  { to: 8, suffix: '+', label: 'years managing Amazon accounts' },
-  { to: 9, suffix: '', label: 'specialists, all 4+ years experience' },
-  { to: 24, suffix: '', label: 'months, average client relationship' },
+  { to: BRANDS_CURRENT, suffix: '+', label: 'brands currently managed' },
+  { to: YEARS, suffix: '+', label: 'years managing Amazon accounts' },
+  { to: TEAM_SIZE, suffix: '', label: `specialists, all ${SPECIALIST_YEARS}+ years experience` },
+  { to: AVG_MONTHS, suffix: '', label: 'months, average client relationship' },
 ];
 
 export default function Results() {

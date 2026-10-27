@@ -29,7 +29,7 @@ export default function Home() {
       <Seo
         route="/"
         title="BLAZON — Amazon account management & growth agency"
-        description="BLAZON manages Amazon for brands that are tired of guessing. 80+ brands and 8+ years of Amazon-only account management. Get a free 60-minute audit."
+        description="BLAZON manages Amazon for brands that are tired of guessing. 100+ brands and 8+ years of Amazon-only account management. Get a free 60-minute audit."
       />
       <Hero />
       <ClientMarquee />

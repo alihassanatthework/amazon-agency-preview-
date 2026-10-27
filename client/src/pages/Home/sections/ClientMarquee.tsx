@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from 'react';
 import { Reveal, useReducedMotion } from '../../../motion';
 import { Container } from '../../../components/layout/Section';
+import { BRANDS_CURRENT } from '../../../data/figures';
 
 const LOGOS = import.meta.glob('../../../assets/clients/*-mono.png', { eager: true, import: 'default' });
 
@@ -60,7 +61,7 @@ export function ClientMarquee() {
       <Container>
         <Reveal>
           <p className="caption logos__caption">
-            Trusted by 80+ brands across supplements, outdoor, personal care, automotive and more
+            Trusted by {BRANDS_CURRENT}+ brands across supplements, outdoor, personal care, automotive and more
           </p>
         </Reveal>
       </Container>

@@ -3,20 +3,27 @@ import { LineDraw, Reveal, RevealGroup } from '../../../motion';
 import { Section, Container } from '../../../components/layout/Section';
 import { SectionHeader } from '../../../components/layout/SectionHeader';
 import { Card } from '../../../components/common/Card';
+import { AVG_MONTHS, BRANDS_CURRENT, BRANDS_TOTAL, COMBINED_YEARS, YEARS } from '../../../data/figures';
+import { TEAM_SIZE } from '../../../data/team';
 
 /**
  * H3 / §9.5 — the proof, now eight cards instead of a four-metric instrument
  * row. Wording is verbatim, client-approved: not paraphrased, not
  * renumbered, nothing added.
+ *
+ * This band is the authoritative figure set for the whole site. The numbers
+ * interpolate from `data/figures.ts` so the pages quoting them cannot drift
+ * from what is shown here; the wording around them is unchanged, character
+ * for character.
  */
 const STATS = [
-  '8+ Years in Business',
-  '30+ Years of Combined Amazon Experience',
+  `${YEARS}+ Years in Business`,
+  `${COMBINED_YEARS}+ Years of Combined Amazon Experience`,
   'Utah Based',
-  '10+ Employees',
-  '100+ Brands Currently Servicing',
-  '250+ Brands Worked With',
-  'Clients stay 24 months on average',
+  `${TEAM_SIZE}+ Employees`,
+  `${BRANDS_CURRENT}+ Brands Currently Servicing`,
+  `${BRANDS_TOTAL}+ Brands Worked With`,
+  `Clients stay ${AVG_MONTHS} months on average`,
   '4–6 Month to Sales Lift',
 ];
 

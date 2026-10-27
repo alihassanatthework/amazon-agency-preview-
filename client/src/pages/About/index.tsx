@@ -5,14 +5,16 @@ import { PageHero } from '../../components/layout/PageHero';
 import { CtaSection } from '../../components/common/CtaSection';
 import { Seo } from '../../components/common/Seo';
 import { site } from '../../data/site';
+import { AVG_MONTHS, BRANDS_CURRENT, SPECIALIST_YEARS, YEARS } from '../../data/figures';
+import { TEAM_SIZE } from '../../data/team';
 
 // Matches the hero stat line on the landing page. The 4+ below is per-employee
 // Amazon experience, not the company's age — it is not the same figure.
 const STATS = [
-  { to: 80, suffix: '+', label: 'brands currently managed' },
-  { to: 8, suffix: '+', label: 'years in business' },
-  { to: 9, suffix: '', label: 'employees, all 4+ years on Amazon' },
-  { to: 24, suffix: '', label: 'months, average client relationship' },
+  { to: BRANDS_CURRENT, suffix: '+', label: 'brands currently managed' },
+  { to: YEARS, suffix: '+', label: 'years in business' },
+  { to: TEAM_SIZE, suffix: '+', label: `employees, all ${SPECIALIST_YEARS}+ years on Amazon` },
+  { to: AVG_MONTHS, suffix: '', label: 'months, average client relationship' },
 ];
 
 export default function About() {
@@ -20,7 +22,7 @@ export default function About() {
     <>
       <Seo
         route="/about" title="About BLAZON — an Amazon-only growth agency"
-        description="A boutique team of nine, all with 4+ years on Amazon, managing 80+ brands. Our mission, our approach, and exactly what to expect."
+        description="A boutique team of ten, all with 4+ years on Amazon, managing 100+ brands. Our mission, our approach, and exactly what to expect."
         schema={{
           '@context': 'https://schema.org', '@type': 'Organization',
           name: 'BLAZON', url: 'https://blazonpros.com', telephone: site.phone,
@@ -30,7 +32,7 @@ export default function About() {
       <PageHero
         eyebrow="About us"
         headline={['A boutique team,', 'entirely on Amazon.']}
-        lead="Nine people, every one of them with four or more years selling on Amazon, managing more than eighty brands. Small enough that you know who runs your account; experienced enough that they have seen your problem before."
+        lead="Ten people, every one of them with four or more years selling on Amazon, managing more than a hundred brands. Small enough that you know who runs your account; experienced enough that they have seen your problem before."
       />
 
       <Section surface="carbon" className="mission">
@@ -54,7 +56,7 @@ export default function About() {
         <Container>
           <SectionHeader
             eyebrow="By the numbers"
-            headline={['Eight years. Eighty brands.']}
+            headline={['Eight years. A hundred brands.']}
             lead="Verified from our own client reporting. We don’t publish an aggregate revenue figure we can’t substantiate."
           />
           <RevealGroup className="stats__row" stagger={90}>

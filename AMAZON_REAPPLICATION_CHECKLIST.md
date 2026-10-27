@@ -56,20 +56,20 @@ remaining explanation.
       `*-preview` deployment — preview URLs can be protected even when production is not
 - [ ] Open the submitted URL in a private window, signed out of Vercel
 
-### 4. Decide which figures are true
+### 4. Decide which figures are true — ✅ RESOLVED
 
-Your homepage contradicts itself **in adjacent sections**. A reviewer checking your claims
-will see both. I did not guess:
+You designated the **stat band as authoritative**. The hero's "80+ brands managed /
+US-based team of 9" now reads **100+ brands / team of 10**, and the same figures were
+applied to the About, Results and Contact stat rows, the client-marquee caption and both
+meta descriptions. No page contradicts the band any more.
 
-| | Hero says | Stat band says |
-|---|---|---|
-| Team | "US-based team of 9" | **"10+ Employees"** |
-| Brands | "80+ brands managed" | **"100+ Brands Currently Servicing"** |
+They now come from one module (`client/src/data/figures.ts`) that the band itself also
+uses, so they cannot drift apart again.
 
-The Team page says "team of 10" and publishes `numberOfEmployees: 10` in structured data.
-
-- [ ] Tell me the correct headcount, brands currently managed, brands worked with and years
-      in business, and I will apply one set everywhere in a single pass
+- [x] Figures reconciled sitewide
+- [ ] **One thing left to confirm:** ten employees at "4+ years each" implies 40+ combined
+      years, but the band says "30+ Years of Combined Amazon Experience". `30+` is a floor
+      so nothing published is false — tell me if the real number is higher and I'll update it
 
 ---
 
