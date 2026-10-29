@@ -32,6 +32,21 @@ const DEFAULT_TO = 'blakegale@blazonpros.com';
 export const recipient = (): string => process.env.LEAD_NOTIFY_TO?.trim() || DEFAULT_TO;
 
 /**
+ * Optional extra recipients, as comma-separated addresses in
+ * LEAD_NOTIFY_CC / LEAD_NOTIFY_BCC.
+ *
+ * Worth having: email is the only copy of a lead in this deployment, so a
+ * second address is a cheap safety net against one mailbox filling up,
+ * filtering the mail or being misconfigured. Use BCC when the extra reader
+ * should not be visible to anyone who sees the message.
+ */
+const addresses = (raw: string | undefined): string[] =>
+  (raw ?? '').split(',').map((a) => a.trim()).filter(Boolean);
+
+export const ccList = (): string[] => addresses(process.env.LEAD_NOTIFY_CC);
+export const bccList = (): string[] => addresses(process.env.LEAD_NOTIFY_BCC);
+
+/**
  * The envelope sender. Most providers reject a From that is not the mailbox
  * being authenticated as, so SMTP_USER is the right default.
  */
@@ -68,7 +83,8 @@ export const isConfigured = (): boolean => Boolean(
 /** The subset of nodemailer this module uses, so tests can supply their own. */
 export interface Transport {
   sendMail(options: {
-    from: string; to: string; subject: string; text: string; replyTo?: string;
+    from: string; to: string; subject: string; text: string;
+    replyTo?: string; cc?: string; bcc?: string;
   }): Promise<unknown>;
 }
 
@@ -116,12 +132,16 @@ export async function send(
 ): Promise<Delivery> {
   if (!isConfigured()) return { status: 'unconfigured' };
   try {
+    const cc = ccList();
+    const bcc = bccList();
     await activeTransport().sendMail({
       from: fromHeader(fromName),
       to: recipient(),
       subject,
       text,
       ...(replyTo ? { replyTo } : {}),
+      ...(cc.length ? { cc: cc.join(', ') } : {}),
+      ...(bcc.length ? { bcc: bcc.join(', ') } : {}),
     });
     return { status: 'sent' };
   } catch (err) {
