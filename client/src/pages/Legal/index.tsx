@@ -16,7 +16,9 @@ import { site } from '../../data/site';
  *                pages/GetStarted/index.tsx
  *   stored     — server/src/db/repositories/lead.repo.js (leads, lead_events,
  *                contact_messages, consent_logs — the last three of those
- *                record ip_address, and leads also records user_agent)
+ *                record ip_address, and leads also records user_agent - note
+ *                that path is not part of the Vercel deployment, which emails
+ *                submissions and retains neither)
  *   retention  — there is no scheduled deletion anywhere in server/, so
  *                "until you ask" is the literal behaviour, not a promise
  *   processors — Vercel (hosting), Resend (api/_lib/notify.ts), Google Fonts
@@ -81,9 +83,9 @@ const PRIVACY: Doc = {
             monthly revenue band, your SKU count band, which Amazon platform you use, your
             primary goal and anything else you choose to tell us.</p>
           <p className="body">
-            With either form we also record the time of submission, the page you submitted
-            from, your IP address and your browser's user-agent string. Those last two are
-            kept to evidence consent and to shut down automated abuse of the forms.
+            With either form we also record the time of submission and the page you
+            submitted from. We do not retain your IP address or your browser's user-agent
+            string.
           </p>
           <p className="body">
             The revenue and SKU bands are commercially sensitive, so we will say plainly:

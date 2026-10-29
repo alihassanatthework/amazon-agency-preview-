@@ -1,4 +1,4 @@
-import { ok, fail, invalid, readBody, clientIp, userAgent } from './_lib/http.js';
+import { ok, fail, invalid, readBody } from './_lib/http.js';
 import type { ApiRequest, ApiResponse } from './_lib/http.js';
 import { validateContact, looksAutomated } from './_lib/validate.js';
 import { asText, send, isConfigured } from './_lib/notify.js';
@@ -41,8 +41,6 @@ export default async function handler(req: ApiRequest, res: ApiResponse) {
       ...value,
       privacyPolicyAccepted: body.consent === true ? 'Yes' : 'No',
       submittedAt: new Date().toISOString(),
-      ip: clientIp(req),
-      userAgent: userAgent(req),
     }),
     value.email,
     value.name,
