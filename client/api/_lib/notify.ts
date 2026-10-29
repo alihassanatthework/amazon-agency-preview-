@@ -122,12 +122,17 @@ export async function send(
 ): Promise<Delivery> {
   if (!isConfigured()) return { status: 'unconfigured' };
   try {
+    /* The subject carries a form field, so it is an injection surface like
+       the display name. Nodemailer encodes headers and neutralises this on
+       its own, but that is the library's guarantee rather than ours: strip
+       the line breaks here so a change of transport cannot make it live. */
+    const safeSubject = subject.replace(/[\r\n]+/g, ' ').trim().slice(0, 200);
     const cc = ccList();
     const bcc = bccList();
     await activeTransport().sendMail({
       from: fromHeader(fromName),
       to: recipient(),
-      subject,
+      subject: safeSubject,
       text,
       ...(html ? { html } : {}),
       ...(replyTo ? { replyTo } : {}),
