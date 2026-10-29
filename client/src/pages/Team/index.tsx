@@ -81,7 +81,7 @@ export default function Team() {
                   {photo ? (
                     <img
                       className="team__photo" src={photo} alt={`${m.name}, ${m.role} at BLAZON`}
-                      width={160} height={160} loading="lazy" decoding="async"
+                      width={200} height={200} loading="lazy" decoding="async"
                     />
                   ) : (
                     <span className="team__monogram" aria-hidden="true">{initials(m.name)}</span>
