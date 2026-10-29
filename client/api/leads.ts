@@ -1,7 +1,9 @@
 import { ok, fail, invalid, readBody } from './_lib/http.js';
 import type { ApiRequest, ApiResponse } from './_lib/http.js';
 import { validateLead, looksAutomated } from './_lib/validate.js';
-import { asText, send, isConfigured } from './_lib/notify.js';
+import { send, isConfigured } from './_lib/notify.js';
+import { asText, asHtml, humanLabel, humanValue, humanTime } from './_lib/format.js';
+import type { Section } from './_lib/format.js';
 
 /**
  * POST /api/leads — the "Get a free audit" wizard.
@@ -34,19 +36,62 @@ export default async function handler(req: ApiRequest, res: ApiResponse) {
   }
 
   const who = [value.firstName, value.lastName].filter(Boolean).join(' ');
+  const str = (k: string) => (typeof body[k] === 'string' ? (body[k] as string) : '');
+
+  const sections: Section[] = [
+    {
+      heading: 'Who to contact',
+      fields: [
+        { label: 'Name', value: who },
+        { label: humanLabel('email'), value: value.email, kind: 'email' as const },
+        { label: humanLabel('phone'), value: value.phone, kind: 'phone' as const },
+        { label: humanLabel('company'), value: value.company },
+      ].filter((f) => f.value),
+    },
+    {
+      heading: 'Their business',
+      fields: [
+        { label: humanLabel('brandName'), value: value.brandName },
+        { label: humanLabel('storeUrl'), value: value.storeUrl, kind: 'url' as const },
+        { label: humanLabel('sellingStatus'), value: humanValue(value.sellingStatus) },
+        { label: humanLabel('platform'), value: humanValue(value.platform) },
+        { label: humanLabel('monthlyRevenueBand'), value: value.monthlyRevenueBand },
+        { label: humanLabel('skuCountBand'), value: value.skuCountBand },
+        { label: humanLabel('productCategory'), value: value.productCategory },
+        { label: 'Marketplaces', value: value.marketplaces.join(', ') },
+        { label: humanLabel('stage'), value: value.stage },
+      ].filter((f) => f.value),
+    },
+    {
+      heading: 'What they want',
+      fields: [
+        { label: humanLabel('primaryGoal'), value: value.primaryGoal, kind: 'long' as const },
+        { label: humanLabel('message'), value: value.message, kind: 'long' as const },
+        { label: humanLabel('platformIssues'), value: value.platformIssues, kind: 'long' as const },
+      ].filter((f) => f.value),
+    },
+    {
+      heading: 'Submission',
+      fields: [
+        { label: humanLabel('submittedAt'), value: humanTime(new Date().toISOString()) },
+        { label: humanLabel('privacyPolicyAccepted'), value: body.consent === true ? 'Yes' : 'No' },
+        { label: 'Source page', value: str('sourcePage') },
+        { label: 'UTM source', value: str('utmSource') },
+        { label: 'UTM medium', value: str('utmMedium') },
+        { label: 'UTM campaign', value: str('utmCampaign') },
+      ].filter((f) => f.value),
+    },
+  ];
+
+  const title = 'New audit request';
+  const subtitle = `${who}${value.brandName ? ` — ${value.brandName}` : ''}`;
+
   const delivery = await send(
     `Free audit request — ${who}${value.brandName ? ` (${value.brandName})` : ''}`,
-    asText('New audit request', {
-      ...value,
-      sourcePage: typeof body.sourcePage === 'string' ? body.sourcePage : '',
-      utmSource: typeof body.utmSource === 'string' ? body.utmSource : '',
-      utmMedium: typeof body.utmMedium === 'string' ? body.utmMedium : '',
-      utmCampaign: typeof body.utmCampaign === 'string' ? body.utmCampaign : '',
-      privacyPolicyAccepted: body.consent === true ? 'Yes' : 'No',
-      submittedAt: new Date().toISOString(),
-    }),
+    asText(title, sections),
     value.email,
     who,
+    asHtml(title, subtitle, sections),
   );
 
   if (delivery.status !== 'sent') {

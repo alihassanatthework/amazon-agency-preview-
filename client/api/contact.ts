@@ -1,7 +1,9 @@
 import { ok, fail, invalid, readBody } from './_lib/http.js';
 import type { ApiRequest, ApiResponse } from './_lib/http.js';
 import { validateContact, looksAutomated } from './_lib/validate.js';
-import { asText, send, isConfigured } from './_lib/notify.js';
+import { send, isConfigured } from './_lib/notify.js';
+import { asText, asHtml, humanLabel, humanValue, humanTime } from './_lib/format.js';
+import type { Section } from './_lib/format.js';
 
 /**
  * POST /api/contact — the contact page form.
@@ -35,15 +37,43 @@ export default async function handler(req: ApiRequest, res: ApiResponse) {
       'We could not send that just now. Please call us on 801-822-9732 and we will take the details.');
   }
 
+  // Grouped so the reader meets the person before the detail. Empty fields are
+  // dropped rather than shown blank.
+  const sections: Section[] = [
+    {
+      heading: 'Who got in touch',
+      fields: [
+        { label: humanLabel('name'), value: value.name },
+        { label: humanLabel('email'), value: value.email, kind: 'email' as const },
+        { label: humanLabel('phone'), value: value.phone, kind: 'phone' as const },
+        { label: humanLabel('company'), value: value.company },
+      ].filter((f) => f.value),
+    },
+    {
+      heading: 'What they said',
+      fields: [
+        { label: humanLabel('inquiryType'), value: humanValue(value.inquiryType) },
+        { label: humanLabel('message'), value: value.message, kind: 'long' as const },
+      ].filter((f) => f.value),
+    },
+    {
+      heading: 'Submission',
+      fields: [
+        { label: humanLabel('submittedAt'), value: humanTime(new Date().toISOString()) },
+        { label: humanLabel('privacyPolicyAccepted'), value: body.consent === true ? 'Yes' : 'No' },
+      ],
+    },
+  ];
+
+  const title = 'New contact form submission';
+  const subtitle = `${value.name}${value.company ? ` — ${value.company}` : ''}`;
+
   const delivery = await send(
     `Contact form — ${value.name}${value.company ? ` (${value.company})` : ''}`,
-    asText('New contact form submission', {
-      ...value,
-      privacyPolicyAccepted: body.consent === true ? 'Yes' : 'No',
-      submittedAt: new Date().toISOString(),
-    }),
+    asText(title, sections),
     value.email,
     value.name,
+    asHtml(title, subtitle, sections),
   );
 
   if (delivery.status !== 'sent') {

@@ -84,7 +84,7 @@ export const isConfigured = (): boolean => Boolean(
 export interface Transport {
   sendMail(options: {
     from: string; to: string; subject: string; text: string;
-    replyTo?: string; cc?: string; bcc?: string;
+    html?: string; replyTo?: string; cc?: string; bcc?: string;
   }): Promise<unknown>;
 }
 
@@ -115,20 +115,10 @@ function activeTransport(): Transport {
   return cached;
 }
 
-/** Renders a flat record as a readable plain-text email body. */
-export const asText = (title: string, fields: Record<string, unknown>): string => {
-  const lines = Object.entries(fields)
-    .filter(([, v]) => v !== undefined && v !== null && v !== '' &&
-      !(Array.isArray(v) && v.length === 0))
-    .map(([k, v]) => {
-      const label = k.replace(/([A-Z])/g, ' $1').replace(/^./, (c) => c.toUpperCase());
-      return `${label}: ${Array.isArray(v) ? v.join(', ') : String(v)}`;
-    });
-  return `${title}\n${'='.repeat(title.length)}\n\n${lines.join('\n')}\n`;
-};
 
 export async function send(
   subject: string, text: string, replyTo?: string, fromName?: string,
+  html?: string,
 ): Promise<Delivery> {
   if (!isConfigured()) return { status: 'unconfigured' };
   try {
@@ -139,6 +129,7 @@ export async function send(
       to: recipient(),
       subject,
       text,
+      ...(html ? { html } : {}),
       ...(replyTo ? { replyTo } : {}),
       ...(cc.length ? { cc: cc.join(', ') } : {}),
       ...(bcc.length ? { bcc: bcc.join(', ') } : {}),
