@@ -12,7 +12,7 @@
  * automatically (see photoFor in pages/Team/index.tsx). Drop the files in and
  * they appear; nothing else needs editing.
  *
- * Ten people are on the team; nine are named here. Surnames are left off where none was supplied.
+ * Ten people are on the team; six are named here, each with a photograph. Surnames are left off where none was supplied.
  * The page is built to take the rest as they arrive.
  */
 export interface TeamMember {
@@ -30,15 +30,7 @@ export const team: TeamMember[] = [
   { slug: 'james',           name: 'James',          role: 'Senior Amazon Expert' },
   { slug: 'lordan',          name: 'Lordan',         role: 'Amazon Expert' },
   { slug: 'shirley',         name: 'Shirley',        role: 'Advertising' },
-  { slug: 'keith-slentz',    name: 'Keith Slentz',   role: 'Account Manager' },
-  { slug: 'daniel-purser',   name: 'Daniel Purser',  role: 'Account Manager' },
-  {
-    slug: 'jantzen-russell',
-    name: 'Jantzen Russell',
-    role: 'Marketing Director',
-    bio: 'Jantzen Russell is the marketing director at BLAZON… helping sellers increase sales for over six years by leveraging sound, sustainable advertising and branding principles to create reliable growth.',
-  },
 ];
 
-/** Headcount is ten; this file names the five we can evidence. */
+/** Headcount is ten; this file names the six we have photographs for. */
 export const TEAM_SIZE = 10;

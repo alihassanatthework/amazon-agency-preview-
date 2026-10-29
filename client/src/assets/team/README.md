@@ -10,10 +10,7 @@ matches the entry in `client/src/data/team.ts`:
 | `james.webp`           | James            |
 | `lordan.webp`          | Lordan           |
 | `shirley.webp`         | Shirley          |
-| `keith-slentz.jpg`     | Keith Slentz     |
-| `daniel-purser.jpg`    | Daniel Purser    |
 | `trevar-gale.webp`     | Trevar Gale      |
-| `jantzen-russell.jpg`  | Jantzen Russell  |
 
 They are picked up automatically — no code change. A member with no file here
 renders their initials instead, never a stock portrait.
@@ -28,6 +25,3 @@ share a brick backdrop and consistent lighting — keep that.
 circularly cropped, so re-extracting them caps quality at whatever the slide
 holds; that is fine for the 128px circle here but will not survive a move to the
 larger 4:5 portrait card, which needs roughly 640×800.
-
-Jantzen Russell has no photograph on record anywhere — that one has to be shot
-or supplied.
