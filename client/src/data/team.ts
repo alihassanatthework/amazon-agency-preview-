@@ -12,7 +12,7 @@
  * automatically (see photoFor in pages/Team/index.tsx). Drop the files in and
  * they appear; nothing else needs editing.
  *
- * Ten people are on the team. Five are named here because five are evidenced.
+ * Ten people are on the team; nine are named here. Surnames are left off where none was supplied.
  * The page is built to take the rest as they arrive.
  */
 export interface TeamMember {
@@ -24,10 +24,14 @@ export interface TeamMember {
 }
 
 export const team: TeamMember[] = [
-  { slug: 'blake-gale',     name: 'Blake Gale',     role: 'Founder & CEO' },
-  { slug: 'keith-slentz',   name: 'Keith Slentz',   role: 'Account Manager' },
-  { slug: 'daniel-purser',  name: 'Daniel Purser',  role: 'Account Manager' },
-  { slug: 'trevar-gale',    name: 'Trevar Gale',    role: 'Account Manager' },
+  { slug: 'gyle',            name: 'Gyle',           role: 'CFO' },
+  { slug: 'blake-gale',      name: 'Blake Gale',     role: 'Founder & CEO' },
+  { slug: 'trevar-gale',     name: 'Trevar Gale',    role: 'Account Executive' },
+  { slug: 'james',           name: 'James',          role: 'Senior Amazon Expert' },
+  { slug: 'lordan',          name: 'Lordan',         role: 'Amazon Expert' },
+  { slug: 'shirley',         name: 'Shirley',        role: 'Advertising' },
+  { slug: 'keith-slentz',    name: 'Keith Slentz',   role: 'Account Manager' },
+  { slug: 'daniel-purser',   name: 'Daniel Purser',  role: 'Account Manager' },
   {
     slug: 'jantzen-russell',
     name: 'Jantzen Russell',

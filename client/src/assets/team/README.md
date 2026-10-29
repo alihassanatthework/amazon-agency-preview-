@@ -5,10 +5,14 @@ matches the entry in `client/src/data/team.ts`:
 
 | File                   | Person           |
 | ---------------------- | ---------------- |
-| `blake-gale.jpg`       | Blake Gale       |
+| `blake-gale.webp`      | Blake Gale       |
+| `gyle.webp`            | Gyle             |
+| `james.webp`           | James            |
+| `lordan.webp`          | Lordan           |
+| `shirley.webp`         | Shirley          |
 | `keith-slentz.jpg`     | Keith Slentz     |
 | `daniel-purser.jpg`    | Daniel Purser    |
-| `trevar-gale.jpg`      | Trevar Gale      |
+| `trevar-gale.webp`     | Trevar Gale      |
 | `jantzen-russell.jpg`  | Jantzen Russell  |
 
 They are picked up automatically — no code change. A member with no file here

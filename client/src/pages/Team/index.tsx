@@ -28,33 +28,40 @@ const photoFor = (slug: string): string | null =>
 const initials = (name: string) =>
   name.split(/\s+/).slice(0, 2).map((w) => w[0]).join('');
 
-const ORG_ID = 'https://blazonpros.com/#organization';
-const personId = (slug: string) => `https://blazonpros.com/team#${slug}`;
+const ORIGIN = 'https://blazonpros.com';
+const ORG_ID = `${ORIGIN}/#organization`;
+const personId = (slug: string) => `${ORIGIN}/team#${slug}`;
+/** Bundled photo URLs are root-relative; schema.org wants an absolute one. */
+const absolute = (url: string) => (url.startsWith('http') ? url : `${ORIGIN}${url}`);
 
 export default function Team() {
   return (
     <>
       <Seo
-        route="/team" title="Your point of contact — BLAZON"
-        description={`The named people who would run your Amazon account: ${team.map((m) => m.name).join(', ')}.`}
+        route="/team" title="Meet the BLAZON team — Amazon account managers & experts"
+        description={`Meet the US-based BLAZON team behind your Amazon account: ${team.slice(0, 6).map((m) => `${m.name} (${m.role})`).join(', ')} and more. Every specialist has 4+ years selling on Amazon.`}
         schema={{
           '@context': 'https://schema.org',
           '@graph': [
             {
               '@type': 'Organization', '@id': ORG_ID,
-              name: 'BLAZON', url: 'https://blazonpros.com', telephone: site.phone,
+              name: 'BLAZON', url: ORIGIN, telephone: site.phone,
               areaServed: 'US', description: site.mission,
               numberOfEmployees: TEAM_SIZE,
               employee: team.map((m) => ({ '@id': personId(m.slug) })),
             },
-            ...team.map((m) => ({
-              '@type': 'Person',
-              '@id': personId(m.slug),
-              name: m.name,
-              jobTitle: m.role,
-              worksFor: { '@id': ORG_ID },
-              ...(m.bio ? { description: m.bio } : {}),
-            })),
+            ...team.map((m) => {
+              const photo = photoFor(m.slug);
+              return {
+                '@type': 'Person',
+                '@id': personId(m.slug),
+                name: m.name,
+                jobTitle: m.role,
+                worksFor: { '@id': ORG_ID },
+                ...(photo ? { image: absolute(photo) } : {}),
+                ...(m.bio ? { description: m.bio } : {}),
+              };
+            }),
           ],
         }}
       />
