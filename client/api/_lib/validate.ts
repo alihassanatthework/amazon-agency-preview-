@@ -63,6 +63,9 @@ export interface LeadInput extends Record<string, string | string[]> {
   company: string; brandName: string; storeUrl: string; sellingStatus: string;
   platform: string; monthlyRevenueBand: string; skuCountBand: string;
   productCategory: string; primaryGoal: string; message: string;
+  /** Both are collected by the wizard; they were previously dropped here and
+   *  so never reached the notification email. */
+  stage: string; platformIssues: string;
   marketplaces: string[];
 }
 
@@ -89,6 +92,8 @@ export function validateLead(b: Record<string, unknown>): { errors: Errors; valu
     productCategory: field(e, 'productCategory', b.productCategory, { max: 120 }),
     primaryGoal: field(e, 'primaryGoal', b.primaryGoal, { max: 500 }),
     message: field(e, 'message', b.message, { max: 2000 }),
+    stage: field(e, 'stage', b.stage, { max: 120 }),
+    platformIssues: field(e, 'platformIssues', b.platformIssues, { max: 2000 }),
     marketplaces: Array.isArray(b.marketplaces)
       ? (b.marketplaces as unknown[]).slice(0, 10).map(str).filter(Boolean) : [],
   };

@@ -1,7 +1,7 @@
-import { ok, fail, invalid, readBody, clientIp, userAgent } from './_lib/http';
-import type { ApiRequest, ApiResponse } from './_lib/http';
-import { validateLead, looksAutomated } from './_lib/validate';
-import { asText, send, isConfigured } from './_lib/notify';
+import { ok, fail, invalid, readBody, clientIp, userAgent } from './_lib/http.js';
+import type { ApiRequest, ApiResponse } from './_lib/http.js';
+import { validateLead, looksAutomated } from './_lib/validate.js';
+import { asText, send, isConfigured } from './_lib/notify.js';
 
 /**
  * POST /api/leads — the "Get a free audit" wizard.
@@ -35,18 +35,20 @@ export default async function handler(req: ApiRequest, res: ApiResponse) {
 
   const who = [value.firstName, value.lastName].filter(Boolean).join(' ');
   const delivery = await send(
-    `Audit request — ${who}${value.brandName ? ` (${value.brandName})` : ''}`,
+    `Free audit request — ${who}${value.brandName ? ` (${value.brandName})` : ''}`,
     asText('New audit request', {
       ...value,
       sourcePage: typeof body.sourcePage === 'string' ? body.sourcePage : '',
       utmSource: typeof body.utmSource === 'string' ? body.utmSource : '',
       utmMedium: typeof body.utmMedium === 'string' ? body.utmMedium : '',
       utmCampaign: typeof body.utmCampaign === 'string' ? body.utmCampaign : '',
+      privacyPolicyAccepted: body.consent === true ? 'Yes' : 'No',
       submittedAt: new Date().toISOString(),
       ip: clientIp(req),
       userAgent: userAgent(req),
     }),
     value.email,
+    who,
   );
 
   if (delivery.status !== 'sent') {

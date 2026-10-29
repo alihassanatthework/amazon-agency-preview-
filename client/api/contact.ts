@@ -1,7 +1,7 @@
-import { ok, fail, invalid, readBody, clientIp, userAgent } from './_lib/http';
-import type { ApiRequest, ApiResponse } from './_lib/http';
-import { validateContact, looksAutomated } from './_lib/validate';
-import { asText, send, isConfigured } from './_lib/notify';
+import { ok, fail, invalid, readBody, clientIp, userAgent } from './_lib/http.js';
+import type { ApiRequest, ApiResponse } from './_lib/http.js';
+import { validateContact, looksAutomated } from './_lib/validate.js';
+import { asText, send, isConfigured } from './_lib/notify.js';
 
 /**
  * POST /api/contact — the contact page form.
@@ -39,11 +39,13 @@ export default async function handler(req: ApiRequest, res: ApiResponse) {
     `Contact form — ${value.name}${value.company ? ` (${value.company})` : ''}`,
     asText('New contact form submission', {
       ...value,
+      privacyPolicyAccepted: body.consent === true ? 'Yes' : 'No',
       submittedAt: new Date().toISOString(),
       ip: clientIp(req),
       userAgent: userAgent(req),
     }),
     value.email,
+    value.name,
   );
 
   if (delivery.status !== 'sent') {
