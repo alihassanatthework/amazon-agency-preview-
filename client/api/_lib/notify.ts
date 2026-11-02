@@ -28,22 +28,39 @@ export type Delivery =
 /** Where submissions go unless LEAD_NOTIFY_TO overrides it. */
 const DEFAULT_TO = 'blakegale@blazonpros.com';
 
+/**
+ * Copied on every submission alongside the main recipient. In code rather
+ * than left to an environment variable so that notifications reach her
+ * whether or not anyone remembers to set one, exactly as DEFAULT_TO does.
+ * CC rather than BCC: both readers are on the same team and each should see
+ * that the other was notified.
+ */
+const DEFAULT_CC = ['susanna@blazonpros.com'];
+
 /** The recipient for both forms. */
 export const recipient = (): string => process.env.LEAD_NOTIFY_TO?.trim() || DEFAULT_TO;
 
 /**
- * Optional extra recipients, as comma-separated addresses in
- * LEAD_NOTIFY_CC / LEAD_NOTIFY_BCC.
+ * Extra recipients, as comma-separated addresses in LEAD_NOTIFY_CC /
+ * LEAD_NOTIFY_BCC.
  *
  * Worth having: email is the only copy of a lead in this deployment, so a
  * second address is a cheap safety net against one mailbox filling up,
  * filtering the mail or being misconfigured. Use BCC when the extra reader
  * should not be visible to anyone who sees the message.
+ *
+ * Setting LEAD_NOTIFY_CC replaces the default list; setting it to an empty
+ * value removes the CC altogether, so the default can be turned off without
+ * a code change.
  */
 const addresses = (raw: string | undefined): string[] =>
   (raw ?? '').split(',').map((a) => a.trim()).filter(Boolean);
 
-export const ccList = (): string[] => addresses(process.env.LEAD_NOTIFY_CC);
+export const ccList = (): string[] =>
+  (process.env.LEAD_NOTIFY_CC === undefined
+    ? DEFAULT_CC
+    : addresses(process.env.LEAD_NOTIFY_CC));
+
 export const bccList = (): string[] => addresses(process.env.LEAD_NOTIFY_BCC);
 
 /**
