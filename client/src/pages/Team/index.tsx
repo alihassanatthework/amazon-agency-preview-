@@ -28,7 +28,7 @@ const photoFor = (slug: string): string | null =>
 const initials = (name: string) =>
   name.split(/\s+/).slice(0, 2).map((w) => w[0]).join('');
 
-const ORIGIN = 'https://blazonpros.com';
+const ORIGIN = 'https://www.blazonpros.com';
 const ORG_ID = `${ORIGIN}/#organization`;
 const personId = (slug: string) => `${ORIGIN}/team#${slug}`;
 /** Bundled photo URLs are root-relative; schema.org wants an absolute one. */

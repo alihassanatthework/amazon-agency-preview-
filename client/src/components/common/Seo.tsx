@@ -19,7 +19,7 @@ function upsertMeta(selector: string, attrs: Record<string, string>) {
 }
 
 /** Canonical origin for absolute URLs in canonical, OG and Twitter tags. */
-const ORIGIN = 'https://blazonpros.com';
+const ORIGIN = 'https://www.blazonpros.com';
 
 /**
  * §19.3 — per-route title, description, canonical, OG and Twitter tags plus

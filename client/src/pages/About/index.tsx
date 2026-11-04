@@ -25,7 +25,7 @@ export default function About() {
         description="A boutique team of ten, all with 4+ years on Amazon, managing 100+ brands. Our mission, our approach, and exactly what to expect."
         schema={{
           '@context': 'https://schema.org', '@type': 'Organization',
-          name: 'BLAZON', url: 'https://blazonpros.com', telephone: site.phone,
+          name: 'BLAZON', url: 'https://www.blazonpros.com', telephone: site.phone,
           areaServed: 'US', description: site.mission,
         }}
       />
